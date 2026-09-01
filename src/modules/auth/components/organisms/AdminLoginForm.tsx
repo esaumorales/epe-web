@@ -3,7 +3,7 @@ import logoEmpresa from "@Assets/image/logo_empresa.webp";
 import { useState } from "react";
 import RecoverFormControl from "../molecules/RecoverFormControl";
 import ConfirmSuccessFormControl from "../molecules/ConfirmSuccessFormControl";
-import { Leaf, ShieldCheck } from "lucide-react";
+import { Leaf } from "lucide-react";
 
 type ViewState = 'login' | 'recover' | 'confirm';
 
