@@ -1,26 +1,29 @@
 import ModuleCard from '../molecules/ModuleCard';
 import { CalendarDays, Users, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ModulesGrid() {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex flex-wrap justify-center gap-8 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full max-w-5xl mx-auto pb-8">
       <ModuleCard 
         title="Planificación de Campaña" 
         description="Organiza y planifica tus campañas de exportación."
-        icon={<CalendarDays size={40} strokeWidth={1.5} />}
-        onClick={() => {}} 
+        icon={<CalendarDays size={32} strokeWidth={1.5} />}
+        onClick={() => navigate('/campaigns')} 
       />
       <ModuleCard 
         title="Gestión de Proveedores" 
         description="Administra y evalúa a tus proveedores."
-        icon={<Users size={40} strokeWidth={1.5} />}
-        onClick={() => {}} 
+        icon={<Users size={32} strokeWidth={1.5} />}
+        onClick={() => navigate('/proveedores')} 
       />
       <ModuleCard 
         title="Gestión de Clientes" 
         description="Administra y da seguimiento a tus clientes."
-        icon={<User size={40} strokeWidth={1.5} />}
-        onClick={() => {}} 
+        icon={<User size={32} strokeWidth={1.5} />}
+        onClick={() => navigate('/certificaciones')} 
       />
     </div>
   );
