@@ -1,12 +1,11 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { X, Calendar, Tag, Sprout, Target, TrendingUp, ShieldCheck, Users, Briefcase, ArrowLeft } from "lucide-react";
+import {  useNavigate } from "react-router-dom";
+import {  Calendar, Tag, Sprout, TrendingUp, ShieldCheck, Users, Briefcase, ArrowLeft } from "lucide-react";
 import StatusBadge from "../components/molecules/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import DashboardLayout from "@/globals/components/templates/DashboardLayout";
 
 export default function CampaignDetailsPage() {
-    const { id } = useParams();
     const navigate = useNavigate();
 
     return (
