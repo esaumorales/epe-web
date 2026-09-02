@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Env vars
+.env
+
 # Claude skills (downloaded from registry, reproducible via skills-lock.json)
 .agents/skills/
 .claude/skills/

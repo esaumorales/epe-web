@@ -23,3 +23,14 @@ Todo lo transversal / no-dominio vive aquí:
 ## Config de shadcn
 
 `components.json` define `aliases.ui` y `aliases.components` apuntando a `@/shared/components(/ui)`. Por eso `npx shadcn@latest add` ya coloca los componentes nuevos en el lugar correcto sin ajustes manuales.
+
+## Integración con backend (API)
+
+- Cliente HTTP único: `shared/api/client.ts` (axios, `baseURL` desde `VITE_API_BASE_URL`). Ningún módulo crea su propia instancia de axios.
+- Por dominio, en `modules/<domain>/api/` (crear solo cuando ese dominio empiece a consumir el backend, no especulativamente):
+  - `<domain>.api.ts` — llamadas axios usando el cliente compartido, funciones `get<Domain>()`, `create<Domain>(dto)`, etc. Reciben/devuelven DTOs.
+  - `<domain>.dto.ts` — tipos que espejan la forma cruda del backend.
+  - `<domain>.mapper.ts` — funciones `to<Domain>(dto)` que transforman DTO → modelo de frontend.
+- Regla dura: componentes y páginas **nunca** importan un DTO ni el cliente axios directamente — solo consumen el modelo de frontend ya mapeado, vía `<domain>.api.ts`. Un cambio de forma en el backend se absorbe en el mapper de ese dominio, sin tocar componentes.
+- Sin TanStack Query / SWR por ahora (decisión explícita, YAGNI) — si más adelante hace falta caché/refetch automático, ese es el upgrade natural.
+- Variable de entorno `VITE_API_BASE_URL` documentada en `.env.example`.
