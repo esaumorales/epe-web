@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Claude skills (downloaded from registry, reproducible via skills-lock.json)
+.agents/skills/
+.claude/skills/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
