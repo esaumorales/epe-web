@@ -1,9 +1,9 @@
 import {  useNavigate } from "react-router-dom";
 import {  Calendar, Tag, Sprout, TrendingUp, ShieldCheck, Users, Briefcase, ArrowLeft } from "lucide-react";
-import StatusBadge from "../components/molecules/StatusBadge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import DashboardLayout from "@/globals/components/templates/DashboardLayout";
+import StatusBadge from "@/modules/campaigns/components/StatusBadge";
+import { Button } from "@/shared/components/ui/button";
+import { Progress } from "@/shared/components/ui/progress";
+import DashboardLayout from "@/shared/layout/DashboardLayout";
 
 export default function CampaignDetailsPage() {
     const navigate = useNavigate();

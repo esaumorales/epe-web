@@ -1,4 +1,4 @@
-import AdminLoginForm from "../components/organisms/AdminLoginForm";
+import AdminLoginForm from "@/modules/auth/components/AdminLoginForm";
 
 interface AdminLoginPageProps {
   onLogin: () => void;

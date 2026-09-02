@@ -1,10 +1,10 @@
 import { useState } from "react";
-import DashboardLayout from "@/globals/components/templates/DashboardLayout";
-import CampaignStatsOverview from "../components/organisms/CampaignStatsOverview";
-import CampaignFilters from "../components/organisms/CampaignFilters";
-import CampaignTable from "../components/organisms/CampaignTable";
-import CampaignCreateModal from "../components/organisms/CampaignCreateModal";
-import CampaignSuccessModal from "../components/organisms/CampaignSuccessModal";
+import DashboardLayout from "@/shared/layout/DashboardLayout";
+import CampaignStatsOverview from "@/modules/campaigns/components/CampaignStatsOverview";
+import CampaignFilters from "@/modules/campaigns/components/CampaignFilters";
+import CampaignTable from "@/modules/campaigns/components/CampaignTable";
+import CampaignCreateModal from "@/modules/campaigns/components/CampaignCreateModal";
+import CampaignSuccessModal from "@/modules/campaigns/components/CampaignSuccessModal";
 import { Leaf } from "lucide-react";
 
 export default function CampaignsPage() {

@@ -1,5 +1,5 @@
-import ModulesGrid from "../components/organisms/ModulesGrid";
-import UserProfilePanel from "../components/organisms/UserProfilePanel";
+import ModulesGrid from "@/modules/users/components/ModulesGrid";
+import UserProfilePanel from "@/modules/users/components/UserProfilePanel";
 import logoEmpresaLarge from "@Assets/image/logo_empresa_large.webp";
 
 interface UsersModulesPageProps {
