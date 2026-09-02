@@ -1,4 +1,4 @@
-import Button from "@/globals/components/atoms/Button";
+import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupInput, InputGroupButton } from "@/components/ui/input-group";
 import { User, Lock, Eye } from "lucide-react";
