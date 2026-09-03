@@ -11,7 +11,7 @@ export default function FormControl({ onSubmit }: FormControlProps) {
     return (
         <div className="flex flex-col gap-4 w-full">
             <Field>
-                <FieldLabel className="text-sm font-semibold text-[#1a2f22]">Usuario</FieldLabel>
+                <FieldLabel className="text-base font-semibold text-[#1a2f22]">Usuario</FieldLabel>
                 <InputGroup className="border-gray-300 focus-within:border-[#5D9634] py-1">
                     <InputGroupAddon align="inline-start">
                         <InputGroupText className="text-[#5D9634]"><User size={18} /></InputGroupText>
@@ -21,7 +21,7 @@ export default function FormControl({ onSubmit }: FormControlProps) {
             </Field>
             
             <Field>
-                <FieldLabel className="text-sm font-semibold text-[#1a2f22]">Contraseña</FieldLabel>
+                <FieldLabel className="text-base font-semibold text-[#1a2f22]">Contraseña</FieldLabel>
                 <InputGroup className="border-gray-300 focus-within:border-[#5D9634] py-1">
                     <InputGroupAddon align="inline-start">
                         <InputGroupText className="text-[#5D9634]"><Lock size={18} /></InputGroupText>
