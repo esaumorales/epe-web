@@ -26,7 +26,7 @@ export default function ModuleCard({ title, description, icon, onClick }: Module
                 </p>
             </div>
             
-            <div className="w-10 h-10 rounded-full bg-[#EBF3EC] flex items-center justify-center text-[#5D9634] mt-2 transition-colors hover:bg-[#5D9634] hover:text-white">
+            <div className="w-10 h-10 rounded-full bg-[#eefff0] flex items-center justify-center text-[#5D9634] mt-2 transition-colors hover:bg-[#5D9634] hover:text-white">
                 <ArrowRight size={18} />
             </div>
         </div>
