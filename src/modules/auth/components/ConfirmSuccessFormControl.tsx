@@ -1,37 +1,87 @@
+import { useState, useRef, type KeyboardEvent, type ChangeEvent } from "react";
 import { Button } from "@/shared/components/ui/button";
-import { Field, FieldLabel } from "@/shared/components/ui/field";
-import { InputGroup, InputGroupInput } from "@/shared/components/ui/input-group";
-import { Leaf } from "lucide-react";
+import { FieldLabel } from "@/shared/components/ui/field";
+import { ArrowRight, KeyRound } from "lucide-react";
 
 interface ConfirmSuccessProps {
     onBack?: () => void;
     onConfirm: () => void;
 }
 
+const OTP_LENGTH = 6;
+
 export default function ConfirmSuccessFormControl({ onBack, onConfirm }: ConfirmSuccessProps) {
+    const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
+    const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
+        const value = e.target.value;
+        // Solo permitir números
+        if (/[^0-9]/.test(value)) return;
+
+        const newOtp = [...otp];
+        newOtp[index] = value.substring(value.length - 1); // Tomar solo el último caracter
+        setOtp(newOtp);
+
+        // Auto-avanzar al siguiente input
+        if (value !== "" && index < OTP_LENGTH - 1) {
+            inputRefs.current[index + 1]?.focus();
+        }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+        // Retroceder al input anterior si se presiona backspace en un input vacío
+        if (e.key === 'Backspace' && !otp[index] && index > 0) {
+            inputRefs.current[index - 1]?.focus();
+        }
+    };
+
     return (
         <div className="w-full flex flex-col items-center">
-            <h1 className="text-3xl font-bold text-[#1a2f22]">Confirmar Sesión</h1>
-            <div className="flex items-center w-full justify-center my-4">
-                <div className="h-px bg-[#c2d3b4] w-16"></div>
-                <Leaf className="text-[#5D9634] mx-2" size={18} />
-                <div className="h-px bg-[#c2d3b4] w-16"></div>
+            <div className="h-12 w-12 rounded-full bg-chart-4/10 flex items-center justify-center mb-4">
+                <KeyRound size={22} strokeWidth={2.5} className="text-chart-4" />
             </div>
-            
-            <p className="text-base text-gray-600 text-center mb-6">
-                Se le ha mandado un código al correo al cual está enlazado
+
+            <h1 className="text-[24px] font-semibold text-chart-5 tracking-tight text-center">Confirmar sesión</h1>
+            <div className="h-1 w-10 bg-chart-4 rounded-full my-3"></div>
+            <p className="text-xs text-muted-foreground text-center max-w-70 mb-6">
+                Ingresa el código de 6 dígitos que enviamos a tu correo
             </p>
-            
-            <div className="flex flex-col gap-4 w-full">
-                <Field>
-                    <FieldLabel className="text-base font-semibold text-[#1a2f22]">Código de Seguridad</FieldLabel>
-                    <InputGroup className="border-gray-300 focus-within:border-[#5D9634] py-1">
-                        <InputGroupInput className="text-[#1a2f22]" placeholder="Ingrese el código" />
-                    </InputGroup>
-                </Field>
-                <Button onClick={onConfirm} className="!bg-[#5D9634] hover:!bg-[#4a7a28] w-full py-2.5 mt-2 rounded-md font-medium text-white shadow-md">Confirmar</Button>
-                {onBack && <button onClick={onBack} className="text-[#5D9634] text-base mt-4 hover:underline">Volver</button>}
+
+            <div className="w-full space-y-1.5">
+                <FieldLabel className="text-sm font-bold text-chart-5">Código de seguridad</FieldLabel>
+                <div className="flex justify-between gap-2" role="presentation">
+                    {Array.from({ length: OTP_LENGTH }).map((_, index) => (
+                        <input
+                            key={index}
+                            ref={(el) => { inputRefs.current[index] = el; }}
+                            type="text"
+                            inputMode="numeric"
+                            maxLength={1}
+                            value={otp[index]}
+                            onChange={(e) => handleChange(e, index)}
+                            onKeyDown={(e) => handleKeyDown(e, index)}
+                            className="flex w-0 aspect-square flex-1 items-center justify-center rounded-sm border border-border/70 bg-background text-center text-xl font-semibold text-chart-5 transition-colors focus:border-chart-4 focus:ring-1 focus:ring-chart-4/30 focus:outline-none caret-chart-4"
+                        />
+                    ))}
+                </div>
             </div>
+
+            <Button
+                onClick={onConfirm}
+                className="bg-chart-5 hover:bg-chart-5/90 w-full h-11 rounded-sm font-medium text-white shadow-md shadow-chart-5/20 flex items-center justify-between px-6 transition-all text-[15px] mt-6"
+            >
+                <span className="flex-1 text-center pr-2">Confirmar</span>
+                <ArrowRight size={20} strokeWidth={2.5} className="shrink-0" />
+            </Button>
+
+            {onBack && (
+                <div className="mt-6 w-full flex justify-center">
+                    <button onClick={onBack} className="text-chart-4 text-sm font-bold hover:underline transition-colors">
+                        Volver
+                    </button>
+                </div>
+            )}
         </div>
     )
 }
