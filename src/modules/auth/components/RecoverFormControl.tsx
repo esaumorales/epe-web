@@ -16,7 +16,7 @@ export default function RecoverFormControl({ onBack }: RecoverFormControlProps) 
 
             <h1 className="text-[24px] font-semibold text-chart-5 tracking-tight text-center">Recuperar contraseña</h1>
             <div className="h-1 w-10 bg-chart-4 rounded-full my-3"></div>
-            <p className="text-xs text-muted-foreground text-center max-w-[280px] mb-6">
+            <p className="text-xs text-muted-foreground text-center max-w-70 mb-6">
                 Ingresa tu correo electrónico para recibir las instrucciones de recuperación
             </p>
 

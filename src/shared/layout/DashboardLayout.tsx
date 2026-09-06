@@ -1,24 +1,28 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { SidebarProvider } from "@/shared/components/ui/sidebar";
 import AppSidebar from "@/shared/layout/Sidebar";
 import TopNavBar from "@/shared/layout/TopNavBar";
 
 interface DashboardLayoutProps {
     children: ReactNode;
+    hideSidebar?: boolean;
+    onLogout?: () => void;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function DashboardLayout({ children, hideSidebar = false, onLogout }: DashboardLayoutProps) {
     return (
-        <SidebarProvider>
-            <AppSidebar />
-            <div
-                className="flex-1 flex flex-col h-screen overflow-hidden bg-cover bg-center bg-no-repeat bg-[#f4f7f5]"
-            >
-                <TopNavBar />
+        <SidebarProvider style={{ "--sidebar-width": "14rem" } as CSSProperties}>
+            <div className="flex flex-col h-screen overflow-hidden w-full">
+                <TopNavBar variant={hideSidebar ? "no-sidebar" : "default"} onLogout={onLogout} />
 
-                <main className="flex-1 overflow-y-auto px-10 py-6">
-                    {children}
-                </main>
+                <div className="flex flex-1 overflow-hidden w-full relative z-10">
+                    {!hideSidebar && <AppSidebar />}
+
+                    {/* `relative` para que los fondos absolutos de cada página se anclen acá y no en un ancestro lejano */}
+                    <main className="relative flex-1 overflow-y-auto w-full">
+                        {children}
+                    </main>
+                </div>
             </div>
         </SidebarProvider>
     );

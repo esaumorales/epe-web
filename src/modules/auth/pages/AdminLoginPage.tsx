@@ -12,7 +12,7 @@ export default function AdminLoginPage({ onLogin }: AdminLoginPageProps) {
       style={{ backgroundImage: "url('/image/fondo_login.webp')" }}
     >
       <div className="relative flex flex-col justify-between p-10 md:p-20 w-full lg:w-[45%] z-10 text-white">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/60 to-transparent pointer-events-none"></div>
+        <div className="absolute inset-0 -z-10 bg-linear-to-r from-black/60 to-transparent pointer-events-none"></div>
 
         <div>
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-normal leading-none tracking-tight">

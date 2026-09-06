@@ -1,26 +1,40 @@
 import ModulesGrid from "@/modules/users/components/ModulesGrid";
-import UserProfilePanel from "@/modules/users/components/UserProfilePanel";
+import HeroModules from "@/modules/users/components/HeroModules";
+import ModulesFooter from "@/modules/users/components/ModulesFooter";
+import WaveClipDefs from "@/modules/users/components/WaveClipDefs";
+import DashboardLayout from "@/shared/layout/DashboardLayout";
 
 interface UsersModulesPageProps {
-    onLogout?: () => void;
+  onLogout?: () => void;
 }
 
 export default function UsersModulesPage({ onLogout }: UsersModulesPageProps) {
-    return (
+  return (
+    <DashboardLayout hideSidebar onLogout={onLogout}>
+      {/* Definiciones de los recortes curvos, compartidas por el hero y las cards */}
+      <WaveClipDefs />
+
+      {/* Fondo: color cálido de página + las ondas del asset en `multiply`, para que
+          el blanco de la imagen deje pasar el color en vez de taparlo */}
+      <div className="absolute inset-0 z-0 bg-surface-page" aria-hidden="true">
         <div
-            className="h-screen w-full relative flex flex-col bg-cover bg-center bg-no-repeat overflow-hidden"
-            style={{ backgroundImage: "url('/image/fondo_modules.webp')" }}
-        >
-            <div className="flex flex-row gap-12 w-full justify-center items-start flex-1 min-h-0 relative z-10">
+          className="absolute inset-0 mix-blend-multiply"
+          style={{
+            backgroundImage: "url('/image/fondo_modules.webp')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        ></div>
+      </div>
 
-                <div className="flex-none h-full flex flex-col justify-start">
-                    <UserProfilePanel onLogout={onLogout} />
-                </div>
-
-                <div className="flex-1 h-full overflow-y-auto pr-6 pt-8" style={{ scrollbarWidth: 'thin' }}>
-                    <ModulesGrid />
-                </div>
-            </div>
-        </div>
-    )
+      {/* `overflow-hidden` + altos relativos: la vista entra completa en pantalla
+          y nunca aparece scroll, sea cual sea el alto del viewport */}
+      <div className="relative z-10 w-full h-full flex flex-col overflow-hidden">
+        <HeroModules />
+        <ModulesGrid />
+        <ModulesFooter />
+      </div>
+    </DashboardLayout>
+  );
 }
