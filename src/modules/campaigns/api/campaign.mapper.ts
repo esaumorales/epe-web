@@ -1,5 +1,5 @@
-import { format } from "date-fns";
 import type { CampanaDto, CreateCampanaDto, FrutaDto, CampanaEstado } from "@/modules/campaigns/api/campaign.dto";
+import { parseFecha, formatFecha } from "@/modules/campaigns/api/fecha.util";
 
 export interface Campana {
   campaniaId: number;
@@ -9,7 +9,7 @@ export interface Campana {
   fechaInicio: Date;
   fechaFin: Date;
   estado: CampanaEstado;
-  requerimientoComercial: string;
+  requerimientoComercial: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -21,14 +21,6 @@ export interface CampaignFormInput {
   fechaFin: Date;
   estado: CampanaEstado;
   requerimientoComercial: string;
-}
-
-function parseFecha(fecha: string): Date {
-  return new Date(`${fecha}T00:00:00`);
-}
-
-export function formatFecha(fecha: Date): string {
-  return format(fecha, "yyyy-MM-dd");
 }
 
 export function toCampana(dto: CampanaDto): Campana {

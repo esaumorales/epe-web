@@ -26,6 +26,17 @@ describe("toCertificadoCampana", () => {
     expect(certificado.documentoUrl).toBe("https://example.com/certificados/global-gap.pdf");
     expect(certificado).not.toHaveProperty("documentUrl");
   });
+
+  it("convierte fechaVencimiento en formato ISO completo (shape real del backend) a Date valido", () => {
+    const certificado = toCertificadoCampana({
+      ...baseDto,
+      fechaVencimiento: "2026-08-31T00:00:00.000Z",
+    });
+
+    expect(certificado.fechaVencimiento.getFullYear()).toBe(2026);
+    expect(certificado.fechaVencimiento.getMonth()).toBe(7);
+    expect(certificado.fechaVencimiento.getDate()).toBe(31);
+  });
 });
 
 describe("toCreateCertificadoCampanaDto", () => {

@@ -1,9 +1,9 @@
-import { format } from "date-fns";
 import type {
   CertificadoCampanaDto,
   CreateCertificadoCampanaDto,
   EstadoCertificadoCampana,
 } from "@/modules/campaigns/api/certificado-campana.dto";
+import { parseFecha, formatFecha } from "@/modules/campaigns/api/fecha.util";
 
 export interface CertificadoCampana {
   certificadoId: number;
@@ -19,14 +19,6 @@ export interface CertificadoCampanaFormInput {
   documentoUrl: string;
   fechaVencimiento: Date;
   estado: EstadoCertificadoCampana;
-}
-
-function parseFecha(fecha: string): Date {
-  return new Date(`${fecha}T00:00:00`);
-}
-
-export function formatFecha(fecha: Date): string {
-  return format(fecha, "yyyy-MM-dd");
 }
 
 export function toCertificadoCampana(dto: CertificadoCampanaDto): CertificadoCampana {

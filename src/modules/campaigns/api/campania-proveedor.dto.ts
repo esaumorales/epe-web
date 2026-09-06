@@ -18,8 +18,8 @@ export interface CampaniaProveedorDto {
   campaniaId: number;
   proveedor?: ProveedorDto;
   proveedorId: number;
-  cantidadProveedor: string;
-  mtdCeratitis: string;
+  cantidadProveedor: number;
+  mtdCeratitis: number;
   frutaConvencionalEstimado: number | null;
   tipoProveedor: TipoProveedorCampania;
 }

@@ -13,7 +13,7 @@ export interface CampanaDto {
   fechaInicio: string;
   fechaFin: string;
   estado: CampanaEstado;
-  requerimientoComercial: string;
+  requerimientoComercial: number;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,6 +1,7 @@
 import { apiClient } from "@/shared/api/client";
 import type { CampanaDto, FrutaDto, UpdateCampanaDto } from "@/modules/campaigns/api/campaign.dto";
-import { toCampana, toCreateCampanaDto, formatFecha, type Campana, type CampaignFormInput } from "@/modules/campaigns/api/campaign.mapper";
+import { toCampana, toCreateCampanaDto, type Campana, type CampaignFormInput } from "@/modules/campaigns/api/campaign.mapper";
+import { formatFecha } from "@/modules/campaigns/api/fecha.util";
 
 export async function getFrutas(): Promise<FrutaDto[]> {
   const { data } = await apiClient.get<FrutaDto[]>("/frutas");
