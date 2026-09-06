@@ -6,6 +6,9 @@ import UsersModulesPage from './modules/users/pages/UsersModulesPage'
 import CampaignsPage from './modules/campaigns/pages/CampaignsPage'
 import CampaignDetailsPage from './modules/campaigns/pages/CampaignDetailsPage'
 import CampaignProvidersPage from './modules/campaigns/pages/CampaignProvidersPage'
+import ProvidersPage from './modules/providers/pages/ProvidersPage'
+import ClientsPage from './modules/clients/pages/ClientsPage'
+import CertificationsPage from './modules/certifications/pages/CertificationsPage'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -56,6 +59,33 @@ function App() {
           element={
             isAuthenticated ? 
               <CampaignProvidersPage /> : 
+              <Navigate to="/login" />
+          } 
+        />
+        
+        <Route 
+          path="/proveedores" 
+          element={
+            isAuthenticated ? 
+              <ProvidersPage /> : 
+              <Navigate to="/login" />
+          } 
+        />
+
+        <Route 
+          path="/clientes" 
+          element={
+            isAuthenticated ? 
+              <ClientsPage /> : 
+              <Navigate to="/login" />
+          } 
+        />
+
+        <Route 
+          path="/certificaciones" 
+          element={
+            isAuthenticated ? 
+              <CertificationsPage /> : 
               <Navigate to="/login" />
           } 
         />
