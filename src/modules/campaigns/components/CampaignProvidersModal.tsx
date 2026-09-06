@@ -117,7 +117,7 @@ export default function CampaignProvidersModal({ open, onOpenChange, onSuccess }
                         <Button 
                             onClick={handleAddProvider}
                             disabled={!selectedName || !selectedRole}
-                            className="rounded-xl h-10 px-8 bg-[#5D9634] hover:bg-[#5D9634] text-white font-semibold shadow-sm disabled:opacity-50"
+                            className="rounded-xl h-11 px-8 bg-[#5D9634] hover:bg-[#5D9634] text-white font-semibold shadow-sm disabled:opacity-50"
                         >
                             Agregar
                         </Button>

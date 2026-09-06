@@ -7,6 +7,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/shared/components/ui/dialog";
+import { DatePicker } from "@/shared/components/ui/date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
 
@@ -66,14 +67,11 @@ export default function CampaignCertificationsModal({ open, onOpenChange, onSucc
                     {/* Fecha de vencimiento */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha de Vencimiento:</label>
-                        <div className="relative">
-                            <input
-                                type="date"
-                                value={expiryDate}
-                                onChange={(e) => setExpiryDate(e.target.value)}
-                                className="w-full rounded-xl h-11 border border-gray-200 text-gray-700 shadow-none focus:outline-none focus:ring-1 focus:ring-[#5D9634] focus:border-[#5D9634] px-4 transition-colors"
-                            />
-                        </div>
+                        <DatePicker
+                            value={expiryDate}
+                            onChange={setExpiryDate}
+                            className="rounded-xl h-11 border-gray-200 text-gray-700 shadow-none focus-visible:ring-[#5D9634]"
+                        />
                     </div>
 
                     {/* Drag and Drop Area */}
