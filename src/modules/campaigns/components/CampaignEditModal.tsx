@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Leaf, X, AlertCircle } from "lucide-react";
 import {
     Dialog,
@@ -10,6 +10,8 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
+import { getFrutas } from "@/modules/campaigns/api/campaign.api";
+import type { FrutaDto } from "@/modules/campaigns/api/campaign.dto";
 
 interface CampaignEditModalProps {
     open: boolean;
@@ -19,13 +21,17 @@ interface CampaignEditModalProps {
 
 export default function CampaignEditModal({ open, onOpenChange, onSuccess }: CampaignEditModalProps) {
     const [selectedFruits, setSelectedFruits] = useState<string[]>(["Mango 2026"]);
+    const [frutas, setFrutas] = useState<FrutaDto[]>([]);
     const [error, setError] = useState<string | null>(null);
 
+    useEffect(() => {
+        if (!open) return;
+        getFrutas()
+            .then(setFrutas)
+            .catch(() => setError("No se pudieron cargar las frutas."));
+    }, [open]);
+
     const handleAddFruit = (value: string | null) => {
-        if (value === "Mngo marron") {
-            setError("La fruta 'Mngo marron' no es válida o está mal escrita.");
-            return;
-        }
         setError(null);
         if (value && !selectedFruits.includes(value)) {
             setSelectedFruits([...selectedFruits, value]);
@@ -91,10 +97,11 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                                 <SelectValue placeholder="Selecciona una fruta derivada" />
                             </SelectTrigger>
                             <SelectContent className="rounded-xl">
-                                <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
-                                <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
-                                <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
-                                <SelectItem value="Mngo marron" className="rounded-lg text-red-500 font-medium">Mngo marron (Mal escrito)</SelectItem>
+                                {frutas.map((fruta) => (
+                                    <SelectItem key={fruta.frutaId} value={fruta.name} className="rounded-lg">
+                                        {fruta.name}
+                                    </SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                         

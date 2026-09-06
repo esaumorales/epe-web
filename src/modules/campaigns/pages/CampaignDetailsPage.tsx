@@ -46,7 +46,7 @@ export default function CampaignDetailsPage() {
                                     <p className="text-[11px] font-bold text-gray-400 tracking-wider uppercase mb-1">Campaña Activa</p>
                                     <h1 className="text-3xl font-extrabold text-[#1a2f22]">Mango 2026</h1>
                                 </div>
-                                <StatusBadge status="Planificado" />
+                                <StatusBadge status="planificacion" />
                             </div>
 
                             {/* Dates Section */}

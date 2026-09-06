@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { FileText, Upload } from "lucide-react";
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
+import { FileText, Trash2, Upload } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -9,17 +10,33 @@ import {
 } from "@/shared/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
+import { getCertificadosCampana, deleteCertificadoCampana } from "@/modules/campaigns/api/certificado-campana.api";
+import type { CertificadoCampana } from "@/modules/campaigns/api/certificado-campana.mapper";
 
 interface CampaignCertificationsModalProps {
     open: boolean;
+    campaniaId: number | null;
     onOpenChange: (open: boolean) => void;
     onSuccess?: () => void;
 }
 
-export default function CampaignCertificationsModal({ open, onOpenChange, onSuccess }: CampaignCertificationsModalProps) {
+export default function CampaignCertificationsModal({ open, campaniaId, onOpenChange, onSuccess }: CampaignCertificationsModalProps) {
     const [selectedCert, setSelectedCert] = useState("");
     const [expiryDate, setExpiryDate] = useState("");
     const [fileName, setFileName] = useState<string | null>(null);
+    const [certificados, setCertificados] = useState<CertificadoCampana[]>([]);
+
+    useEffect(() => {
+        if (!open || campaniaId === null) return;
+        getCertificadosCampana(campaniaId).then(setCertificados);
+    }, [open, campaniaId]);
+
+    const handleDeleteCertificado = (certificadoId: number) => {
+        if (campaniaId === null) return;
+        deleteCertificadoCampana(campaniaId, certificadoId).then(() => {
+            setCertificados((prev) => prev.filter((c) => c.certificadoId !== certificadoId));
+        });
+    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -47,6 +64,44 @@ export default function CampaignCertificationsModal({ open, onOpenChange, onSucc
                 </DialogHeader>
 
                 <div className="flex flex-col gap-6">
+                    {/* Certificados registrados */}
+                    <div className="flex flex-col gap-2.5">
+                        <label className="text-[13px] font-semibold text-[#1a2f22]">Certificados Registrados:</label>
+                        {certificados.length === 0 ? (
+                            <p className="text-[13px] text-gray-500">Esta campaña aún no tiene certificados registrados.</p>
+                        ) : (
+                            <ul className="flex flex-col gap-2">
+                                {certificados.map((certificado) => (
+                                    <li
+                                        key={certificado.certificadoId}
+                                        className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 px-4 py-2.5"
+                                    >
+                                        <div className="flex flex-col overflow-hidden">
+                                            <span className="text-[13.5px] font-bold text-[#1a2f22] truncate">{certificado.nombre}</span>
+                                            <span className="text-[11.5px] text-gray-500">
+                                                Vence: {format(certificado.fechaVencimiento, "dd/MM/yyyy")} · {certificado.estado}
+                                            </span>
+                                            <a
+                                                href={certificado.documentoUrl}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="text-[11.5px] text-[#5D9634] underline truncate"
+                                            >
+                                                Ver documento
+                                            </a>
+                                        </div>
+                                        <button
+                                            onClick={() => handleDeleteCertificado(certificado.certificadoId)}
+                                            className="hover:bg-red-50 hover:text-red-500 rounded-full p-1.5 transition-colors text-gray-400 shrink-0"
+                                        >
+                                            <Trash2 size={16} strokeWidth={2} />
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
                     {/* Seleccionar Certificación */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Certificación:</label>
