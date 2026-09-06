@@ -5,6 +5,7 @@ import AdminLoginPage from './modules/auth/pages/AdminLoginPage'
 import UsersModulesPage from './modules/users/pages/UsersModulesPage'
 import CampaignsPage from './modules/campaigns/pages/CampaignsPage'
 import CampaignDetailsPage from './modules/campaigns/pages/CampaignDetailsPage'
+import CampaignProvidersPage from './modules/campaigns/pages/CampaignProvidersPage'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -46,6 +47,15 @@ function App() {
           element={
             isAuthenticated ? 
               <CampaignDetailsPage /> : 
+              <Navigate to="/login" />
+          } 
+        />
+        
+        <Route 
+          path="/campaigns/:id/providers" 
+          element={
+            isAuthenticated ? 
+              <CampaignProvidersPage /> : 
               <Navigate to="/login" />
           } 
         />

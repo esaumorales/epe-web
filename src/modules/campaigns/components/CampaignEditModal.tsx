@@ -18,22 +18,35 @@ interface CampaignEditModalProps {
 }
 
 export default function CampaignEditModal({ open, onOpenChange, onSuccess }: CampaignEditModalProps) {
-    const [selectedFruits, setSelectedFruits] = useState<string[]>(["Mango 2026"]);
-    const [error, setError] = useState<string | null>(null);
+    const [selectedFruit, setSelectedFruit] = useState<string | null>(null);
+    const [selectedDerivedFruits, setSelectedDerivedFruits] = useState<string[]>(["Mango 2026"]);
+    
+    const [fruitError, setFruitError] = useState<string | null>(null);
+    const [derivedError, setDerivedError] = useState<string | null>(null);
 
-    const handleAddFruit = (value: string | null) => {
-        if (value === "Mngo marron") {
-            setError("La fruta 'Mngo marron' no es válida o está mal escrita.");
+    const handleFruitChange = (value: string) => {
+        if (value === "Mngo ") {
+            setFruitError("La fruta seleccionada no es válida o está mal escrita.");
+            setSelectedFruit(null);
             return;
         }
-        setError(null);
-        if (value && !selectedFruits.includes(value)) {
-            setSelectedFruits([...selectedFruits, value]);
+        setFruitError(null);
+        setSelectedFruit(value);
+    };
+
+    const handleAddDerivedFruit = (value: string) => {
+        if (value === "Mngo marron") {
+            setDerivedError("La fruta 'Mngo marron' no es válida o está mal escrita.");
+            return;
+        }
+        setDerivedError(null);
+        if (value && !selectedDerivedFruits.includes(value)) {
+            setSelectedDerivedFruits([...selectedDerivedFruits, value]);
         }
     };
 
-    const handleRemoveFruit = (fruit: string) => {
-        setSelectedFruits(selectedFruits.filter((f) => f !== fruit));
+    const handleRemoveDerivedFruit = (fruit: string) => {
+        setSelectedDerivedFruits(selectedDerivedFruits.filter((f) => f !== fruit));
     };
 
     return (
@@ -84,38 +97,62 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                     </div>
 
                     {/* Frutas derivadas */}
-                    <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas:</label>
-                        <Select onValueChange={handleAddFruit} value="">
-                            <SelectTrigger className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
-                                <SelectValue placeholder="Selecciona una fruta derivada" />
-                            </SelectTrigger>
-                            <SelectContent className="rounded-xl">
-                                <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
-                                <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
-                                <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
-                                <SelectItem value="Mngo marron" className="rounded-lg text-red-500 font-medium">Mngo marron (Mal escrito)</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        
-                        {/* Validación Micro-animada */}
-                        <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-red-500 ${error ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
-                            <AlertCircle size={14} />
-                            <span className="text-[13px] font-medium">{error}</span>
+                    <div className="grid grid-cols-2 gap-4">
+
+                        <div className="flex flex-col gap-2.5">
+                            <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Frutas:</label>
+                            <Select onValueChange={handleFruitChange} value={selectedFruit || ""}>
+                                <SelectTrigger className={`rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634] transition-colors ${fruitError ? "border-red-400 focus:ring-red-400" : ""}`}>
+                                    <SelectValue placeholder="Seleccionar Fruta" />
+                                </SelectTrigger>
+                                <SelectContent className="rounded-xl">
+                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
+                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
+                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
+                                    <SelectItem value="Mngo " className="rounded-lg text-red-500 font-medium">Mngo marron (Mal escrito)</SelectItem>
+                                </SelectContent>
+                            </Select>
+
+                            {/* Validación Micro-animada */}
+                            <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-red-500 ${fruitError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
+                                <AlertCircle size={14} />
+                                <span className="text-[13px] font-medium">{fruitError}</span>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2.5">
+                            <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas  derivadas:</label>
+                            <Select onValueChange={handleAddDerivedFruit} value="">
+                                <SelectTrigger className={`rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634] transition-colors ${derivedError ? "border-red-400 focus:ring-red-400" : ""}`}>
+                                    <SelectValue placeholder="Seleccionar Fruta Derivada" />
+                                </SelectTrigger>
+                                <SelectContent className="rounded-xl">
+                                    <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
+                                    <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
+                                    <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
+                                    <SelectItem value="Mngo marron" className="rounded-lg text-red-500 font-medium">Mngo marron (Mal escrito)</SelectItem>
+                                </SelectContent>
+                            </Select>
+
+                            {/* Validación Micro-animada */}
+                            <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-red-500 ${derivedError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
+                                <AlertCircle size={14} />
+                                <span className="text-[13px] font-medium">{derivedError}</span>
+                            </div>
                         </div>
                     </div>
 
                     {/* Frutas Seleccionadas */}
-                    <div className={`flex flex-col gap-2.5 transition-all duration-300 ${selectedFruits.length > 0 ? "opacity-100 h-auto" : "opacity-0 h-0 overflow-hidden"}`}>
+                    <div className={`flex flex-col gap-2.5 transition-all duration-300 ${selectedDerivedFruits.length > 0 ? "opacity-100 h-auto" : "opacity-0 h-0 overflow-hidden"}`}>
                         <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas seleccionadas:</label>
                         <div className="flex flex-wrap gap-2">
-                            {selectedFruits.map((fruit) => (
+                            {selectedDerivedFruits.map((fruit) => (
                                 <div
                                     key={fruit}
                                     className="bg-[#EBF3EC] text-[#5D9634] pr-3 pl-2 py-1.5 rounded-full text-[13px] font-semibold flex items-center gap-2"
                                 >
                                     <button
-                                        onClick={() => handleRemoveFruit(fruit)}
+                                        onClick={() => handleRemoveDerivedFruit(fruit)}
                                         className="hover:bg-[#d2e5d5] rounded-full p-0.5 transition-colors text-[#5D9634]"
                                     >
                                         <X size={14} strokeWidth={3} />

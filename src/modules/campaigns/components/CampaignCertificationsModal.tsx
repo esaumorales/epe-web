@@ -47,36 +47,39 @@ export default function CampaignCertificationsModal({ open, onOpenChange, onSucc
                 </DialogHeader>
 
                 <div className="flex flex-col gap-6">
-                    {/* Seleccionar Certificación */}
-                    <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Certificación:</label>
-                        <Select value={selectedCert} onValueChange={(val) => setSelectedCert(val || "")}>
-                            <SelectTrigger className="w-full rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
-                                <SelectValue placeholder="Seleccione una certificación" />
-                            </SelectTrigger>
-                            <SelectContent className="rounded-xl">
-                                <SelectItem value="Global GAP" className="rounded-lg">Global GAP</SelectItem>
-                                <SelectItem value="Fairtrade" className="rounded-lg">Fairtrade (Comercio Justo)</SelectItem>
-                                <SelectItem value="Organica" className="rounded-lg">Orgánica</SelectItem>
-                                <SelectItem value="Rainforest" className="rounded-lg">Rainforest Alliance</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
 
-                    {/* Fecha de vencimiento */}
-                    <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha de Vencimiento:</label>
-                        <div className="relative">
-                            <input
-                                type="date"
-                                value={expiryDate}
-                                onChange={(e) => setExpiryDate(e.target.value)}
-                                className="w-full rounded-xl h-11 border border-gray-200 text-gray-700 shadow-none focus:outline-none focus:ring-1 focus:ring-[#5D9634] focus:border-[#5D9634] px-4 transition-colors"
-                            />
+                    <div className="grid grid-cols-2 gap-4">
+                        {/* Seleccionar Certificación */}
+                        <div className="flex flex-col gap-2.5">
+                            <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Certificación:</label>
+                            <Select value={selectedCert} onValueChange={(val) => setSelectedCert(val || "")}>
+                                <SelectTrigger className="w-full rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
+                                    <SelectValue placeholder="Seleccione una certificación" />
+                                </SelectTrigger>
+                                <SelectContent className="rounded-xl">
+                                    <SelectItem value="Global GAP" className="rounded-lg">Global GAP</SelectItem>
+                                    <SelectItem value="Fairtrade" className="rounded-lg">Fairtrade (Comercio Justo)</SelectItem>
+                                    <SelectItem value="Organica" className="rounded-lg">Orgánica</SelectItem>
+                                    <SelectItem value="Rainforest" className="rounded-lg">Rainforest Alliance</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        {/* Fecha de vencimiento */}
+                        <div className="flex flex-col gap-2.5">
+                            <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha de Vencimiento:</label>
+                            <div className="relative">
+                                <input
+                                    type="date"
+                                    value={expiryDate}
+                                    onChange={(e) => setExpiryDate(e.target.value)}
+                                    className="w-full rounded-xl h-11 border border-gray-200 text-gray-700 shadow-none focus:outline-none focus:ring-1 focus:ring-[#5D9634] focus:border-[#5D9634] px-4 transition-colors"
+                                />
+                            </div>
                         </div>
                     </div>
 
-                    {/* Drag and Drop Area */}
+                    {/* Drag and Drop  */}
                     <div className="mt-2">
                         <div className="border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition-colors rounded-2xl p-8 flex flex-col items-center justify-center relative group">
                             <input
@@ -85,15 +88,15 @@ export default function CampaignCertificationsModal({ open, onOpenChange, onSucc
                                 onChange={handleFileChange}
                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                             />
-                            
+
                             <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 mb-4 group-hover:text-[#5D9634] group-hover:shadow transition-all">
                                 <Upload size={24} strokeWidth={2} />
                             </div>
-                            
+
                             <Button variant="secondary" className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl mb-3 pointer-events-none">
                                 Importar Archivo PDF
                             </Button>
-                            
+
                             <p className="text-[12px] text-gray-500 font-medium text-center">
                                 {fileName ? (
                                     <span className="text-[#5D9634] font-bold">Archivo seleccionado: {fileName}</span>
