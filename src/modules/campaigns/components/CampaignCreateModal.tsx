@@ -8,6 +8,7 @@ import {
     DialogDescription,
 } from "@/shared/components/ui/dialog";
 import { Input } from "@/shared/components/ui/input";
+import { DatePicker } from "@/shared/components/ui/date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
 import { getFrutas } from "@/modules/campaigns/api/campaign.api";
@@ -73,15 +74,13 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                     <div className="grid grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Inicio:</label>
-                            <Input
-                                type="date"
+                            <DatePicker
                                 className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus-visible:ring-[#5D9634]"
                             />
                         </div>
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Fin:</label>
-                            <Input
-                                type="date"
+                            <DatePicker
                                 className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus-visible:ring-[#5D9634]"
                             />
                         </div>

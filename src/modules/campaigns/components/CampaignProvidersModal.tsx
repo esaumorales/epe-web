@@ -182,7 +182,7 @@ export default function CampaignProvidersModal({ campaniaId, open, onOpenChange,
                         <Button
                             onClick={handleAddProvider}
                             disabled={!selectedProveedorId || !tipoProveedor || !cantidadProveedor || !mtdCeratitis}
-                            className="rounded-xl h-10 px-8 bg-[#5D9634] hover:bg-[#5D9634] text-white font-semibold shadow-sm disabled:opacity-50"
+                            className="rounded-xl h-11 px-8 bg-[#5D9634] hover:bg-[#5D9634] text-white font-semibold shadow-sm disabled:opacity-50"
                         >
                             Agregar
                         </Button>

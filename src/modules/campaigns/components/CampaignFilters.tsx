@@ -1,7 +1,8 @@
-import { Search, Settings2, CalendarDays } from "lucide-react";
+import { Search, Settings2 } from "lucide-react";
 import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
+import { DatePicker } from "@/shared/components/ui/date-picker";
 
 export default function CampaignFilters() {
     return (
@@ -20,32 +21,12 @@ export default function CampaignFilters() {
 
                 <div className="w-[180px] flex flex-col gap-2.5">
                     <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Inicio</label>
-                    <Select>
-                        <SelectTrigger className="rounded-xl h-11 border-gray-200 shadow-none text-gray-500 font-medium [&>svg]:opacity-50">
-                            <div className="flex items-center gap-2">
-                                <CalendarDays size={16} className="opacity-70" />
-                                <SelectValue placeholder="--/--/----" />
-                            </div>
-                        </SelectTrigger>
-                        <SelectContent className="rounded-xl">
-                            <SelectItem value="today" className="rounded-lg">Hoy</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <DatePicker placeholder="--/--/----" className="border-gray-200 text-gray-500" />
                 </div>
 
                 <div className="w-[180px] flex flex-col gap-2.5">
                     <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Fin</label>
-                    <Select>
-                        <SelectTrigger className="rounded-xl h-11 border-gray-200 shadow-none text-gray-500 font-medium [&>svg]:opacity-50">
-                            <div className="flex items-center gap-2">
-                                <CalendarDays size={16} className="opacity-70" />
-                                <SelectValue placeholder="--/--/----" />
-                            </div>
-                        </SelectTrigger>
-                        <SelectContent className="rounded-xl">
-                            <SelectItem value="today" className="rounded-lg">Hoy</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <DatePicker placeholder="--/--/----" className="border-gray-200 text-gray-500" />
                 </div>
 
                 <div className="w-[180px] flex flex-col gap-2.5">
