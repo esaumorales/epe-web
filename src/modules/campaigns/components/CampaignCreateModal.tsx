@@ -77,20 +77,38 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                         </div>
                     </div>
 
-                    {/* Frutas derivadas */}
-                    <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas:</label>
-                        <Select onValueChange={handleAddFruit} value="">
-                            <SelectTrigger className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
-                                <SelectValue placeholder="Selecciona una fruta derivada" />
-                            </SelectTrigger>
-                            <SelectContent className="rounded-xl">
-                                <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
-                                <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
-                                <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
-                            </SelectContent>
-                        </Select>
+                    {/* Frutas Derivadas */}
+                    <div className="grid grid-cols-2 gap-4 ">
+                        <div className="flex flex-col gap-2.5 ">
+                            <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Frutas:</label>
+                            <Select onValueChange={handleAddFruit} value="">
+                                <SelectTrigger className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
+                                    <SelectValue placeholder="Seleccionar Fruta" />
+                                </SelectTrigger>
+                                <SelectContent className="rounded-xl">
+                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
+                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
+                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="flex flex-col gap-2.5">
+                            <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas:</label>
+                            <Select onValueChange={handleAddFruit} value="">
+                                <SelectTrigger className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
+                                    <SelectValue placeholder="Derivadas:" />
+                                </SelectTrigger>
+                                <SelectContent className="rounded-xl">
+                                    <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
+                                    <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
+                                    <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
                     </div>
+
 
                     {/* Frutas Seleccionadas */}
                     <div className={`flex flex-col gap-2.5 transition-all duration-300 ${selectedFruits.length > 0 ? "opacity-100 h-auto" : "opacity-0 h-0 overflow-hidden"}`}>

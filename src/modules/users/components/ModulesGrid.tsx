@@ -6,6 +6,7 @@ import {
   Sprout,
   Package,
   Truck,
+  Award,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import CampaignPlanningImg from "@/assets/campaign_planning.webp";
@@ -61,6 +62,12 @@ export default function ModulesGrid() {
         icon={<Truck size={28} strokeWidth={1.5} />}
         image={LogisticsImg}
         onClick={() => navigate("/logistica")}
+      />
+      <ModuleCard 
+        title="Gestión de Certificaciones" 
+        description="Administra y haz seguimiento de las certificaciones."
+        icon={<Award size={28} strokeWidth={1.5} />}
+        onClick={() => navigate('/certificaciones')} 
       />
     </div>
   );

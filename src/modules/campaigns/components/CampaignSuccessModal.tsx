@@ -10,7 +10,7 @@ import { Button } from "@/shared/components/ui/button";
 interface CampaignSuccessModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    mode?: "create" | "edit" | "provider" | "certification";
+    mode?: "create" | "edit" | "provider" | "certification" | "exam" | "interview" | "client";
 }
 
 export default function CampaignSuccessModal({ open, onOpenChange, mode = "create" }: CampaignSuccessModalProps) {
@@ -18,6 +18,9 @@ export default function CampaignSuccessModal({ open, onOpenChange, mode = "creat
         if (mode === "edit") return "Cambios Guardados";
         if (mode === "provider") return "Productor Registrado";
         if (mode === "certification") return "Certificación Registrada";
+        if (mode === "exam") return "Examen Registrado";
+        if (mode === "interview") return "Informe Registrado";
+        if (mode === "client") return "Clientes Registrados";
         return "Campaña Registrada";
     };
 
@@ -25,13 +28,15 @@ export default function CampaignSuccessModal({ open, onOpenChange, mode = "creat
         if (mode === "edit") return "Se actualizó correctamente";
         if (mode === "provider") return "Se podra ver los productores en visualizar";
         if (mode === "certification") return "El documento se ha subido exitosamente";
+        if (mode === "exam") return "Se visualizara los examenes";
+        if (mode === "interview") return "Se visualizara informe";
+        if (mode === "client") return "Se podra ver los clientes en visualizar";
         return "Se podra ver las campañas registradas en el inicio";
     };
     
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="max-w-[400px] sm:max-w-[400px] p-8 rounded-[1.5rem] bg-white border-none shadow-2xl gap-0 flex flex-col items-center text-center">
-                
                 <div className="w-24 h-24 rounded-full bg-[#EBF3EC] flex items-center justify-center text-[#5D9634] mb-6 border border-[#d2e5d5]">
                     <Smile size={48} strokeWidth={2} />
                 </div>

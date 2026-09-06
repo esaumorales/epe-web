@@ -4,9 +4,14 @@ import StatusBadge from "@/modules/campaigns/components/StatusBadge";
 import { Button } from "@/shared/components/ui/button";
 import { Progress } from "@/shared/components/ui/progress";
 import DashboardLayout from "@/shared/layout/DashboardLayout";
+import { useState } from "react";
+import CampaignManagementProvidersModal from "@/modules/campaigns/components/CampaignManagementProvidersModal";
+import CampaignManagementClientsModal from "@/modules/campaigns/components/CampaignManagementClientsModal";
 
 export default function CampaignDetailsPage() {
     const navigate = useNavigate();
+    const [isProvidersModalOpen, setIsProvidersModalOpen] = useState(false);
+    const [isClientsModalOpen, setIsClientsModalOpen] = useState(false);
 
     return (
         <DashboardLayout>
@@ -111,11 +116,17 @@ export default function CampaignDetailsPage() {
 
                         {/* Action Buttons */}
                         <div className="grid grid-cols-2 gap-4">
-                            <Button className="h-14 rounded-2xl bg-[#5D9634] hover:bg-[#4b7a29] text-white font-bold text-[15px] flex items-center justify-center gap-3 shadow-sm border-b-4 border-[#4b7a29] active:border-b-0 active:translate-y-[4px] transition-all">
+                            <Button 
+                                onClick={() => setIsProvidersModalOpen(true)}
+                                className="h-14 rounded-2xl bg-[#5D9634] hover:bg-[#4b7a29] text-white font-bold text-[15px] flex items-center justify-center gap-3 shadow-sm border-b-4 border-[#4b7a29] active:border-b-0 active:translate-y-[4px] transition-all"
+                            >
                                 <Briefcase size={22} strokeWidth={2.5} />
                                 Proveedores
                             </Button>
-                            <Button className="h-14 rounded-2xl bg-[#5D9634] hover:bg-[#4b7a29] text-white font-bold text-[15px] flex items-center justify-center gap-3 shadow-sm border-b-4 border-[#4b7a29] active:border-b-0 active:translate-y-[4px] transition-all">
+                            <Button 
+                                onClick={() => setIsClientsModalOpen(true)}
+                                className="h-14 rounded-2xl bg-[#5D9634] hover:bg-[#4b7a29] text-white font-bold text-[15px] flex items-center justify-center gap-3 shadow-sm border-b-4 border-[#4b7a29] active:border-b-0 active:translate-y-[4px] transition-all"
+                            >
                                 <Users size={22} strokeWidth={2.5} />
                                 Clientes
                             </Button>
@@ -231,6 +242,16 @@ export default function CampaignDetailsPage() {
                     </div>
                 </div>
             </div>
+
+            <CampaignManagementProvidersModal 
+                open={isProvidersModalOpen} 
+                onOpenChange={setIsProvidersModalOpen} 
+            />
+
+            <CampaignManagementClientsModal
+                open={isClientsModalOpen}
+                onOpenChange={setIsClientsModalOpen}
+            />
         </DashboardLayout>
     );
 }

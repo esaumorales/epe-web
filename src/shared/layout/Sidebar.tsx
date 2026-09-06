@@ -1,4 +1,4 @@
-import { CalendarDays, Users, Award, User, LogOut } from "lucide-react";
+import { Home, Users, Award, User, LogOut, Contact } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 import {
@@ -16,12 +16,17 @@ const items = [
   {
     title: "Campañas",
     url: "/campaigns",
-    icon: CalendarDays,
+    icon: Home,
   },
   {
     title: "Proveedores",
     url: "/proveedores",
     icon: Users,
+  },
+  {
+    title: "Clientes",
+    url: "/clientes",
+    icon: Contact,
   },
   {
     title: "Certificaciones",

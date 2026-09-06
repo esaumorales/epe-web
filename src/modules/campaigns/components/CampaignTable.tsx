@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FileText, Users, Pencil, Eye } from "lucide-react";
+import { FileText, Users, Pencil, Eye, Contact } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -13,8 +13,8 @@ import StatusBadge from "@/modules/campaigns/components/StatusBadge";
 import { Button } from "@/shared/components/ui/button";
 import CampaignEditModal from "@/modules/campaigns/components/CampaignEditModal";
 import CampaignSuccessModal from "@/modules/campaigns/components/CampaignSuccessModal";
-import CampaignProvidersModal from "@/modules/campaigns/components/CampaignProvidersModal";
 import CampaignCertificationsModal from "@/modules/campaigns/components/CampaignCertificationsModal";
+import CampaignLinkClientModal from "@/modules/campaigns/components/CampaignLinkClientModal";
 const data = [
     {
         id: 1,
@@ -36,11 +36,11 @@ const data = [
 
 export default function CampaignTable() {
     const [editingCampaignId, setEditingCampaignId] = useState<number | null>(null);
-    const [managingProvidersCampaignId, setManagingProvidersCampaignId] = useState<number | null>(null);
     const [managingCertificationsCampaignId, setManagingCertificationsCampaignId] = useState<number | null>(null);
+    const [managingClientsCampaignId, setManagingClientsCampaignId] = useState<number | null>(null);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const navigate = useNavigate();
-    const [successModalMode, setSuccessModalMode] = useState<"edit" | "provider" | "certification">("edit");
+    const [successModalMode, setSuccessModalMode] = useState<"edit" | "provider" | "certification" | "client">("edit");
 
     const handleEditSuccess = () => {
         setEditingCampaignId(null);
@@ -79,8 +79,11 @@ export default function CampaignTable() {
                                                 <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors" onClick={() => setManagingCertificationsCampaignId(row.id)}>
                                                     <FileText size={18} strokeWidth={2.5} />
                                                 </Button>
-                                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors" onClick={() => setManagingProvidersCampaignId(row.id)}>
+                                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors" onClick={() => navigate(`/campaigns/${row.id}/providers`)}>
                                                     <Users size={18} strokeWidth={2.5} />
+                                                </Button>
+                                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors" onClick={() => setManagingClientsCampaignId(row.id)}>
+                                                    <Contact size={18} strokeWidth={2.5} />
                                                 </Button>
                                                 <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors" onClick={() => setEditingCampaignId(row.id)}>
                                                     <Pencil size={18} strokeWidth={2.5} />
@@ -104,15 +107,7 @@ export default function CampaignTable() {
                 onSuccess={handleEditSuccess}
             />
 
-            <CampaignProvidersModal 
-                open={managingProvidersCampaignId !== null}
-                onOpenChange={(open) => !open && setManagingProvidersCampaignId(null)}
-                onSuccess={() => {
-                    setManagingProvidersCampaignId(null);
-                    setSuccessModalMode("provider");
-                    setIsSuccessModalOpen(true);
-                }}
-            />
+
 
             <CampaignCertificationsModal 
                 open={managingCertificationsCampaignId !== null}
@@ -120,6 +115,16 @@ export default function CampaignTable() {
                 onSuccess={() => {
                     setManagingCertificationsCampaignId(null);
                     setSuccessModalMode("certification");
+                    setIsSuccessModalOpen(true);
+                }}
+            />
+
+            <CampaignLinkClientModal
+                open={managingClientsCampaignId !== null}
+                onOpenChange={(open) => !open && setManagingClientsCampaignId(null)}
+                onSave={() => {
+                    setManagingClientsCampaignId(null);
+                    setSuccessModalMode("client");
                     setIsSuccessModalOpen(true);
                 }}
             />
