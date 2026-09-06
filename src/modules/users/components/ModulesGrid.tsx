@@ -1,29 +1,66 @@
-import ModuleCard from '@/modules/users/components/ModuleCard';
-import { CalendarDays, Users, User } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import ModuleCard from "@/modules/users/components/ModuleCard";
+import {
+  CalendarDays,
+  Users,
+  User,
+  Sprout,
+  Package,
+  Truck,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import CampaignPlanningImg from "@/assets/campaign_planning.webp";
+import SupplierManagementImg from "@/assets/supplier_management.webp";
+import CustomerManagementImg from "@/assets/customer_management.webp";
+import ProductionImg from "@/assets/production.webp";
+import InventoryImg from "@/assets/inventory.webp";
+import LogisticsImg from "@/assets/logistics.webp";
 
 export default function ModulesGrid() {
   const navigate = useNavigate();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full max-w-5xl mx-auto pb-8">
-      <ModuleCard 
-        title="Planificación de Campaña" 
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-6 w-full flex-1 min-h-0 px-14 py-5">
+      <ModuleCard
+        title="Planificación de Campaña"
         description="Organiza y planifica tus campañas de exportación."
-        icon={<CalendarDays size={32} strokeWidth={1.5} />}
-        onClick={() => navigate('/campaigns')} 
+        icon={<CalendarDays size={28} strokeWidth={1.5} />}
+        image={CampaignPlanningImg}
+        onClick={() => navigate("/campaigns")}
       />
-      <ModuleCard 
-        title="Gestión de Proveedores" 
+      <ModuleCard
+        title="Gestión de Proveedores"
         description="Administra y evalúa a tus proveedores."
-        icon={<Users size={32} strokeWidth={1.5} />}
-        onClick={() => navigate('/proveedores')} 
+        icon={<Users size={28} strokeWidth={1.5} />}
+        image={SupplierManagementImg}
+        onClick={() => navigate("/proveedores")}
       />
-      <ModuleCard 
-        title="Gestión de Clientes" 
+      <ModuleCard
+        title="Gestión de Clientes"
         description="Administra y da seguimiento a tus clientes."
-        icon={<User size={32} strokeWidth={1.5} />}
-        onClick={() => navigate('/certificaciones')} 
+        icon={<User size={28} strokeWidth={1.5} />}
+        image={CustomerManagementImg}
+        onClick={() => navigate("/clientes")}
+      />
+      <ModuleCard
+        title="Producción [PRUEBA]"
+        description="Da seguimiento al proceso productivo y asegura la calidad en cada etapa."
+        icon={<Sprout size={28} strokeWidth={1.5} />}
+        image={ProductionImg}
+        onClick={() => navigate("/produccion")}
+      />
+      <ModuleCard
+        title="Inventario [PRUEBA]"
+        description="Controla el stock y la disponibilidad de productos de manera eficiente."
+        icon={<Package size={28} strokeWidth={1.5} />}
+        image={InventoryImg}
+        onClick={() => navigate("/inventario")}
+      />
+      <ModuleCard
+        title="Logística [PRUEBA]"
+        description="Gestiona embarques, transporte y distribución global."
+        icon={<Truck size={28} strokeWidth={1.5} />}
+        image={LogisticsImg}
+        onClick={() => navigate("/logistica")}
       />
     </div>
   );
