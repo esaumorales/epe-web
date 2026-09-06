@@ -14,12 +14,32 @@ export default function UsersModulesPage({ onLogout }: UsersModulesPageProps) {
       {/* Definiciones de los recortes curvos, compartidas por el hero y las cards */}
       <WaveClipDefs />
 
-      {/* Fondo: color cálido de página + las ondas del asset en `multiply`, para que
-          el blanco de la imagen deje pasar el color en vez de taparlo */}
+      {/* Fondo en tres capas: base casi blanca, un degradado verde que sube desde
+          abajo, y encima las ondas del asset en `multiply` para que su blanco deje
+          pasar lo que hay debajo en vez de taparlo. */}
       <div className="absolute inset-0 z-0 bg-surface-page" aria-hidden="true">
+        {/* El verde entra solo por abajo y se apaga a media altura, así el hero y
+            la zona de cards quedan limpios. Mezclas bajas a propósito: el tinte
+            tiene que leerse como un matiz del fondo, no como una capa de color. */}
         <div
-          className="absolute inset-0 mix-blend-multiply"
+          className="absolute inset-0"
           style={{
+            background:
+              "linear-gradient(to top," +
+              " color-mix(in srgb, var(--brand) 12%, transparent) 0%," +
+              " color-mix(in srgb, var(--brand) 4%, transparent) 22%," +
+              " transparent 50%)",
+          }}
+        ></div>
+
+        <div
+          className="absolute inset-0 mix-blend-multiply opacity-70"
+          style={{
+            // El asset viene en tono olivo y desaturado, y al multiplicarse daba un
+            // verde apagado (tono 83, saturacion 29%). Estos valores lo dejan sobre
+            // el tono del brand (95deg) sin subirle la saturacion de mas: la idea es
+            // corregir el tono, no pintar la imagen.
+            filter: "saturate(1.45) hue-rotate(6deg)",
             backgroundImage: "url('/image/fondo_modules.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
