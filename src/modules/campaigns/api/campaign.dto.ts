@@ -3,6 +3,14 @@ export interface FrutaDto {
   name: string;
 }
 
+export interface FrutaDerivadaDto {
+  frutaDerivadaId: number;
+  name: string;
+  frutaId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export type CampanaEstado = "planificacion" | "en proceso" | "terminado";
 
 export interface CampanaDto {

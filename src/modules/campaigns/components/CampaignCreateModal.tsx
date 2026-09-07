@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Leaf, X } from "lucide-react";
+import { Leaf } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -11,8 +11,9 @@ import { Input } from "@/shared/components/ui/input";
 import { DatePicker } from "@/shared/components/ui/date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
-import { getFrutas } from "@/modules/campaigns/api/campaign.api";
-import type { FrutaDto } from "@/modules/campaigns/api/campaign.dto";
+import { getFrutas, getFrutaDerivadas, createCampana } from "@/modules/campaigns/api/campaign.api";
+import type { FrutaDto, FrutaDerivadaDto } from "@/modules/campaigns/api/campaign.dto";
+import { parseFecha } from "@/modules/campaigns/api/fecha.util";
 
 interface CampaignCreateModalProps {
     open: boolean;
@@ -21,24 +22,69 @@ interface CampaignCreateModalProps {
 }
 
 export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: CampaignCreateModalProps) {
-    const [selectedFruits, setSelectedFruits] = useState<string[]>([]);
     const [frutas, setFrutas] = useState<FrutaDto[]>([]);
+    const [nombre, setNombre] = useState("");
+    const [frutaId, setFrutaId] = useState<number | null>(null);
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFin, setFechaFin] = useState("");
+    const [requerimientoComercial, setRequerimientoComercial] = useState("");
+    const [derivadas, setDerivadas] = useState<FrutaDerivadaDto[]>([]);
+    const [derivadasLoading, setDerivadasLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         if (!open) return;
+        setNombre("");
+        setFrutaId(null);
+        setFechaInicio("");
+        setFechaFin("");
+        setRequerimientoComercial("");
+        setDerivadas([]);
+        setError(null);
         getFrutas()
             .then(setFrutas)
             .catch(() => setFrutas([]));
     }, [open]);
 
-    const handleAddFruit = (value: string | null) => {
-        if (value && !selectedFruits.includes(value)) {
-            setSelectedFruits([...selectedFruits, value]);
+    useEffect(() => {
+        if (!open || frutaId === null) {
+            setDerivadas([]);
+            return;
         }
-    };
+        setDerivadasLoading(true);
+        getFrutaDerivadas(frutaId)
+            .then(setDerivadas)
+            .catch(() => setDerivadas([]))
+            .finally(() => setDerivadasLoading(false));
+    }, [open, frutaId]);
 
-    const handleRemoveFruit = (fruit: string) => {
-        setSelectedFruits(selectedFruits.filter((f) => f !== fruit));
+    const isValid =
+        nombre.trim() !== "" &&
+        frutaId !== null &&
+        fechaInicio !== "" &&
+        fechaFin !== "" &&
+        requerimientoComercial.trim() !== "";
+
+    const handleSubmit = async () => {
+        if (!isValid || frutaId === null) return;
+        setSaving(true);
+        setError(null);
+        try {
+            await createCampana({
+                nombre,
+                frutaId,
+                fechaInicio: parseFecha(fechaInicio),
+                fechaFin: parseFecha(fechaFin),
+                estado: "planificacion",
+                requerimientoComercial,
+            });
+            onSuccess?.();
+        } catch {
+            setError("No se pudo crear la campaña.");
+        } finally {
+            setSaving(false);
+        }
     };
 
     return (
@@ -65,6 +111,8 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-[#1a2f22]">Nombre de Campaña:</label>
                         <Input
+                            value={nombre}
+                            onChange={(e) => setNombre(e.target.value)}
                             placeholder="Ej: Campaña Mango 2026"
                             className="rounded-xl h-11 border-gray-200 shadow-none focus-visible:ring-[#5D9634]"
                         />
@@ -75,27 +123,36 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Inicio:</label>
                             <DatePicker
+                                value={fechaInicio}
+                                onChange={setFechaInicio}
                                 className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus-visible:ring-[#5D9634]"
                             />
                         </div>
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Fin:</label>
                             <DatePicker
+                                value={fechaFin}
+                                onChange={setFechaFin}
                                 className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus-visible:ring-[#5D9634]"
                             />
                         </div>
                     </div>
 
-                    {/* Frutas derivadas */}
+                    {/* Fruta */}
                     <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas:</label>
-                        <Select onValueChange={handleAddFruit} value="">
+                        <label className="text-[13px] font-semibold text-[#1a2f22]">Fruta:</label>
+                        <Select
+                            value={frutaId !== null ? String(frutaId) : ""}
+                            onValueChange={(val) => setFrutaId(val ? Number(val) : null)}
+                        >
                             <SelectTrigger className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
-                                <SelectValue placeholder="Selecciona una fruta derivada" />
+                                <SelectValue placeholder="Selecciona una fruta">
+                                    {frutas.find((f) => f.frutaId === frutaId)?.name}
+                                </SelectValue>
                             </SelectTrigger>
                             <SelectContent className="rounded-xl">
                                 {frutas.map((fruta) => (
-                                    <SelectItem key={fruta.frutaId} value={fruta.name} className="rounded-lg">
+                                    <SelectItem key={fruta.frutaId} value={String(fruta.frutaId)} className="rounded-lg">
                                         {fruta.name}
                                     </SelectItem>
                                 ))}
@@ -103,24 +160,24 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                         </Select>
                     </div>
 
-                    {/* Frutas Seleccionadas */}
-                    <div className={`flex flex-col gap-2.5 transition-all duration-300 ${selectedFruits.length > 0 ? "opacity-100 h-auto" : "opacity-0 h-0 overflow-hidden"}`}>
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas seleccionadas:</label>
+                    {/* Derivadas de la fruta seleccionada (informativo, solo lectura) */}
+                    <div className={`flex flex-col gap-2.5 transition-all duration-300 ${frutaId !== null ? "opacity-100 h-auto" : "opacity-0 h-0 overflow-hidden"}`}>
+                        <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas:</label>
                         <div className="flex flex-wrap gap-2">
-                            {selectedFruits.map((fruit) => (
-                                <div
-                                    key={fruit}
-                                    className="bg-[#EBF3EC] text-[#5D9634] pr-3 pl-2 py-1.5 rounded-full text-[13px] font-semibold flex items-center gap-2"
-                                >
-                                    <button
-                                        onClick={() => handleRemoveFruit(fruit)}
-                                        className="hover:bg-[#d2e5d5] rounded-full p-0.5 transition-colors text-[#5D9634]"
+                            {derivadasLoading ? (
+                                <span className="text-[13px] text-gray-500">Cargando derivadas...</span>
+                            ) : derivadas.length === 0 ? (
+                                <span className="text-[13px] text-gray-500">Esta fruta no tiene derivadas registradas.</span>
+                            ) : (
+                                derivadas.map((derivada) => (
+                                    <div
+                                        key={derivada.frutaDerivadaId}
+                                        className="bg-[#EBF3EC] text-[#5D9634] px-3 py-1.5 rounded-full text-[13px] font-semibold"
                                     >
-                                        <X size={14} strokeWidth={3} />
-                                    </button>
-                                    {fruit}
-                                </div>
-                            ))}
+                                        {derivada.name}
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
 
@@ -129,6 +186,8 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                         <label className="text-[13px] font-semibold text-[#1a2f22]">Requerimientos Comerciales:</label>
                         <div className="relative">
                             <Input
+                                value={requerimientoComercial}
+                                onChange={(e) => setRequerimientoComercial(e.target.value)}
                                 placeholder="Ej: 3000"
                                 className="rounded-xl h-11 border-gray-200 pr-12 shadow-none focus-visible:ring-[#5D9634]"
                             />
@@ -137,6 +196,8 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                             </div>
                         </div>
                     </div>
+
+                    {error && <p className="text-[13px] text-red-500 font-medium">{error}</p>}
                 </div>
 
                 <div className="flex justify-center gap-4 mt-8">
@@ -148,8 +209,9 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                         Cancelar
                     </Button>
                     <Button
-                        onClick={onSuccess}
-                        className="rounded-xl h-11 px-6 bg-[#6b9d3b] hover:bg-[#58852e] text-white font-semibold gap-2 shadow-sm"
+                        onClick={handleSubmit}
+                        disabled={!isValid || saving}
+                        className="rounded-xl h-11 px-6 bg-[#6b9d3b] hover:bg-[#58852e] text-white font-semibold gap-2 shadow-sm disabled:opacity-50"
                     >
                         <Leaf size={18} strokeWidth={2.5} />
                         Crear Campaña

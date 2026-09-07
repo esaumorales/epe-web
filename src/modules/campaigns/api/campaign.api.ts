@@ -1,10 +1,15 @@
 import { apiClient } from "@/shared/api/client";
-import type { CampanaDto, FrutaDto, UpdateCampanaDto } from "@/modules/campaigns/api/campaign.dto";
+import type { CampanaDto, FrutaDto, FrutaDerivadaDto, UpdateCampanaDto } from "@/modules/campaigns/api/campaign.dto";
 import { toCampana, toCreateCampanaDto, type Campana, type CampaignFormInput } from "@/modules/campaigns/api/campaign.mapper";
 import { formatFecha } from "@/modules/campaigns/api/fecha.util";
 
 export async function getFrutas(): Promise<FrutaDto[]> {
   const { data } = await apiClient.get<FrutaDto[]>("/frutas");
+  return data;
+}
+
+export async function getFrutaDerivadas(frutaId: number): Promise<FrutaDerivadaDto[]> {
+  const { data } = await apiClient.get<FrutaDerivadaDto[]>(`/frutas/${frutaId}/derivadas`);
   return data;
 }
 

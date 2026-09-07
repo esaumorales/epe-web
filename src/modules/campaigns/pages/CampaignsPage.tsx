@@ -10,10 +10,12 @@ import { Leaf } from "lucide-react";
 export default function CampaignsPage() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+    const [tableKey, setTableKey] = useState(0);
 
     const handleCreateSuccess = () => {
         setIsCreateModalOpen(false);
         setIsSuccessModalOpen(true);
+        setTableKey((k) => k + 1);
     };
 
     return (
@@ -37,7 +39,7 @@ export default function CampaignsPage() {
 
             <CampaignFilters />
 
-            <CampaignTable />
+            <CampaignTable key={tableKey} />
 
             <CampaignCreateModal 
                 open={isCreateModalOpen} 

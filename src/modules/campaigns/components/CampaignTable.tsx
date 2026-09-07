@@ -41,6 +41,9 @@ export default function CampaignTable() {
         setEditingCampaignId(null);
         setSuccessModalMode("edit");
         setIsSuccessModalOpen(true);
+        getCampanas()
+            .then(setCampaigns)
+            .catch(() => setError("No se pudieron cargar las campañas."));
     };
 
     if (isLoading) {
@@ -111,8 +114,9 @@ export default function CampaignTable() {
                 </Table>
             </div>
 
-            <CampaignEditModal 
+            <CampaignEditModal
                 open={editingCampaignId !== null}
+                campaniaId={editingCampaignId}
                 onOpenChange={(open) => !open && setEditingCampaignId(null)}
                 onSuccess={handleEditSuccess}
             />
