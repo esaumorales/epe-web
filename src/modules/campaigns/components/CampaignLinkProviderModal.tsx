@@ -58,7 +58,7 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                     {/* Seleccionar Proveedor */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Proveedor:</label>
-                        <Select value={selectedProvider} onValueChange={setSelectedProvider}>
+                        <Select value={selectedProvider} onValueChange={(val) => setSelectedProvider(val || "")}>
                             <SelectTrigger className="w-full rounded-xl h-11 border-[1.5px] border-gray-400 text-gray-600 shadow-none focus:ring-[#5D9634]">
                                 <SelectValue placeholder="Seleccione un proveedor..." />
                             </SelectTrigger>

@@ -1,5 +1,5 @@
-import { Search, X, CalendarDays } from "lucide-react";
 import { useState } from "react";
+import { Search, X } from "lucide-react";
 import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
