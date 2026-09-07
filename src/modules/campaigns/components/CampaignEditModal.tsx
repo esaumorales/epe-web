@@ -24,7 +24,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
     const [fruitError, setFruitError] = useState<string | null>(null);
     const [derivedError, setDerivedError] = useState<string | null>(null);
 
-    const handleFruitChange = (value: string) => {
+    const handleFruitChange = (value: string | null) => {
         if (value === "Mngo ") {
             setFruitError("La fruta seleccionada no es válida o está mal escrita.");
             setSelectedFruit(null);
@@ -34,7 +34,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
         setSelectedFruit(value);
     };
 
-    const handleAddDerivedFruit = (value: string) => {
+    const handleAddDerivedFruit = (value: string | null) => {
         if (value === "Mngo marron") {
             setDerivedError("La fruta 'Mngo marron' no es válida o está mal escrita.");
             return;

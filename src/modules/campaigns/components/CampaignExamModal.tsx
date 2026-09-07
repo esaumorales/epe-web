@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Upload } from "lucide-react";
 import {
     Dialog,
@@ -18,10 +17,10 @@ interface CampaignExamModalProps {
 
 export default function CampaignExamModal({ open, onOpenChange, onSave }: CampaignExamModalProps) {
 
-    // Mock state for added exams
-    const [addedExams, setAddedExams] = useState([
+    // Mock data for added exams
+    const addedExams = [
         { id: 1, name: "CADMIO", result: "Negativo", date: "28/05/20", origin: "Trujillo", details: "ACETAMIPRID 0.15 mg/kg, TRAZAS: CLORFENAPIR" }
-    ]);
+    ];
 
     const handleAdd = () => {
         // Logic to add to addedExams
