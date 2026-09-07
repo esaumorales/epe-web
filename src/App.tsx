@@ -9,6 +9,7 @@ import CampaignProvidersPage from './modules/campaigns/pages/CampaignProvidersPa
 import ProvidersPage from './modules/providers/pages/ProvidersPage'
 import ClientsPage from './modules/clients/pages/ClientsPage'
 import CertificationsPage from './modules/certifications/pages/CertificationsPage'
+import CertificationsCreatePage from './modules/certifications/pages/CertificationsCreatePage'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -86,6 +87,15 @@ function App() {
           element={
             isAuthenticated ? 
               <CertificationsPage /> : 
+              <Navigate to="/login" />
+          } 
+        />
+
+        <Route 
+          path="/certificaciones/nueva" 
+          element={
+            isAuthenticated ? 
+              <CertificationsCreatePage /> : 
               <Navigate to="/login" />
           } 
         />

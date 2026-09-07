@@ -1,4 +1,5 @@
-import { Pencil, Eye, FileArchive } from "lucide-react";
+import { useState } from "react";
+import { Pencil, Eye, FilePlus } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableRow,
 } from "@/shared/components/ui/table";
 import { Button } from "@/shared/components/ui/button";
+import ProviderInterviewModal from "./ProviderInterviewModal";
 
 const data = [
     {
@@ -29,6 +31,8 @@ const data = [
 ];
 
 export default function ProvidersTable() {
+    const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
+
     return (
         <div className="bg-white rounded-[1.5rem] p-3 shadow-[0_2px_12px_rgb(0,0,0,0.02)] border border-gray-100 overflow-hidden">
             <div className="rounded-xl overflow-hidden border border-gray-100">
@@ -58,13 +62,18 @@ export default function ProvidersTable() {
                                 <TableCell className="px-6 text-center">
                                     <div className="flex items-center justify-center gap-1.5 text-[#1a2f22]">
                                         <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors">
-                                            <Pencil size={20} strokeWidth={2.5} />
+                                            <Pencil size={18} strokeWidth={2.5} />
                                         </Button>
                                         <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors">
-                                            <Eye size={20} strokeWidth={2.5} />
+                                            <Eye size={18} strokeWidth={2.5} />
                                         </Button>
-                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors">
-                                            <FileArchive size={20} strokeWidth={2.5} />
+                                        <Button 
+                                            variant="ghost" 
+                                            size="icon" 
+                                            onClick={() => setIsInterviewModalOpen(true)}
+                                            className="h-9 w-9 hover:text-[#5D9634] hover:bg-[#EBF3EC] rounded-lg transition-colors"
+                                        >
+                                            <FilePlus size={18} strokeWidth={2.5} />
                                         </Button>
                                     </div>
                                 </TableCell>
@@ -73,6 +82,11 @@ export default function ProvidersTable() {
                     </TableBody>
                 </Table>
             </div>
+
+            <ProviderInterviewModal 
+                open={isInterviewModalOpen} 
+                onOpenChange={setIsInterviewModalOpen}
+            />
         </div>
     );
 }

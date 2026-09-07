@@ -1,9 +1,12 @@
 import { Search, X, CalendarDays } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
 
 export default function CertificationsFilters() {
+    const navigate = useNavigate();
+
     return (
         <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_2px_12px_rgb(0,0,0,0.02)] border border-gray-100 mb-6 flex flex-col gap-5">
             {/* Top Row: Search and Clear Filters */}
@@ -66,7 +69,11 @@ export default function CertificationsFilters() {
                 </div>
 
                 <div className="flex gap-4">
-                    <Button variant="outline" className="h-11 rounded-xl px-6 border-[1.5px] border-gray-400 text-[#1a2f22] font-semibold shadow-none bg-white hover:bg-gray-50">
+                    <Button 
+                        variant="outline" 
+                        onClick={() => navigate('/certificaciones/nueva')}
+                        className="h-11 rounded-xl px-6 border-[1.5px] border-gray-400 text-[#1a2f22] font-semibold shadow-none bg-white hover:bg-gray-50"
+                    >
                         + Nuevo Cotizacion
                     </Button>
                 </div>

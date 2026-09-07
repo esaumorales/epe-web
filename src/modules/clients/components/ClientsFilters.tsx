@@ -1,9 +1,20 @@
 import { Search, X, CalendarDays } from "lucide-react";
+import { useState } from "react";
 import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
+import ClientCreateModal from "./ClientCreateModal";
+import ClientSuccessModal from "./ClientSuccessModal";
 
 export default function ClientsFilters() {
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+    const handleCreateSuccess = () => {
+        setIsCreateModalOpen(false);
+        setIsSuccessModalOpen(true);
+    };
+
     return (
         <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_2px_12px_rgb(0,0,0,0.02)] border border-gray-100 mb-6 flex flex-col gap-5">
             {/* Top Row: Search and Clear Filters */}
@@ -66,11 +77,26 @@ export default function ClientsFilters() {
                 </div>
 
                 <div className="flex gap-4">
-                    <Button variant="outline" className="h-11 rounded-xl px-6 border-[1.5px] border-gray-400 text-[#1a2f22] font-semibold shadow-none bg-white hover:bg-gray-50">
+                    <Button 
+                        variant="outline" 
+                        onClick={() => setIsCreateModalOpen(true)}
+                        className="h-11 rounded-xl px-6 border-[1.5px] border-gray-400 text-[#1a2f22] font-semibold shadow-none bg-white hover:bg-gray-50"
+                    >
                         + Nuevo Cliente
                     </Button>
                 </div>
             </div>
+
+            <ClientCreateModal 
+                open={isCreateModalOpen} 
+                onOpenChange={setIsCreateModalOpen}
+                onSuccess={handleCreateSuccess}
+            />
+
+            <ClientSuccessModal 
+                open={isSuccessModalOpen} 
+                onOpenChange={setIsSuccessModalOpen}
+            />
         </div>
     );
 }
