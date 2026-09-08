@@ -1,0 +1,43 @@
+import { Badge } from "@/shared/components/ui/badge";
+import { cn } from "@/lib/utils";
+
+type StatusTone = "brand" | "highlight" | "warning" | "neutral";
+
+const STATUS_TONES: Record<string, StatusTone> = {
+    planificado: "brand",
+    aprobado: "brand",
+    activo: "brand",
+    vigente: "brand",
+    "por aprobar": "highlight",
+    "por vencer": "highlight",
+    pendiente: "highlight",
+    vencida: "warning",
+    rechazado: "warning",
+    terminado: "neutral",
+    inactivo: "neutral",
+};
+
+const TONE_STYLES: Record<StatusTone, { badge: string; dot: string }> = {
+    brand: { badge: "bg-brand-surface text-brand", dot: "bg-brand" },
+    highlight: { badge: "bg-status-highlight-surface text-status-highlight", dot: "bg-status-highlight" },
+    warning: { badge: "bg-status-warning/10 text-status-warning", dot: "bg-status-warning" },
+    neutral: { badge: "bg-status-neutral-surface text-status-neutral", dot: "bg-status-neutral" },
+};
+
+interface StatusBadgeProps {
+    status: string;
+}
+
+export default function StatusBadge({ status }: StatusBadgeProps) {
+    const tone = TONE_STYLES[STATUS_TONES[status.toLowerCase()] ?? "neutral"];
+
+    return (
+        <Badge
+            variant="outline"
+            className={cn("rounded-full px-3.5 py-1.5 font-semibold text-[13px] border-none gap-2", tone.badge)}
+        >
+            <div className={cn("w-1.5 h-1.5 rounded-full", tone.dot)} />
+            {status}
+        </Badge>
+    );
+}

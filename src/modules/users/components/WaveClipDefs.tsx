@@ -10,6 +10,29 @@
 export const WAVE_CLIP_ID = "module-card-wave";
 export const HERO_CLIP_ID = "hero-wave";
 
+/**
+ * Solo el borde curvo del hero, de abajo hacia arriba. Se comparte entre el
+ * clip-path y la línea decorativa para que no se puedan desincronizar: si se
+ * ajusta la curva, ambas se mueven juntas.
+ *
+ * Medido sobre el contenedor real (~1013x271px):
+ * - Tramo superior: baja casi recto, se aparta ~10px como máximo de la recta
+ *   entre el vértice y la panza.
+ * - Panza en el centro exacto de la altura (0.50). El radio de curvatura sale de
+ *   la relación entre el largo del handle vertical y cuánto se desplaza en
+ *   horizontal el control siguiente: handle más largo o control más cerca =
+ *   panza más redonda.
+ * - Contra-arqueo hacia adentro con el pico en y=0.78. La inflexión (0.160,0.750)
+ *   no puede acercarse más a la panza: cuanto menos alto queda entre ambas, más
+ *   cerrado es el giro y se siente un golpe en la curva.
+ *
+ * La continuidad se sostiene manteniendo colineales los controles a cada lado de
+ * un anclaje: verticales en la panza, paralelos en la inflexión, y horizontal en
+ * el pie para que la esquina inferior quede redondeada.
+ */
+export const HERO_EDGE_D =
+  "M0.24,1 C0.200,1 0.1915,0.804 0.160,0.750 C0.125,0.690 0.070,0.670 0.070,0.500 C0.070,0.318 0.122,0.250 0.145,0";
+
 export default function WaveClipDefs() {
   return (
     <svg width="0" height="0" aria-hidden="true" className="absolute">
@@ -18,29 +41,9 @@ export default function WaveClipDefs() {
           <path d="M0,0 L1,0 L1,1 L0.38,1 C0.26,1 0.135,0.88 0.13,0.58 C0.125,0.28 0.085,0.05 0,0 Z" />
         </clipPath>
 
-        {/* El hero no repite la media luna de las cards: es una S de tres tramos.
-            Medido sobre el contenedor real (968x302px):
-            - Tramo superior: baja casi recto, se aparta 9.7px como maximo de la
-              recta entre el vertice y la panza.
-            - Panza en el centro exacto de la altura (0.50); radio de curvatura de
-              90px por arriba y 74px por abajo. El radio sale de la relacion entre
-              el largo del handle vertical y cuanto se desplaza en horizontal el
-              control siguiente: handle mas largo o control mas cerca = mas redonda.
-            - Contra-arqueo hacia adentro de +5.6px con el pico en y=0.78. La
-              inflexion (0.160,0.750) no puede acercarse mas a la panza: cuanto
-              menos alto queda entre ambas, mas cerrado es el giro. A 0.72 el radio
-              caia a 13px y se sentia un golpe; asi se mantiene sobre 33px, que es
-              el minimo de toda la curva y cae recien en la esquina inferior.
-            La continuidad se sostiene manteniendo colineales los controles a cada
-            lado de un anclaje: verticales en la panza, paralelos en la inflexion, y
-            horizontal en el pie para que la esquina inferior quede redondeada. */}
+        {/* El borde curvo + el resto del rectángulo para cerrar la región */}
         <clipPath id={HERO_CLIP_ID} clipPathUnits="objectBoundingBox">
-          <path
-            d="M0.145,0 L1,0 L1,1 L0.24,1
-               C0.200,1     0.1915,0.804 0.160,0.750
-               C0.125,0.690 0.070,0.670  0.070,0.500
-               C0.070,0.318 0.122,0.250  0.145,0 Z"
-          />
+          <path d={`${HERO_EDGE_D} L1,0 L1,1 Z`} />
         </clipPath>
       </defs>
     </svg>

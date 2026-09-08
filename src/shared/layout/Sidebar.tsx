@@ -1,4 +1,4 @@
-import { CalendarDays, Users, Award, User, LogOut } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 import {
@@ -11,35 +11,18 @@ import {
   SidebarGroup,
   SidebarGroupContent,
 } from "@/shared/components/ui/sidebar";
-
-const items = [
-  {
-    title: "Campañas",
-    url: "/campaigns",
-    icon: CalendarDays,
-  },
-  {
-    title: "Proveedores",
-    url: "/proveedores",
-    icon: Users,
-  },
-  {
-    title: "Certificaciones",
-    url: "/certificaciones",
-    icon: Award,
-  },
-]
+import { sidebarItems } from "@/shared/layout/sidebarItems";
 
 export default function AppSidebar() {
   const location = useLocation();
 
   return (
-    <Sidebar collapsible="icon" className="!top-20 !h-[calc(100vh-5rem)] border-r border-gray-100 shadow-[4px_0_24px_rgb(0,0,0,0.02)] bg-white mt-0">
+    <Sidebar collapsible="icon" className="!top-20 !h-[calc(100vh-5rem)] border-r border-border shadow-[4px_0_24px_rgb(0,0,0,0.02)] bg-white mt-0">
       <SidebarContent className="px-4 group-data-[collapsible=icon]:px-2 mt-2">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="gap-3">
-              {items.map((item) => {
+              {sidebarItems.map((item) => {
                 const isActive = location.pathname.startsWith(item.url);
                 return (
                   <SidebarMenuItem key={item.title}>
@@ -68,7 +51,7 @@ export default function AppSidebar() {
       </SidebarContent>
       
       <SidebarFooter className="p-6 pb-8 group-data-[collapsible=icon]:p-2 group-data-[collapsible=icon]:pb-4">
-        <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100 group-data-[collapsible=icon]:bg-transparent group-data-[collapsible=icon]:border-none group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:justify-center">
+        <div className="flex items-center gap-4 bg-status-neutral-surface p-4 rounded-2xl border border-status-neutral-border group-data-[collapsible=icon]:bg-transparent group-data-[collapsible=icon]:border-none group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:justify-center">
             <div className="w-10 h-10 rounded-full bg-brand-surface flex items-center justify-center text-brand border border-brand-border shrink-0">
                 <User size={20} strokeWidth={2} />
             </div>
@@ -76,7 +59,7 @@ export default function AppSidebar() {
                 <span className="text-ink font-bold text-sm truncate">Nombre Usuario</span>
                 <span className="text-ink-muted text-[12px] font-medium truncate">Gerente General</span>
             </div>
-            <Link to="/login" className="text-gray-400 hover:text-red-500 transition-colors ml-auto group-data-[collapsible=icon]:hidden">
+            <Link to="/login" className="text-ink-muted hover:text-status-warning transition-all ml-auto group-data-[collapsible=icon]:hidden active:scale-95">
                 <LogOut size={18} />
             </Link>
         </div>
