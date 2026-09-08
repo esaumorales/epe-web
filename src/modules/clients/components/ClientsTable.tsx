@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Pencil, Eye, Contact } from "lucide-react";
 import {
   Table,
@@ -9,27 +10,37 @@ import {
 } from "@/shared/components/ui/table";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
-
-const data = [
-    {
-        id: 1,
-        empresa: "SUTRIMEX",
-        representante: "Brayayin",
-        numero: "987456321",
-        correo: "SUTRIMEX@gmail.com",
-        ruc: "209874563210"
-    },
-    {
-        id: 2,
-        empresa: "FIXGROM",
-        representante: "Luchito",
-        numero: "962541387",
-        correo: "FIXGROM@gmail.com",
-        ruc: "209874563210"
-    }
-];
+import { getClientesNegocio } from "@/modules/clients/api/cliente-negocio.api";
+import type { ClienteNegocio } from "@/modules/clients/api/cliente-negocio.mapper";
 
 export default function ClientsTable() {
+    const [clients, setClients] = useState<ClienteNegocio[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        getClientesNegocio()
+            .then(setClients)
+            .catch(() => setError("No se pudieron cargar los clientes."))
+            .finally(() => setIsLoading(false));
+    }, []);
+
+    if (isLoading) {
+        return (
+            <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_2px_12px_rgb(0,0,0,0.02)] border border-gray-100 text-center text-[#545454]">
+                Cargando clientes...
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_2px_12px_rgb(0,0,0,0.02)] border border-gray-100 text-center text-red-600">
+                {error}
+            </div>
+        );
+    }
+
     return (
         <Card className="rounded-2xl border-border shadow-[0_2px_12px_rgb(0,0,0,0.03)]">
             <CardContent className="p-6 flex flex-col gap-6">
@@ -44,7 +55,7 @@ export default function ClientsTable() {
                         </div>
                     </div>
                     <div className="text-[13px] text-muted-foreground font-medium">
-                        Mostrando <span className="font-bold">{data.length}</span> de <span className="font-bold">{data.length}</span> clientes
+                        Mostrando <span className="font-bold">{clients.length}</span> de <span className="font-bold">{clients.length}</span> clientes
                     </div>
                 </div>
 
@@ -61,12 +72,12 @@ export default function ClientsTable() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {data.map((row) => (
-                                <TableRow key={row.id} className="border-b border-border hover:bg-surface-page/60 transition-colors">
-                                    <TableCell className="font-medium text-ink h-16 px-6">{row.empresa}</TableCell>
-                                    <TableCell className="text-ink-body font-medium">{row.representante}</TableCell>
-                                    <TableCell className="text-ink-body font-medium">{row.numero}</TableCell>
-                                    <TableCell className="text-ink-body font-medium">{row.correo}</TableCell>
+                            {clients.map((row) => (
+                                <TableRow key={row.clienteNegocioId} className="border-b border-border hover:bg-surface-page/60 transition-colors">
+                                    <TableCell className="font-medium text-ink h-16 px-6">{row.nombreEmpresa}</TableCell>
+                                    <TableCell className="text-ink-body font-medium">{row.nombreContacto}</TableCell>
+                                    <TableCell className="text-ink-body font-medium">{row.telefono}</TableCell>
+                                    <TableCell className="text-ink-body font-medium">{row.correoCorporativo}</TableCell>
                                     <TableCell className="text-ink-body font-medium">{row.ruc}</TableCell>
                                     <TableCell className="px-6">
                                         <div className="flex items-center justify-end gap-1.5 text-ink-muted">

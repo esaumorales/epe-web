@@ -2,15 +2,9 @@ import { apiClient } from "@/shared/api/client";
 import type {
   CampaniaProveedorDto,
   CreateCampaniaProveedorDto,
-  ProveedorDto,
   UpdateCampaniaProveedorDto,
 } from "@/modules/campaigns/api/campania-proveedor.dto";
 import type { CampaniaProveedor } from "@/modules/campaigns/api/campania-proveedor.mapper";
-
-export async function getProveedores(): Promise<ProveedorDto[]> {
-  const { data } = await apiClient.get<ProveedorDto[]>("/proveedores");
-  return data;
-}
 
 export async function getCampaniaProveedoresByCampania(campaniaId: number): Promise<CampaniaProveedor[]> {
   const { data } = await apiClient.get<CampaniaProveedorDto[]>(`/campanias-proveedores/campania/${campaniaId}`);

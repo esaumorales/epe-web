@@ -19,24 +19,6 @@ import CampaignCertificationsModal from "@/modules/campaigns/components/Campaign
 import { getCampanas } from "@/modules/campaigns/api/campaign.api";
 import type { Campana } from "@/modules/campaigns/api/campaign.mapper";
 import CampaignLinkClientModal from "@/modules/campaigns/components/CampaignLinkClientModal";
-const data = [
-    {
-        id: 1,
-        nombre: "Mango 2026",
-        inicio: "01/06/2026",
-        fin: "31/08/2026",
-        kilos: "3000",
-        estado: "Planificado"
-    },
-    {
-        id: 2,
-        nombre: "Mango 2025",
-        inicio: "27/07/2025",
-        fin: "27/07/2025",
-        kilos: "3100",
-        estado: "Terminado"
-    }
-];
 
 export default function CampaignTable() {
     const [campaigns, setCampaigns] = useState<Campana[]>([]);
@@ -96,7 +78,7 @@ export default function CampaignTable() {
                         </div>
                     </div>
                     <div className="text-[13px] text-muted-foreground font-medium">
-                        Mostrando <span className="font-bold">{data.length}</span> de <span className="font-bold">{data.length}</span> campañas
+                        Mostrando <span className="font-bold">{campaigns.length}</span> de <span className="font-bold">{campaigns.length}</span> campañas
                     </div>
                 </div>
 
@@ -186,6 +168,7 @@ export default function CampaignTable() {
 
             <CampaignLinkClientModal
                 open={managingClientsCampaignId !== null}
+                campaniaId={managingClientsCampaignId}
                 onOpenChange={(open) => !open && setManagingClientsCampaignId(null)}
                 onSave={() => {
                     setManagingClientsCampaignId(null);

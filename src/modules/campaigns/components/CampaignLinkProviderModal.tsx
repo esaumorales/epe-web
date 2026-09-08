@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X, UserRound } from "lucide-react";
 import {
     Dialog,
@@ -9,40 +9,91 @@ import {
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
+import { getProveedores } from "@/modules/providers/api/proveedor.api";
+import type { Proveedor } from "@/modules/providers/api/proveedor.mapper";
+import { createCampaniaProveedor } from "@/modules/campaigns/api/campania-proveedor.api";
+import type { TipoProveedorCampania } from "@/modules/campaigns/api/campania-proveedor.dto";
 
 interface CampaignLinkProviderModalProps {
     open: boolean;
+    campaniaId: number | null;
     onOpenChange: (open: boolean) => void;
     onSave?: () => void;
 }
 
-export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }: CampaignLinkProviderModalProps) {
+interface PendingProvider {
+    proveedorId: number;
+    nombre: string;
+    tipo: TipoProveedorCampania;
+    cantidad: string;
+}
+
+export default function CampaignLinkProviderModal({ open, campaniaId, onOpenChange, onSave }: CampaignLinkProviderModalProps) {
     const [isAcopiador, setIsAcopiador] = useState(false);
     const [selectedProvider, setSelectedProvider] = useState<string>("");
     const [cantidad, setCantidad] = useState<string>("");
-    
-    const [addedProviders, setAddedProviders] = useState([
-        { id: 1, name: "Pepe Alonso", type: "Productor" },
-        { id: 2, name: "Pepe Alonso", type: "Acopiador" }
-    ]);
 
-    const handleRemove = (id: number) => {
-        setAddedProviders(addedProviders.filter(p => p.id !== id));
+    const [proveedores, setProveedores] = useState<Proveedor[]>([]);
+    const [addedProviders, setAddedProviders] = useState<PendingProvider[]>([]);
+    const [isSaving, setIsSaving] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!open) return;
+        getProveedores()
+            .then(setProveedores)
+            .catch(() => setError("No se pudieron cargar los proveedores."));
+    }, [open]);
+
+    const handleRemove = (proveedorId: number) => {
+        setAddedProviders(addedProviders.filter((p) => p.proveedorId !== proveedorId));
     };
 
     const handleAdd = () => {
         if (!selectedProvider) return;
-        
-        const name = selectedProvider === "pepe" ? "Pepe Alonso" : "Juan Perez";
-        const newProvider = {
-            id: Date.now(),
-            name,
-            type: isAcopiador ? "Acopiador" : "Productor"
-        };
+        const proveedor = proveedores.find((p) => String(p.proveedorId) === selectedProvider);
+        if (!proveedor) return;
 
-        setAddedProviders([...addedProviders, newProvider]);
+        setAddedProviders([
+            ...addedProviders,
+            {
+                proveedorId: proveedor.proveedorId,
+                nombre: `${proveedor.nombres} ${proveedor.apellido}`,
+                tipo: isAcopiador ? "acopio" : "productor",
+                cantidad,
+            },
+        ]);
         setSelectedProvider("");
         setCantidad("");
+    };
+
+    const handleGuardar = async () => {
+        if (campaniaId === null || addedProviders.length === 0) {
+            onSave ? onSave() : onOpenChange(false);
+            return;
+        }
+        setIsSaving(true);
+        setError(null);
+        try {
+            await Promise.all(
+                addedProviders.map((p) =>
+                    createCampaniaProveedor({
+                        campaniaId,
+                        proveedorId: p.proveedorId,
+                        cantidadProveedor: p.cantidad || "0",
+                        // TODO: pendiente de backend/UI, el formulario aún no captura mtdCeratitis
+                        mtdCeratitis: "0",
+                        tipoProveedor: p.tipo,
+                    })
+                )
+            );
+            setAddedProviders([]);
+            onSave ? onSave() : onOpenChange(false);
+        } catch {
+            setError("No se pudieron vincular los proveedores.");
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     return (
@@ -63,8 +114,11 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                                 <SelectValue placeholder="Seleccione un proveedor..." />
                             </SelectTrigger>
                             <SelectContent className="rounded-lg">
-                                <SelectItem value="pepe" className="rounded-lg">Pepe Alonso</SelectItem>
-                                <SelectItem value="juan" className="rounded-lg">Juan Perez</SelectItem>
+                                {proveedores.map((p) => (
+                                    <SelectItem key={p.proveedorId} value={String(p.proveedorId)} className="rounded-lg">
+                                        {p.nombres} {p.apellido}
+                                    </SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>
@@ -76,7 +130,7 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                                 <span className={`text-[12px] font-bold ${!isAcopiador ? "text-ink" : "text-ink-muted"}`}>Productor</span>
                                 <span className={`text-[12px] font-bold ${isAcopiador ? "text-ink" : "text-ink-muted"}`}>Acopiador</span>
                             </div>
-                            <div 
+                            <div
                                 className="relative w-[130px] h-11 rounded-full cursor-pointer border-[2.5px] border-ink-muted bg-white transition-colors hover:border-ink"
                                 onClick={() => setIsAcopiador(!isAcopiador)}
                             >
@@ -98,7 +152,7 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
 
                     {/* Boton Agregar */}
                     <div className="flex justify-center mt-2">
-                        <Button 
+                        <Button
                             onClick={handleAdd}
                             disabled={!selectedProvider}
                             className="h-10 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-8 shadow-sm disabled:opacity-50 transition-colors active:scale-95"
@@ -107,14 +161,16 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                         </Button>
                     </div>
 
+                    {error && <p className="text-[13px] text-red-600 text-center">{error}</p>}
+
                     {/* Proveedores Agregados */}
                     <div className="flex flex-col gap-3 mt-4">
-                        <label className="text-[13px] font-semibold text-ink">Productores Agregados:</label>
+                        <label className="text-[13px] font-semibold text-ink">Proveedores Agregados:</label>
                         <div className="flex flex-wrap gap-3">
                             {addedProviders.map((provider) => (
-                                <div key={provider.id} className="flex items-center gap-3 p-3 rounded-2xl border border-border bg-white min-w-[200px]">
-                                    <button 
-                                        onClick={() => handleRemove(provider.id)}
+                                <div key={provider.proveedorId} className="flex items-center gap-3 p-3 rounded-2xl border border-border bg-white min-w-[200px]">
+                                    <button
+                                        onClick={() => handleRemove(provider.proveedorId)}
                                         className="text-ink hover:text-destructive transition-colors"
                                     >
                                         <X size={18} strokeWidth={2.5} />
@@ -123,8 +179,8 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                                         <UserRound size={22} strokeWidth={2.5} />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[13px] font-bold text-ink leading-tight mb-0.5">{provider.name}</span>
-                                        <span className="text-[11px] font-medium text-ink">Proveedor - {provider.type}</span>
+                                        <span className="text-[13px] font-bold text-ink leading-tight mb-0.5">{provider.nombre}</span>
+                                        <span className="text-[11px] font-medium text-ink">Proveedor - {provider.tipo === "acopio" ? "Acopiador" : "Productor"}</span>
                                     </div>
                                 </div>
                             ))}
@@ -142,10 +198,11 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                         Cancelar
                     </Button>
                     <Button
-                        onClick={() => onSave ? onSave() : onOpenChange(false)}
-                        className="rounded-lg h-10 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
+                        onClick={handleGuardar}
+                        disabled={isSaving || addedProviders.length === 0}
+                        className="rounded-lg h-10 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm disabled:opacity-50 transition-colors active:scale-95"
                     >
-                        Guardar
+                        {isSaving ? "Guardando..." : "Guardar"}
                     </Button>
                 </div>
             </DialogContent>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pencil, Eye, FileArchive, Truck } from "lucide-react";
 import {
   Table,
@@ -10,30 +10,38 @@ import {
 } from "@/shared/components/ui/table";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
-import StatusBadge from "@/shared/components/StatusBadge";
 import ProviderInterviewModal from "./ProviderInterviewModal";
-
-const data = [
-    {
-        id: 1,
-        nombre: "Brayan Gay",
-        dni: "98765412",
-        fruta: "mango",
-        categoria: "Mango Eduard",
-        estado: "Aprobado"
-    },
-    {
-        id: 2,
-        nombre: "Brayan Gay 2",
-        dni: "78451296",
-        fruta: "mango",
-        categoria: "Mango Eduard",
-        estado: "Por aprobar"
-    }
-];
+import { getProveedores } from "@/modules/providers/api/proveedor.api";
+import type { Proveedor } from "@/modules/providers/api/proveedor.mapper";
 
 export default function ProvidersTable() {
     const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
+    const [providers, setProviders] = useState<Proveedor[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        getProveedores()
+            .then(setProviders)
+            .catch(() => setError("No se pudieron cargar los proveedores."))
+            .finally(() => setIsLoading(false));
+    }, []);
+
+    if (isLoading) {
+        return (
+            <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_2px_12px_rgb(0,0,0,0.02)] border border-gray-100 text-center text-[#545454]">
+                Cargando proveedores...
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_2px_12px_rgb(0,0,0,0.02)] border border-gray-100 text-center text-red-600">
+                {error}
+            </div>
+        );
+    }
 
     return (
         <>
@@ -50,7 +58,7 @@ export default function ProvidersTable() {
                             </div>
                         </div>
                         <div className="text-[13px] text-muted-foreground font-medium">
-                            Mostrando <span className="font-bold">{data.length}</span> de <span className="font-bold">{data.length}</span> proveedores
+                            Mostrando <span className="font-bold">{providers.length}</span> de <span className="font-bold">{providers.length}</span> proveedores
                         </div>
                     </div>
 
@@ -67,15 +75,13 @@ export default function ProvidersTable() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {data.map((row) => (
-                                    <TableRow key={row.id} className="border-b border-border hover:bg-surface-page/60 transition-colors">
-                                        <TableCell className="font-medium text-ink h-16 px-6">{row.nombre}</TableCell>
-                                        <TableCell className="text-ink-body font-medium">{row.dni}</TableCell>
-                                        <TableCell className="text-ink-body font-medium">{row.fruta}</TableCell>
-                                        <TableCell className="text-ink-body font-medium">{row.categoria}</TableCell>
-                                        <TableCell>
-                                            <StatusBadge status={row.estado} />
-                                        </TableCell>
+                                {providers.map((row) => (
+                                    <TableRow key={row.proveedorId} className="border-b border-border hover:bg-surface-page/60 transition-colors">
+                                        <TableCell className="font-medium text-ink h-16 px-6">{row.nombres} {row.apellido}</TableCell>
+                                        <TableCell className="text-ink-body font-medium">{row.nmrDocumento}</TableCell>
+                                        <TableCell className="text-ink-body font-medium">—</TableCell>
+                                        <TableCell className="text-ink-body font-medium">—</TableCell>
+                                        <TableCell className="text-ink-body font-medium">—</TableCell>
                                         <TableCell className="px-6">
                                             <div className="flex items-center justify-end gap-1.5 text-ink-muted">
                                                 <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
@@ -84,7 +90,7 @@ export default function ProvidersTable() {
                                                 <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                     <Eye size={18} strokeWidth={2.5} />
                                                 </Button>
-                                                <Button variant="ghost" size="icon" 
+                                                <Button variant="ghost" size="icon"
                                                 onClick={() => setIsInterviewModalOpen(true)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                     <FileArchive size={18} strokeWidth={2.5} />
                                                 </Button>
@@ -97,8 +103,8 @@ export default function ProvidersTable() {
                     </div>
                 </CardContent>
             </Card>
-            <ProviderInterviewModal 
-                open={isInterviewModalOpen} 
+            <ProviderInterviewModal
+                open={isInterviewModalOpen}
                 onOpenChange={setIsInterviewModalOpen}
             />
         </>
