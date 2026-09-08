@@ -94,8 +94,6 @@ export default function CampaignEditModal({ open, campaniaId, onOpenChange, onSu
     }
 
     const [fruitError] = useState<string | null>(null);
-    
-
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>

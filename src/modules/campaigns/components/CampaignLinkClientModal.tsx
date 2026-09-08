@@ -58,7 +58,7 @@ export default function CampaignLinkClientModal({ open, onOpenChange, onSave }: 
                     <div className="flex gap-4 items-start">
                         <div className="flex-1 flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-ink">Seleccionar Cliente:</label>
-                            <Select value={selectedClient} onValueChange={setSelectedClient}>
+                            <Select value={selectedClient} onValueChange={(val) => setSelectedClient(val || "")}>
                                 <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
                                     <SelectValue placeholder="Selecciona un cliente" />
                                 </SelectTrigger>
