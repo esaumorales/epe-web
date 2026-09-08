@@ -1,7 +1,8 @@
-import { Search, Settings2, CalendarDays } from "lucide-react";
+import { Search, Settings2 } from "lucide-react";
 import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
+import { DatePicker } from "@/shared/components/ui/date-picker";
 import { Card, CardContent } from "@/shared/components/ui/card";
 
 export default function CampaignFilters() {
@@ -31,33 +32,13 @@ export default function CampaignFilters() {
                 {/* Fecha Inicio */}
                 <div className="flex-1 min-w-[150px] flex flex-col gap-1.5">
                     <label className="text-[13px] font-bold text-ink">Fecha Inicio</label>
-                    <Select>
-                        <SelectTrigger className="w-full rounded-sm !h-11 border-border shadow-none text-ink-muted font-medium [&>svg]:opacity-50 focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                            <div className="flex items-center gap-2">
-                                <CalendarDays size={16} className="opacity-70" />
-                                <SelectValue placeholder="--/--/----" />
-                            </div>
-                        </SelectTrigger>
-                        <SelectContent className="rounded-sm">
-                            <SelectItem value="today" className="rounded-sm">Hoy</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <DatePicker placeholder="--/--/----" className="h-11 rounded-sm border-border text-ink-muted focus:ring-1 focus:ring-brand/30 focus:border-brand" />
                 </div>
 
                 {/* Fecha Fin */}
                 <div className="flex-1 min-w-[150px] flex flex-col gap-1.5">
                     <label className="text-[13px] font-bold text-ink">Fecha Fin</label>
-                    <Select>
-                        <SelectTrigger className="w-full rounded-sm !h-11 border-border shadow-none text-ink-muted font-medium [&>svg]:opacity-50 focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                            <div className="flex items-center gap-2">
-                                <CalendarDays size={16} className="opacity-70" />
-                                <SelectValue placeholder="--/--/----" />
-                            </div>
-                        </SelectTrigger>
-                        <SelectContent className="rounded-sm">
-                            <SelectItem value="today" className="rounded-sm">Hoy</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <DatePicker placeholder="--/--/----" className="h-11 rounded-sm border-border text-ink-muted focus:ring-1 focus:ring-brand/30 focus:border-brand" />
                 </div>
 
                 {/* Estado */}
