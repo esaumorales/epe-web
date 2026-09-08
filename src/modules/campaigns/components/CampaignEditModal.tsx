@@ -51,17 +51,17 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[600px] sm:max-w-[700px] p-8 rounded-[1.5rem] bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[600px] sm:max-w-[700px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
                 <DialogHeader className="mb-6">
                     <div className="flex items-start gap-5">
-                        <div className="w-[52px] h-[52px] rounded-full bg-[#EBF3EC] flex items-center justify-center text-[#5D9634] shrink-0 border border-[#d2e5d5]">
+                        <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
                             <Leaf size={24} strokeWidth={2} />
                         </div>
                         <div className="flex-1 pt-1">
-                            <DialogTitle className="text-xl font-bold text-[#1a2f22]">
+                            <DialogTitle className="text-xl font-bold text-ink">
                                 Editar Campaña
                             </DialogTitle>
-                            <DialogDescription className="text-[13.5px] text-gray-500 mt-1">
+                            <DialogDescription className="text-[13.5px] text-ink-muted mt-1">
                                 Modifica la información de la campaña existente.
                             </DialogDescription>
                         </div>
@@ -71,27 +71,27 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                 <div className="flex flex-col gap-6">
                     {/* Nombre */}
                     <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Nombre de Campaña:</label>
+                        <label className="text-[13px] font-semibold text-ink">Nombre de Campaña:</label>
                         <Input
                             placeholder="Ej: Campaña Mango 2026"
-                            className="rounded-xl h-11 border-gray-200 shadow-none focus-visible:ring-[#5D9634]"
+                            className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand placeholder:text-muted-foreground"
                         />
                     </div>
 
                     {/* Fechas */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Inicio:</label>
+                            <label className="text-[13px] font-semibold text-ink">Fecha Inicio:</label>
                             <Input
                                 type="date"
-                                className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus-visible:ring-[#5D9634]"
+                                className="rounded-lg h-11 border-border text-ink-muted shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand"
                             />
                         </div>
                         <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Fin:</label>
+                            <label className="text-[13px] font-semibold text-ink">Fecha Fin:</label>
                             <Input
                                 type="date"
-                                className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus-visible:ring-[#5D9634]"
+                                className="rounded-lg h-11 border-border text-ink-muted shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand"
                             />
                         </div>
                     </div>
@@ -100,42 +100,42 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                     <div className="grid grid-cols-2 gap-4">
 
                         <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Frutas:</label>
+                            <label className="text-[13px] font-semibold text-ink">Seleccionar Frutas:</label>
                             <Select onValueChange={handleFruitChange} value={selectedFruit || ""}>
-                                <SelectTrigger className={`rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634] transition-colors ${fruitError ? "border-red-400 focus:ring-red-400" : ""}`}>
+                                <SelectTrigger className={`w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand transition-colors ${fruitError ? "border-destructive focus:ring-destructive" : ""}`}>
                                     <SelectValue placeholder="Seleccionar Fruta" />
                                 </SelectTrigger>
-                                <SelectContent className="rounded-xl">
+                                <SelectContent className="rounded-lg">
                                     <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
                                     <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
                                     <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
-                                    <SelectItem value="Mngo " className="rounded-lg text-red-500 font-medium">Mngo marron (Mal escrito)</SelectItem>
+                                    <SelectItem value="Mngo " className="rounded-lg text-destructive font-medium">Mngo marron (Mal escrito)</SelectItem>
                                 </SelectContent>
                             </Select>
 
                             {/* Validación Micro-animada */}
-                            <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-red-500 ${fruitError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
+                            <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-destructive ${fruitError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
                                 <AlertCircle size={14} />
                                 <span className="text-[13px] font-medium">{fruitError}</span>
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas  derivadas:</label>
+                            <label className="text-[13px] font-semibold text-ink">Frutas  derivadas:</label>
                             <Select onValueChange={handleAddDerivedFruit} value="">
-                                <SelectTrigger className={`rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634] transition-colors ${derivedError ? "border-red-400 focus:ring-red-400" : ""}`}>
+                                <SelectTrigger className={`w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand transition-colors ${derivedError ? "border-destructive focus:ring-destructive" : ""}`}>
                                     <SelectValue placeholder="Seleccionar Fruta Derivada" />
                                 </SelectTrigger>
-                                <SelectContent className="rounded-xl">
+                                <SelectContent className="rounded-lg">
                                     <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
                                     <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
                                     <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
-                                    <SelectItem value="Mngo marron" className="rounded-lg text-red-500 font-medium">Mngo marron (Mal escrito)</SelectItem>
+                                    <SelectItem value="Mngo marron" className="rounded-lg text-destructive font-medium">Mngo marron (Mal escrito)</SelectItem>
                                 </SelectContent>
                             </Select>
 
                             {/* Validación Micro-animada */}
-                            <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-red-500 ${derivedError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
+                            <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-destructive ${derivedError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
                                 <AlertCircle size={14} />
                                 <span className="text-[13px] font-medium">{derivedError}</span>
                             </div>
@@ -144,16 +144,16 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
 
                     {/* Frutas Seleccionadas */}
                     <div className={`flex flex-col gap-2.5 transition-all duration-300 ${selectedDerivedFruits.length > 0 ? "opacity-100 h-auto" : "opacity-0 h-0 overflow-hidden"}`}>
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas seleccionadas:</label>
+                        <label className="text-[13px] font-semibold text-ink">Frutas derivadas seleccionadas:</label>
                         <div className="flex flex-wrap gap-2">
                             {selectedDerivedFruits.map((fruit) => (
                                 <div
                                     key={fruit}
-                                    className="bg-[#EBF3EC] text-[#5D9634] pr-3 pl-2 py-1.5 rounded-full text-[13px] font-semibold flex items-center gap-2"
+                                    className="bg-brand-surface text-brand pr-3 pl-2 py-1.5 rounded-full text-[13px] font-semibold flex items-center gap-2"
                                 >
                                     <button
                                         onClick={() => handleRemoveDerivedFruit(fruit)}
-                                        className="hover:bg-[#d2e5d5] rounded-full p-0.5 transition-colors text-[#5D9634]"
+                                        className="hover:bg-brand-border rounded-full p-0.5 transition-colors text-brand"
                                     >
                                         <X size={14} strokeWidth={3} />
                                     </button>
@@ -165,13 +165,13 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
 
                     {/* Requerimientos */}
                     <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Requerimientos Comerciales:</label>
+                        <label className="text-[13px] font-semibold text-ink">Requerimientos Comerciales:</label>
                         <div className="relative">
                             <Input
                                 placeholder="Ej: 3000"
-                                className="rounded-xl h-11 border-gray-200 pr-12 shadow-none focus-visible:ring-[#5D9634]"
+                                className="rounded-lg h-11 border-border pr-12 shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand placeholder:text-muted-foreground"
                             />
-                            <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#EBF3EC] text-[#5D9634] text-[11px] font-bold px-2 py-1 rounded-md">
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-brand-surface text-brand text-[11px] font-bold px-2 py-1 rounded-md">
                                 KG
                             </div>
                         </div>
@@ -182,13 +182,13 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-xl h-11 px-8 border-gray-200 text-[#5D9634] font-bold hover:bg-gray-50 hover:text-[#5D9634]"
+                        className="rounded-lg h-11 px-8 border-border text-ink-muted font-bold hover:bg-muted hover:text-ink transition-colors"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={onSuccess}
-                        className="rounded-xl h-11 px-8 bg-[#5D9634] hover:bg-[#5D9634] text-white font-semibold gap-2 shadow-sm"
+                        className="rounded-lg h-11 px-8 bg-brand hover:bg-brand-dark text-white font-semibold gap-2 shadow-sm transition-colors active:scale-95"
                     >
                         Guardar
                     </Button>

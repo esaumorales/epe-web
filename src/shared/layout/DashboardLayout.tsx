@@ -9,17 +9,17 @@ interface DashboardLayoutProps {
     onLogout?: () => void;
 }
 
-export default function DashboardLayout({ children, hideSidebar = false, onLogout }: DashboardLayoutProps) {
+export default function DashboardLayout({ children, hideSidebar = true, onLogout }: DashboardLayoutProps) {
     return (
         <SidebarProvider style={{ "--sidebar-width": "14rem" } as CSSProperties}>
             <div className="flex flex-col h-screen overflow-hidden w-full">
-                <TopNavBar variant={hideSidebar ? "no-sidebar" : "default"} onLogout={onLogout} />
+                <TopNavBar onLogout={onLogout} />
 
                 <div className="flex flex-1 overflow-hidden w-full relative z-10">
                     {!hideSidebar && <AppSidebar />}
 
                     {/* `relative` para que los fondos absolutos de cada página se anclen acá y no en un ancestro lejano */}
-                    <main className="relative flex-1 overflow-y-auto w-full">
+                    <main className="relative flex-1 overflow-y-auto bg-surface-page">
                         {children}
                     </main>
                 </div>

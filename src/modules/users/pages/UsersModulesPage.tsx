@@ -2,15 +2,10 @@ import ModulesGrid from "@/modules/users/components/ModulesGrid";
 import HeroModules from "@/modules/users/components/HeroModules";
 import ModulesFooter from "@/modules/users/components/ModulesFooter";
 import WaveClipDefs from "@/modules/users/components/WaveClipDefs";
-import DashboardLayout from "@/shared/layout/DashboardLayout";
 
-interface UsersModulesPageProps {
-  onLogout?: () => void;
-}
-
-export default function UsersModulesPage({ onLogout }: UsersModulesPageProps) {
+export default function UsersModulesPage() {
   return (
-    <DashboardLayout hideSidebar onLogout={onLogout}>
+    <>
       {/* Definiciones de los recortes curvos, compartidas por el hero y las cards */}
       <WaveClipDefs />
 
@@ -39,7 +34,7 @@ export default function UsersModulesPage({ onLogout }: UsersModulesPageProps) {
             // verde apagado (tono 83, saturacion 29%). Estos valores lo dejan sobre
             // el tono del brand (95deg) sin subirle la saturacion de mas: la idea es
             // corregir el tono, no pintar la imagen.
-            filter: "saturate(1.45) hue-rotate(6deg)",
+            
             backgroundImage: "url('/image/fondo_modules.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -55,6 +50,6 @@ export default function UsersModulesPage({ onLogout }: UsersModulesPageProps) {
         <ModulesGrid />
         <ModulesFooter />
       </div>
-    </DashboardLayout>
+    </>
   );
 }

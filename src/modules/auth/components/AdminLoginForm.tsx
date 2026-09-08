@@ -43,8 +43,8 @@ export default function AdminLoginForm({ onLogin }: AdminLoginFormProps) {
                         </div>
 
                         <div className="mb-6">
-                            <h1 className="text-[24px] font-semibold text-chart-5 tracking-tight">Iniciar sesión</h1>
-                            <div className="h-1 w-10 bg-chart-4 rounded-full mb-3"></div>
+                            <h1 className="text-[24px] font-semibold text-ink tracking-tight">Iniciar sesión</h1>
+                            <div className="h-1 w-10 bg-brand rounded-full mb-3"></div>
                             <p className="text-xs text-muted-foreground">
                                 Accede para continuar con tus operaciones
                             </p>
@@ -53,14 +53,14 @@ export default function AdminLoginForm({ onLogin }: AdminLoginFormProps) {
                         <FormControl onSubmit={() => setView('confirm')} />
 
                         <div className="mt-6 w-full flex justify-center">
-                            <button onClick={() => setView('recover')} className="text-chart-4 text-sm font-bold hover:underline transition-colors">
+                            <button onClick={() => setView('recover')} className="text-brand text-sm font-bold hover:underline transition-colors">
                                 ¿Olvidó su contraseña?
                             </button>
                         </div>
 
                         <div className="w-full mt-8 flex items-center gap-3">
-                            <Leaf size={12} className="text-chart-3 shrink-0" />
-                            <span className="text-[9px] font-bold tracking-[0.15em] text-foreground/80 whitespace-nowrap opacity-80">
+                            <Leaf size={12} className="text-brand shrink-0" />
+                            <span className="text-[9px] font-bold tracking-[0.15em] text-ink-muted whitespace-nowrap opacity-80">
                                 GENTE QUE CULTIVA OPORTUNIDADES
                             </span>
                             <div className="flex-1 h-px bg-border"></div>

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import DashboardLayout from "@/shared/layout/DashboardLayout";
 import CampaignStatsOverview from "@/modules/campaigns/components/CampaignStatsOverview";
 import CampaignFilters from "@/modules/campaigns/components/CampaignFilters";
 import CampaignTable from "@/modules/campaigns/components/CampaignTable";
 import CampaignCreateModal from "@/modules/campaigns/components/CampaignCreateModal";
 import CampaignSuccessModal from "@/modules/campaigns/components/CampaignSuccessModal";
 import { Leaf } from "lucide-react";
+import PageHeader from "@/shared/layout/PageHeader";
+import { Button } from "@/shared/components/ui/button";
 
 export default function CampaignsPage() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -17,21 +18,17 @@ export default function CampaignsPage() {
     };
 
     return (
-        <DashboardLayout>
-            <div className="flex justify-between items-center mb-8">
-                <div className="flex items-center gap-3">
-                    <div className="text-[#5D9634]">
-                        <Leaf size={24} strokeWidth={2.5} />
-                    </div>
-                    <h1 className="text-[22px] font-bold text-[#1a2f22]">Planificación de Campaña</h1>
-                </div>
-                <button 
-                    onClick={() => setIsCreateModalOpen(true)}
-                    className="bg-[#6b9d3b] hover:bg-[#58852e] text-white px-6 py-2.5 rounded-[0.8rem] font-semibold text-[14px] transition-colors shadow-sm"
-                >
-                    + Nueva Campaña
-                </button>
-            </div>
+        <div className="px-14 py-5">
+            <PageHeader
+                icon={<Leaf size={24} strokeWidth={2.5} />}
+                title="Planificación de Campaña"
+                description="Organiza y planifica tus campañas de exportación."
+                action={
+                    <Button onClick={() => setIsCreateModalOpen(true)} className="bg-brand hover:bg-brand-dark text-white rounded-lg font-semibold h-11 px-6 shadow-sm">
+                        + Nueva Campaña
+                    </Button>
+                }
+            />
 
             <CampaignStatsOverview />
 
@@ -49,6 +46,6 @@ export default function CampaignsPage() {
                 open={isSuccessModalOpen}
                 onOpenChange={setIsSuccessModalOpen}
             />
-        </DashboardLayout>
+        </div>
     );
 }

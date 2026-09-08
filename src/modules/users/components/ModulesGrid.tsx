@@ -1,20 +1,10 @@
 import ModuleCard from "@/modules/users/components/ModuleCard";
-import {
-  CalendarDays,
-  Users,
-  User,
-  Sprout,
-  Package,
-  Truck,
-  Award,
-} from "lucide-react";
+import { CalendarDays, Users, User, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import CampaignPlanningImg from "@/assets/campaign_planning.webp";
 import SupplierManagementImg from "@/assets/supplier_management.webp";
 import CustomerManagementImg from "@/assets/customer_management.webp";
-import ProductionImg from "@/assets/production.webp";
-import InventoryImg from "@/assets/inventory.webp";
-import LogisticsImg from "@/assets/logistics.webp";
+import CertificationsImg from "@/assets/certifications.webp";
 
 export default function ModulesGrid() {
   const navigate = useNavigate();
@@ -42,31 +32,11 @@ export default function ModulesGrid() {
         image={CustomerManagementImg}
         onClick={() => navigate("/clientes")}
       />
-      <ModuleCard
-        title="Producción [PRUEBA]"
-        description="Da seguimiento al proceso productivo y asegura la calidad en cada etapa."
-        icon={<Sprout size={28} strokeWidth={1.5} />}
-        image={ProductionImg}
-        onClick={() => navigate("/produccion")}
-      />
-      <ModuleCard
-        title="Inventario [PRUEBA]"
-        description="Controla el stock y la disponibilidad de productos de manera eficiente."
-        icon={<Package size={28} strokeWidth={1.5} />}
-        image={InventoryImg}
-        onClick={() => navigate("/inventario")}
-      />
-      <ModuleCard
-        title="Logística [PRUEBA]"
-        description="Gestiona embarques, transporte y distribución global."
-        icon={<Truck size={28} strokeWidth={1.5} />}
-        image={LogisticsImg}
-        onClick={() => navigate("/logistica")}
-      />
       <ModuleCard 
         title="Gestión de Certificaciones" 
         description="Administra y haz seguimiento de las certificaciones."
         icon={<Award size={28} strokeWidth={1.5} />}
+        image={CertificationsImg}
         onClick={() => navigate('/certificaciones')} 
       />
     </div>

@@ -32,17 +32,17 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[600px] sm:max-w-[700px] p-8 rounded-[1.5rem] bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[600px] sm:max-w-[700px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
                 <DialogHeader className="mb-6">
                     <div className="flex items-start gap-5">
-                        <div className="w-[52px] h-[52px] rounded-full bg-[#EBF3EC] flex items-center justify-center text-[#5D9634] shrink-0 border border-[#d2e5d5]">
+                        <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
                             <Leaf size={24} strokeWidth={2} />
                         </div>
                         <div className="flex-1 pt-1">
-                            <DialogTitle className="text-xl font-bold text-[#1a2f22]">
+                            <DialogTitle className="text-xl font-bold text-ink">
                                 Nueva Campaña
                             </DialogTitle>
-                            <DialogDescription className="text-[13.5px] text-gray-500 mt-1">
+                            <DialogDescription className="text-[13.5px] text-ink-muted mt-1">
                                 Completa la información para registrar una nueva campaña.
                             </DialogDescription>
                         </div>
@@ -52,27 +52,27 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                 <div className="flex flex-col gap-6">
                     {/* Nombre */}
                     <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Nombre de Campaña:</label>
+                        <label className="text-[13px] font-semibold text-ink">Nombre de Campaña:</label>
                         <Input
                             placeholder="Ej: Campaña Mango 2026"
-                            className="rounded-xl h-11 border-gray-200 shadow-none focus-visible:ring-[#5D9634]"
+                            className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand placeholder:text-muted-foreground"
                         />
                     </div>
 
                     {/* Fechas */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Inicio:</label>
+                            <label className="text-[13px] font-semibold text-ink">Fecha Inicio:</label>
                             <Input
                                 type="date"
-                                className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus-visible:ring-[#5D9634]"
+                                className="rounded-lg h-11 border-border text-ink-muted shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand"
                             />
                         </div>
                         <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-[#1a2f22]">Fecha Fin:</label>
+                            <label className="text-[13px] font-semibold text-ink">Fecha Fin:</label>
                             <Input
                                 type="date"
-                                className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus-visible:ring-[#5D9634]"
+                                className="rounded-lg h-11 border-border text-ink-muted shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand"
                             />
                         </div>
                     </div>
@@ -80,12 +80,12 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                     {/* Frutas Derivadas */}
                     <div className="grid grid-cols-2 gap-4 ">
                         <div className="flex flex-col gap-2.5 ">
-                            <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Frutas:</label>
+                            <label className="text-[13px] font-semibold text-ink">Seleccionar Frutas:</label>
                             <Select onValueChange={handleAddFruit} value="">
-                                <SelectTrigger className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
+                                <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
                                     <SelectValue placeholder="Seleccionar Fruta" />
                                 </SelectTrigger>
-                                <SelectContent className="rounded-xl">
+                                <SelectContent className="rounded-lg">
                                     <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
                                     <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
                                     <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
@@ -94,12 +94,12 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                         </div>
 
                         <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas:</label>
+                            <label className="text-[13px] font-semibold text-ink">Frutas derivadas:</label>
                             <Select onValueChange={handleAddFruit} value="">
-                                <SelectTrigger className="rounded-xl h-11 border-gray-200 text-gray-500 shadow-none focus:ring-[#5D9634]">
+                                <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
                                     <SelectValue placeholder="Derivadas:" />
                                 </SelectTrigger>
-                                <SelectContent className="rounded-xl">
+                                <SelectContent className="rounded-lg">
                                     <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
                                     <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
                                     <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
@@ -112,16 +112,16 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
 
                     {/* Frutas Seleccionadas */}
                     <div className={`flex flex-col gap-2.5 transition-all duration-300 ${selectedFruits.length > 0 ? "opacity-100 h-auto" : "opacity-0 h-0 overflow-hidden"}`}>
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Frutas derivadas seleccionadas:</label>
+                        <label className="text-[13px] font-semibold text-ink">Frutas derivadas seleccionadas:</label>
                         <div className="flex flex-wrap gap-2">
                             {selectedFruits.map((fruit) => (
                                 <div
                                     key={fruit}
-                                    className="bg-[#EBF3EC] text-[#5D9634] pr-3 pl-2 py-1.5 rounded-full text-[13px] font-semibold flex items-center gap-2"
+                                    className="bg-brand-surface text-brand pr-3 pl-2 py-1.5 rounded-full text-[13px] font-semibold flex items-center gap-2"
                                 >
                                     <button
                                         onClick={() => handleRemoveFruit(fruit)}
-                                        className="hover:bg-[#d2e5d5] rounded-full p-0.5 transition-colors text-[#5D9634]"
+                                        className="hover:bg-brand-border rounded-full p-0.5 transition-colors text-brand"
                                     >
                                         <X size={14} strokeWidth={3} />
                                     </button>
@@ -133,13 +133,13 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
 
                     {/* Requerimientos */}
                     <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Requerimientos Comerciales:</label>
+                        <label className="text-[13px] font-semibold text-ink">Requerimientos Comerciales:</label>
                         <div className="relative">
                             <Input
                                 placeholder="Ej: 3000"
-                                className="rounded-xl h-11 border-gray-200 pr-12 shadow-none focus-visible:ring-[#5D9634]"
+                                className="rounded-lg h-11 border-border pr-12 shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand placeholder:text-muted-foreground"
                             />
-                            <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#EBF3EC] text-[#5D9634] text-[11px] font-bold px-2 py-1 rounded-md">
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-brand-surface text-brand text-[11px] font-bold px-2 py-1 rounded-md">
                                 KG
                             </div>
                         </div>
@@ -150,13 +150,13 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-xl h-11 px-8 border-gray-200 text-[#5D9634] font-bold hover:bg-gray-50 hover:text-[#5D9634]"
+                        className="rounded-lg h-11 px-8 border-border text-ink-muted font-bold hover:bg-muted hover:text-ink transition-colors"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={onSuccess}
-                        className="rounded-xl h-11 px-6 bg-[#6b9d3b] hover:bg-[#58852e] text-white font-semibold gap-2 shadow-sm"
+                        className="rounded-lg h-11 px-6 bg-brand hover:bg-brand-dark text-white font-semibold gap-2 shadow-sm transition-colors active:scale-95"
                     >
                         <Leaf size={18} strokeWidth={2.5} />
                         Crear Campaña

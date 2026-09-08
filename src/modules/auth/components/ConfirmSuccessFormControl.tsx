@@ -38,18 +38,18 @@ export default function ConfirmSuccessFormControl({ onBack, onConfirm }: Confirm
 
     return (
         <div className="w-full flex flex-col items-center">
-            <div className="h-12 w-12 rounded-full bg-chart-4/10 flex items-center justify-center mb-4">
-                <KeyRound size={22} strokeWidth={2.5} className="text-chart-4" />
+            <div className="h-12 w-12 rounded-full bg-brand/10 flex items-center justify-center mb-4">
+                <KeyRound size={22} strokeWidth={2.5} className="text-brand" />
             </div>
 
-            <h1 className="text-[24px] font-semibold text-chart-5 tracking-tight text-center">Confirmar sesión</h1>
-            <div className="h-1 w-10 bg-chart-4 rounded-full my-3"></div>
+            <h1 className="text-[24px] font-semibold text-ink tracking-tight text-center">Confirmar sesión</h1>
+            <div className="h-1 w-10 bg-brand rounded-full my-3"></div>
             <p className="text-xs text-muted-foreground text-center max-w-70 mb-6">
                 Ingresa el código de 6 dígitos que enviamos a tu correo
             </p>
 
             <div className="w-full space-y-1.5">
-                <FieldLabel className="text-sm font-bold text-chart-5">Código de seguridad</FieldLabel>
+                <FieldLabel className="text-sm font-bold text-ink">Código de seguridad</FieldLabel>
                 <div className="flex justify-between gap-2" role="presentation">
                     {Array.from({ length: OTP_LENGTH }).map((_, index) => (
                         <input
@@ -61,7 +61,7 @@ export default function ConfirmSuccessFormControl({ onBack, onConfirm }: Confirm
                             value={otp[index]}
                             onChange={(e) => handleChange(e, index)}
                             onKeyDown={(e) => handleKeyDown(e, index)}
-                            className="flex w-0 aspect-square flex-1 items-center justify-center rounded-sm border border-border/70 bg-background text-center text-xl font-semibold text-chart-5 transition-colors focus:border-chart-4 focus:ring-1 focus:ring-chart-4/30 focus:outline-none caret-chart-4"
+                            className="flex w-0 aspect-square flex-1 items-center justify-center rounded-lg border border-border/70 bg-background text-center text-xl font-semibold text-ink transition-colors focus:border-brand focus:ring-1 focus:ring-brand/30 focus:outline-none caret-brand"
                         />
                     ))}
                 </div>
@@ -69,7 +69,7 @@ export default function ConfirmSuccessFormControl({ onBack, onConfirm }: Confirm
 
             <Button
                 onClick={onConfirm}
-                className="bg-chart-5 hover:bg-chart-5/90 w-full h-11 rounded-sm font-medium text-white shadow-md shadow-chart-5/20 flex items-center justify-between px-6 transition-all text-[15px] mt-6"
+                className="bg-brand hover:bg-brand-dark w-full h-11 rounded-lg font-bold text-white shadow-sm flex items-center justify-between px-6 transition-all text-[15px] mt-6 active:scale-95"
             >
                 <span className="flex-1 text-center pr-2">Confirmar</span>
                 <ArrowRight size={20} strokeWidth={2.5} className="shrink-0" />
@@ -77,7 +77,7 @@ export default function ConfirmSuccessFormControl({ onBack, onConfirm }: Confirm
 
             {onBack && (
                 <div className="mt-6 w-full flex justify-center">
-                    <button onClick={onBack} className="text-chart-4 text-sm font-bold hover:underline transition-colors">
+                    <button onClick={onBack} className="text-brand text-sm font-bold hover:underline transition-colors">
                         Volver
                     </button>
                 </div>

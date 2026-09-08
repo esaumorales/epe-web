@@ -19,7 +19,7 @@ interface CampaignLinkClientModalProps {
 export default function CampaignLinkClientModal({ open, onOpenChange, onSave }: CampaignLinkClientModalProps) {
     const [selectedClient, setSelectedClient] = useState<string>("");
     const [cantidad, setCantidad] = useState<string>("");
-    
+
     const [addedClients, setAddedClients] = useState([
         { id: 1, contact: "Pepe Alonso", company: "Sutrimex" },
         { id: 2, contact: "Pepe Alonso", company: "Fixgrom" }
@@ -31,7 +31,7 @@ export default function CampaignLinkClientModal({ open, onOpenChange, onSave }: 
 
     const handleAdd = () => {
         if (!selectedClient) return;
-        
+
         const company = selectedClient === "sutrimex" ? "Sutrimex" : "Fixgrom";
         const newClient = {
             id: Date.now(),
@@ -46,78 +46,80 @@ export default function CampaignLinkClientModal({ open, onOpenChange, onSave }: 
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[550px] md:max-w-xl p-8 rounded-[1.5rem] bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[550px] md:max-w-xl p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
                 <DialogHeader className="mb-6">
-                    <DialogTitle className="text-xl font-bold text-[#1a2f22]">
+                    <DialogTitle className="text-xl font-bold text-ink">
                         Registrar Clientes
                     </DialogTitle>
                 </DialogHeader>
 
                 <div className="flex flex-col gap-5">
-                    {/* Seleccionar Cliente */}
-                    <div className="flex flex-col gap-2.5">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Seleccionar Cliente:</label>
-                        <Select value={selectedClient} onValueChange={setSelectedClient}>
-                            <SelectTrigger className="w-full rounded-xl h-11 border-[1.5px] border-gray-400 text-gray-600 shadow-none focus:ring-[#5D9634]">
-                                <SelectValue placeholder="" />
-                            </SelectTrigger>
-                            <SelectContent className="rounded-xl">
-                                <SelectItem value="sutrimex" className="rounded-lg">Sutrimex</SelectItem>
-                                <SelectItem value="fixgrom" className="rounded-lg">Fixgrom</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
+                    {/* Cliente + Cantidad */}
+                    <div className="flex gap-4 items-start">
+                        <div className="flex-1 flex flex-col gap-2.5">
+                            <label className="text-[13px] font-semibold text-ink">Seleccionar Cliente:</label>
+                            <Select value={selectedClient} onValueChange={setSelectedClient}>
+                                <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
+                                    <SelectValue placeholder="Selecciona un cliente" />
+                                </SelectTrigger>
+                                <SelectContent className="rounded-lg">
+                                    <SelectItem value="sutrimex" className="rounded-lg">Sutrimex</SelectItem>
+                                    <SelectItem value="fixgrom" className="rounded-lg">Fixgrom</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
 
-                    <div className="flex flex-col items-end gap-2.5 mt-[-10px]">
-                        <div className="w-[200px]">
-                            <label className="text-[13px] font-semibold text-[#1a2f22] ml-4">Cantidad kg:</label>
+                        <div className="w-[140px] flex flex-col gap-2.5">
+                            <label className="text-[13px] font-semibold text-ink">Cantidad kg:</label>
                             <Input
                                 type="number"
-                                placeholder=""
+                                placeholder="0"
                                 value={cantidad}
                                 onChange={(e) => setCantidad(e.target.value)}
-                                className="rounded-xl h-11 border-[1.5px] border-gray-400 shadow-none focus-visible:ring-[#5D9634] mt-1"
+                                className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand"
                             />
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center gap-4 mt-2">
-                        <Button 
-                            variant="secondary" 
-                            className="rounded-xl h-12 bg-[#6B6B6B] hover:bg-[#5a5a5a] text-white font-semibold px-8 flex gap-3 shadow-md w-[280px]"
+                    {/* Adjuntar + Agregar */}
+                    <div className="flex items-center justify-between gap-4">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className="rounded-lg h-11 border-dashed border-brand-border text-ink-body hover:border-brand hover:text-brand hover:bg-brand-surface font-semibold px-5 flex gap-2 transition-colors active:scale-95"
                         >
                             <Upload size={18} />
-                            Adjuntar Requerimientos
+                            Adjuntar requerimientos
                         </Button>
 
-                        <Button 
+                        <Button
                             onClick={handleAdd}
                             disabled={!selectedClient}
-                            className="h-10 rounded-xl bg-[#5D9634] hover:bg-[#4b7a29] text-white font-bold px-8 shadow-sm disabled:opacity-50"
+                            className="h-11 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-8 shadow-sm disabled:opacity-50 transition-colors active:scale-95 shrink-0"
                         >
                             Agregar
                         </Button>
                     </div>
 
                     {/* Clientes Agregados */}
-                    <div className="flex flex-col gap-3 mt-4">
-                        <label className="text-[13px] font-semibold text-[#1a2f22]">Clientes agregados:</label>
+                    <div className="flex flex-col gap-3 mt-2">
+                        <label className="text-[13px] font-semibold text-ink">Clientes agregados:</label>
                         <div className="flex flex-wrap gap-3">
                             {addedClients.map((client) => (
-                                <div key={client.id} className="flex items-center gap-3 p-3 rounded-[1.25rem] border-[2px] border-gray-500 bg-white min-w-[200px]">
-                                    <button 
+                                <div key={client.id} className="flex items-center gap-3 p-3 rounded-2xl border border-border bg-white min-w-[200px]">
+                                    <div className="w-10 h-10 rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0">
+                                        <UserSquare size={20} strokeWidth={2.5} />
+                                    </div>
+                                    <div className="flex flex-col flex-1">
+                                        <span className="text-[13px] font-bold text-ink leading-tight mb-0.5">{client.contact}</span>
+                                        <span className="text-[11px] font-medium text-ink-muted">Cliente - {client.company}</span>
+                                    </div>
+                                    <button
                                         onClick={() => handleRemove(client.id)}
-                                        className="text-[#1a2f22] hover:text-red-500 transition-colors"
+                                        className="text-ink-muted hover:text-destructive transition-colors shrink-0"
                                     >
-                                        <X size={18} strokeWidth={2.5} />
+                                        <X size={16} strokeWidth={2.5} />
                                     </button>
-                                    <div className="w-10 h-10 rounded-full border-2 border-gray-800 flex items-center justify-center text-gray-800 shrink-0">
-                                        <UserSquare size={22} strokeWidth={2.5} />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-[13px] font-bold text-[#1a2f22] leading-tight mb-0.5">{client.contact}</span>
-                                        <span className="text-[11px] font-medium text-[#1a2f22]">Cliente - {client.company}</span>
-                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -129,13 +131,13 @@ export default function CampaignLinkClientModal({ open, onOpenChange, onSave }: 
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-xl h-10 px-6 border-transparent bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold shadow-none"
+                        className="rounded-lg h-10 px-6 border-border text-ink-body font-bold hover:bg-muted transition-colors"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={() => onSave ? onSave() : onOpenChange(false)}
-                        className="rounded-xl h-10 px-8 bg-[#5D9634] hover:bg-[#4b7a29] text-white font-bold shadow-sm"
+                        className="rounded-lg h-10 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
                     >
                         Guardar
                     </Button>

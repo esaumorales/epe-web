@@ -20,7 +20,7 @@ export default function ModuleCard({
   return (
     <div
       onClick={onClick}
-      className="group relative flex items-stretch w-full h-full min-h-35 bg-white rounded-[10px] cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] overflow-hidden border-l-[3px] border-transparent hover:border-[#5D9634]"
+      className="group relative flex items-stretch w-full h-full min-h-35 bg-white rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] overflow-hidden border-l-[3px] border-transparent hover:border-brand"
     >
 
       {/* Efecto de iluminación (Shimmer on hover) */}
@@ -31,13 +31,13 @@ export default function ModuleCard({
       {/* Left section (Icon & Text) */}
       <div className="flex flex-1 items-start p-5 gap-4 z-20 relative">
         {/* Icon */}
-        <div className="w-14 h-14 shrink-0 rounded-full bg-[#EBF3EC] flex items-center justify-center text-[#5D9634] mt-0.5">
+        <div className="w-14 h-14 shrink-0 rounded-full bg-brand-surface flex items-center justify-center text-brand mt-0.5">
           {icon}
         </div>
 
         {/* Text & Link */}
         <div className="flex flex-col justify-center flex-1">
-          <h2 className="text-[17px] font-bold text-[#1a2f22] leading-tight mb-1">
+          <h2 className="text-[17px] font-bold text-ink leading-tight mb-1">
             {title}
           </h2>
           <p className="text-ink-muted text-[13px] leading-snug mb-2 line-clamp-3">
@@ -58,7 +58,7 @@ export default function ModuleCard({
         className="w-[155px] shrink-0 relative z-0 -ml-5"
         style={{ clipPath: `url(#${WAVE_CLIP_ID})` }}
       >
-        <div className="w-full h-full bg-gray-200">
+        <div className="w-full h-full bg-muted">
           {image && (
             <img
               src={image}
