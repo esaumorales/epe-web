@@ -56,14 +56,18 @@ export default function TopNavBar({ onLogout }: TopNavBarProps) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" sideOffset={12} className="w-75 p-3 rounded-xl grid grid-cols-2 gap-2">
                         {sidebarItems.map((item) => (
-                            <DropdownMenuItem key={item.title} asChild className="p-0 outline-none">
-                                <Link to={item.url} className="w-full group flex flex-col items-center justify-center p-3 gap-2 h-auto text-[13px] font-medium text-ink-body cursor-pointer rounded-xl hover:bg-brand-surface hover:text-brand transition-colors focus:bg-brand-surface text-center outline-none ring-0">
-                                    <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-ink-muted group-hover:bg-brand/15 group-hover:text-brand transition-colors">
-                                        <item.icon size={20} strokeWidth={1.5} />
-                                    </div>
-                                    <span className="leading-tight">{item.title}</span>
-                                </Link>
-                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                key={item.title}
+                                className="p-0 outline-none"
+                                render={
+                                    <Link to={item.url} className="w-full group flex flex-col items-center justify-center p-3 gap-2 h-auto text-[13px] font-medium text-ink-body cursor-pointer rounded-xl hover:bg-brand-surface hover:text-brand transition-colors focus:bg-brand-surface text-center outline-none ring-0">
+                                        <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-ink-muted group-hover:bg-brand/15 group-hover:text-brand transition-colors">
+                                            <item.icon size={20} strokeWidth={1.5} />
+                                        </div>
+                                        <span className="leading-tight">{item.title}</span>
+                                    </Link>
+                                }
+                            />
                         ))}
                     </DropdownMenuContent>
                 </DropdownMenu>
