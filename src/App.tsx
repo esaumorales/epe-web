@@ -9,6 +9,7 @@ import CampaignProvidersPage from './modules/campaigns/pages/CampaignProvidersPa
 import ProvidersPage from './modules/providers/pages/ProvidersPage'
 import ClientsPage from './modules/clients/pages/ClientsPage'
 import CertificationsPage from './modules/certifications/pages/CertificationsPage'
+import CertificationsCreatePage from './modules/certifications/pages/CertificationsCreatePage'
 import DashboardLayout from '@/shared/layout/DashboardLayout'
 
 // Persistent layout wrapper for authenticated routes
@@ -43,6 +44,7 @@ function App() {
           <Route path="/proveedores" element={<ProvidersPage />} />
           <Route path="/clientes" element={<ClientsPage />} />
           <Route path="/certificaciones" element={<CertificationsPage />} />
+          <Route path="/certificaciones/nueva" element={<CertificationsCreatePage />} />
         </Route>
         
         <Route path="/" element={<Navigate to="/modules" />} />

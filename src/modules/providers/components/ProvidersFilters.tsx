@@ -3,9 +3,21 @@ import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
 import { Card, CardContent } from "@/shared/components/ui/card";
+import { useState } from "react";
+import ProviderCreateModal from "./ProviderCreateModal";
+import ProviderSuccessModal from "./ProviderSuccessModal";
 
 export default function ProvidersFilters() {
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+    const handleCreateSuccess = () => {
+        setIsCreateModalOpen(false);
+        setIsSuccessModalOpen(true);
+    };
+
     return (
+        <>
         <Card className="mb-8 border-border shadow-[0_2px_12px_rgb(0,0,0,0.03)] rounded-2xl">
             <CardContent className="p-6 flex flex-col gap-6">
                 <div className="flex items-start gap-3">
@@ -68,12 +80,35 @@ export default function ProvidersFilters() {
                         </Select>
                     </div>
 
-                    <Button variant="outline" className="h-11 rounded-sm px-6 border-border text-ink-muted gap-2 hover:bg-muted hover:text-ink shadow-none font-semibold transition-colors active:scale-95">
-                        <Settings2 size={16} strokeWidth={2.5} />
-                        Limpiar Filtros
-                    </Button>
+                    <div className="flex gap-4">
+                        <Button variant="outline" className="h-11 rounded-sm px-6 border-border text-ink-muted gap-2 hover:bg-muted hover:text-ink shadow-none font-semibold transition-colors active:scale-95">
+                            <Settings2 size={16} strokeWidth={2.5} />
+                            Limpiar Filtros
+                        </Button>
+                        <Button variant="secondary" className="h-11 rounded-xl px-6 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold shadow-none border border-gray-400">
+                            Importar Excel
+                        </Button>
+                        <Button 
+                            variant="outline" 
+                            onClick={() => setIsCreateModalOpen(true)}
+                            className="h-11 rounded-xl px-6 border-[1.5px] border-gray-400 text-[#1a2f22] font-semibold shadow-none bg-white hover:bg-gray-50"
+                        >
+                            + Nuevo Proveedor
+                        </Button>
+                    </div>
                 </div>
             </CardContent>
         </Card>
+        <ProviderCreateModal 
+            open={isCreateModalOpen} 
+            onOpenChange={setIsCreateModalOpen}
+            onSuccess={handleCreateSuccess}
+        />
+
+        <ProviderSuccessModal 
+            open={isSuccessModalOpen} 
+            onOpenChange={setIsSuccessModalOpen}
+        />
+    </>
     );
 }
