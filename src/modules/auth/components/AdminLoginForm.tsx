@@ -44,7 +44,7 @@ export default function AdminLoginForm({ onLogin }: AdminLoginFormProps) {
             className="w-full max-w-md rounded-2xl overflow-hidden relative z-10 bg-white shadow-2xl border border-border/40 transition-[height] duration-300 ease-in-out"
             style={{ height: cardHeight }}
         >
-            <div ref={contentRef} className="px-6 py-8 sm:px-10 lg:px-12 flex flex-col">
+            <div ref={contentRef} className="px-5 py-7 sm:px-10 sm:py-8 lg:px-12 flex flex-col">
                 {view === 'recover' && <RecoverFormControl onBack={() => setView('login')} />}
 
                 {view === 'confirm' && <ConfirmSuccessFormControl onBack={() => setView('login')} onConfirm={onLogin} />}

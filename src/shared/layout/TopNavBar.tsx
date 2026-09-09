@@ -20,35 +20,39 @@ export default function TopNavBar({ onLogout }: TopNavBarProps) {
     const isRoot = location.pathname === '/modules' || location.pathname === '/';
 
     return (
-        <header className="flex h-16 shrink-0 items-center justify-between px-14 bg-white w-full z-20 border-b border-border">
-            <div className="flex items-center">
+        <header className="flex h-16 shrink-0 items-center justify-between px-4 sm:px-8 lg:px-14 bg-white w-full z-20 border-b border-border">
+            <div className="flex items-center min-w-0">
                 {/* Botón de regresar animado (aparece empujando el logo) */}
-                <div 
-                    className={`overflow-hidden transition-[width,opacity] duration-500 ease-in-out flex items-center ${
-                        isRoot ? 'w-0 opacity-0' : 'w-12 opacity-100'
+                <div
+                    className={`overflow-hidden transition-[width,opacity] duration-500 ease-in-out flex items-center shrink-0 ${
+                        isRoot ? 'w-0 opacity-0' : 'w-9 sm:w-12 opacity-100'
                     }`}
                 >
-                    <button 
-                        onClick={() => navigate('/modules')} 
-                        className="text-ink-muted hover:text-brand transition-all flex items-center justify-center shrink-0 w-8 h-8 rounded-full hover:bg-black/5 mr-4 active:scale-95"
+                    <button
+                        onClick={() => navigate('/modules')}
+                        className="text-ink-muted hover:text-brand transition-all flex items-center justify-center shrink-0 w-8 h-8 rounded-full hover:bg-black/5 mr-1 sm:mr-4 active:scale-95"
                         aria-label="Regresar a módulos"
                     >
                         <ArrowLeft size={22} strokeWidth={2} />
                     </button>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <img src={LogoEmpresaOnly} alt="Agro Exportaciones Logo" className="h-10 w-auto object-contain shrink-0" />
+                <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
+                    <img src={LogoEmpresaOnly} alt="Agro Exportaciones Logo" className="h-8 sm:h-10 w-auto object-contain shrink-0" />
                     {/* Línea divisoria verde como en el login */}
-                    <div className="h-10 w-0.5 bg-brand shrink-0 rounded-full"></div>
-                    <div className="flex flex-col justify-center">
-                        <span className="font-bold text-[16px] md:text-[18px] leading-none text-brand-dark tracking-tight">AGRO EXPORTACIONES</span>
-                        <span className="text-[7px] md:text-[8px] tracking-[0.2em] font-bold text-brand mt-1.5">CULTIVANDO CONFIANZA</span>
+                    <div className="h-8 sm:h-10 w-0.5 bg-brand shrink-0 rounded-full"></div>
+                    {/* El lockup completo no cabe en móvil: se deja solo la marca corta */}
+                    <div className="flex flex-col justify-center min-w-0">
+                        <span className="font-bold text-[13px] sm:text-[16px] md:text-[18px] leading-none text-brand-dark tracking-tight truncate">
+                            <span className="sm:hidden">AGRO F.V.</span>
+                            <span className="hidden sm:inline">AGRO EXPORTACIONES</span>
+                        </span>
+                        <span className="hidden sm:block text-[7px] md:text-[8px] tracking-[0.2em] font-bold text-brand mt-1.5">CULTIVANDO CONFIANZA</span>
                     </div>
                 </div>
             </div>
 
-            <div className="flex items-center gap-6 ml-auto">
+            <div className="flex items-center gap-3 sm:gap-6 ml-auto shrink-0">
                 {/* Menú rápido de Módulos (Mini-Sidebar) */}
                 <DropdownMenu>
                     <DropdownMenuTrigger className="text-ink-muted hover:text-brand transition-all outline-none focus-visible:ring-2 focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand/40 rounded-lg p-1 active:scale-95" aria-label="Módulos">
@@ -77,18 +81,19 @@ export default function TopNavBar({ onLogout }: TopNavBarProps) {
                     <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
                 </button>
 
-                <div className="h-9 w-px bg-border shrink-0"></div>
+                <div className="hidden sm:block h-9 w-px bg-border shrink-0"></div>
 
                 <DropdownMenu>
-                    <DropdownMenuTrigger className="flex items-center gap-3 p-1.5 pl-2 rounded-xl transition-all hover:bg-black/5 outline-none focus-visible:ring-2 focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand/40 active:scale-95">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-sm">
+                    <DropdownMenuTrigger className="flex items-center gap-3 p-1 sm:p-1.5 sm:pl-2 rounded-xl transition-all hover:bg-black/5 outline-none focus-visible:ring-2 focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand/40 active:scale-95">
+                        <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-sm">
                             <User size={20} strokeWidth={2} />
                         </span>
-                        <span className="flex flex-col items-start">
+                        {/* Nombre y rol se ocultan en móvil: el avatar basta como acceso al menú */}
+                        <span className="hidden md:flex flex-col items-start">
                             <span className="text-sm font-bold text-ink leading-tight">Juan Pérez</span>
                             <span className="text-xs text-ink-muted font-medium">Usuario Normal</span>
                         </span>
-                        <ChevronDown size={16} className="text-ink-muted ml-1" />
+                        <ChevronDown size={16} className="hidden md:block text-ink-muted ml-1" />
                     </DropdownMenuTrigger>
 
                     <DropdownMenuContent align="end" sideOffset={8} className="w-56 p-1.5">

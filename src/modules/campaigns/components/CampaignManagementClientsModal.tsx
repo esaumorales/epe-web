@@ -52,7 +52,7 @@ export default function CampaignManagementClientsModal({ open, onOpenChange }: C
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[600px] md:max-w-3xl p-8 rounded-2xl bg-white border-none shadow-2xl gap-6">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[600px] md:max-w-3xl p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-6 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-2">
                     <DialogTitle className="text-[22px] font-bold text-ink">
                         Gestión de Clientes
@@ -71,20 +71,20 @@ export default function CampaignManagementClientsModal({ open, onOpenChange }: C
 
                             {/* Info Principal */}
                             <div className="flex-1 flex flex-col gap-1.5">
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <h4 className="text-[14px] font-bold text-ink">{client.name}</h4>
-                                        <p className="text-[12px] text-muted-foreground font-medium">{client.type}</p>
+                                <div className="flex justify-between items-start gap-2">
+                                    <div className="min-w-0">
+                                        <h4 className="text-[14px] font-bold text-ink truncate">{client.name}</h4>
+                                        <p className="text-[12px] text-muted-foreground font-medium truncate">{client.type}</p>
                                     </div>
                                     
                                     {/* Status Badge */}
                                     {client.status === "Activo" ? (
-                                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-status-highlight-border text-status-highlight bg-status-highlight-surface">
+                                        <div className="flex shrink-0 items-center gap-1.5 px-3 py-1 rounded-full border border-status-highlight-border text-status-highlight bg-status-highlight-surface">
                                             <div className="w-1.5 h-1.5 rounded-full bg-status-highlight"></div>
                                             <span className="text-[11px] font-bold">Activo</span>
                                         </div>
                                     ) : (
-                                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-status-neutral-border text-status-neutral bg-status-neutral-surface">
+                                        <div className="flex shrink-0 items-center gap-1.5 px-3 py-1 rounded-full border border-status-neutral-border text-status-neutral bg-status-neutral-surface">
                                             <div className="w-1.5 h-1.5 rounded-full bg-status-neutral"></div>
                                             <span className="text-[11px] font-bold">Inactivo</span>
                                         </div>
@@ -92,12 +92,12 @@ export default function CampaignManagementClientsModal({ open, onOpenChange }: C
                                 </div>
 
                                 {/* Contact Details */}
-                                <div className="flex items-center gap-3 text-[12px] text-ink-muted font-medium mt-1">
-                                    <span>{client.contact}</span>
-                                    <span className="text-border">·</span>
-                                    <span>{client.email}</span>
-                                    <span className="text-border">·</span>
-                                    <span>{client.orders}</span>
+                                <div className="flex flex-col sm:flex-row sm:items-center sm:flex-wrap gap-1 sm:gap-0 text-[12px] text-ink-muted font-medium mt-1">
+                                    <span className="truncate">{client.contact}</span>
+                                    <span className="hidden sm:inline mx-1.5 text-border">·</span>
+                                    <span className="truncate">{client.email}</span>
+                                    <span className="hidden sm:inline mx-1.5 text-border">·</span>
+                                    <span className="truncate">{client.orders}</span>
                                 </div>
                             </div>
                         </div>

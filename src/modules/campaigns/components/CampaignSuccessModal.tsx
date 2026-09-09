@@ -10,15 +10,14 @@ import { Button } from "@/shared/components/ui/button";
 interface CampaignSuccessModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    mode?: "create" | "edit" | "provider" | "certification" | "exam" | "interview" | "client";
+    mode?: "create" | "edit" | "provider" | "exam" | "interview" | "client";
 }
 
 export default function CampaignSuccessModal({ open, onOpenChange, mode = "create" }: CampaignSuccessModalProps) {
     const getTitle = () => {
         if (mode === "edit") return "Cambios Guardados";
-        if (mode === "provider") return "Productor Registrado";
-        if (mode === "certification") return "Certificación Registrada";
-        if (mode === "exam") return "Examen Registrado";
+        if (mode === "provider") return "Proveedor Añadido a Campaña";
+        if (mode === "exam") return "Examen Médico Registrado";
         if (mode === "interview") return "Informe Registrado";
         if (mode === "client") return "Clientes Registrados";
         return "Campaña Registrada";
@@ -26,9 +25,8 @@ export default function CampaignSuccessModal({ open, onOpenChange, mode = "creat
 
     const getDescription = () => {
         if (mode === "edit") return "Se actualizó correctamente";
-        if (mode === "provider") return "Se podra ver los productores en visualizar";
-        if (mode === "certification") return "El documento se ha subido exitosamente";
-        if (mode === "exam") return "Se visualizara los examenes";
+        if (mode === "provider") return "Se ha añadido el proveedor exitosamente a la campaña";
+        if (mode === "exam") return "Se ha registrado el examen médico del proveedor exitosamente";
         if (mode === "interview") return "Se visualizara informe";
         if (mode === "client") return "Se podra ver los clientes en visualizar";
         return "Se podra ver las campañas registradas en el inicio";
@@ -36,7 +34,7 @@ export default function CampaignSuccessModal({ open, onOpenChange, mode = "creat
     
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[400px] sm:max-w-[400px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 flex flex-col items-center text-center">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[400px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 flex flex-col items-center text-center max-h-[90vh] overflow-y-auto">
                 <div className="w-24 h-24 rounded-full bg-brand-surface flex items-center justify-center text-brand mb-6 border border-brand-border">
                     <Smile size={48} strokeWidth={2} />
                 </div>

@@ -20,11 +20,7 @@ interface CampaignCreateModalProps {
 export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: CampaignCreateModalProps) {
     const [selectedFruits, setSelectedFruits] = useState<string[]>([]);
 
-    const handleAddFruit = (value: string | null) => {
-        if (value && !selectedFruits.includes(value)) {
-            setSelectedFruits([...selectedFruits, value]);
-        }
-    };
+
 
     const handleRemoveFruit = (fruit: string) => {
         setSelectedFruits(selectedFruits.filter((f) => f !== fruit));
@@ -32,7 +28,7 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[600px] sm:max-w-[700px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[700px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
                     <div className="flex items-start gap-5">
                         <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
@@ -60,7 +56,7 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                     </div>
 
                     {/* Fechas */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-ink">Fecha Inicio:</label>
                             <Input
@@ -77,36 +73,23 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                         </div>
                     </div>
 
-                    {/* Frutas Derivadas */}
-                    <div className="grid grid-cols-2 gap-4 ">
-                        <div className="flex flex-col gap-2.5 ">
-                            <label className="text-[13px] font-semibold text-ink">Seleccionar Frutas:</label>
-                            <Select onValueChange={handleAddFruit} value="">
-                                <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                                    <SelectValue placeholder="Seleccionar Fruta" />
-                                </SelectTrigger>
-                                <SelectContent className="rounded-lg">
-                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
-                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
-                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-ink">Frutas derivadas:</label>
-                            <Select onValueChange={handleAddFruit} value="">
-                                <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                                    <SelectValue placeholder="Derivadas:" />
-                                </SelectTrigger>
-                                <SelectContent className="rounded-lg">
-                                    <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
-                                    <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
-                                    <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
+                    {/* Fruta Principal */}
+                    <div className="flex flex-col gap-2.5">
+                        <label className="text-[13px] font-semibold text-ink">Seleccionar Fruta:</label>
+                        <Select onValueChange={(value) => {
+                            if (value === "Mango") {
+                                const derivatives = ["Mango Kent", "Mango Edward", "Mango Haden"];
+                                const toAdd = derivatives.filter(d => !selectedFruits.includes(d));
+                                setSelectedFruits([...selectedFruits, ...toAdd]);
+                            }
+                        }} value="">
+                            <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
+                                <SelectValue placeholder="Seleccionar Fruta" />
+                            </SelectTrigger>
+                            <SelectContent className="rounded-lg">
+                                <SelectItem value="Mango" className="rounded-lg">Mango</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
 
 
@@ -146,7 +129,7 @@ export default function CampaignCreateModal({ open, onOpenChange, onSuccess }: C
                     </div>
                 </div>
 
-                <div className="flex justify-center gap-4 mt-8">
+                <div className="flex flex-col-reverse sm:flex-row justify-center gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}

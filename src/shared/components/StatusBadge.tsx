@@ -1,7 +1,7 @@
 import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-type StatusTone = "brand" | "highlight" | "warning" | "neutral";
+type StatusTone = "brand" | "highlight" | "warning" | "danger" | "neutral";
 
 const STATUS_TONES: Record<string, StatusTone> = {
     planificado: "brand",
@@ -10,9 +10,11 @@ const STATUS_TONES: Record<string, StatusTone> = {
     vigente: "brand",
     "por aprobar": "highlight",
     "por vencer": "highlight",
+    "en espera": "highlight",
     pendiente: "highlight",
-    vencida: "warning",
-    rechazado: "warning",
+    "en proceso": "warning",
+    vencida: "danger",
+    rechazado: "danger",
     terminado: "neutral",
     inactivo: "neutral",
 };
@@ -21,6 +23,7 @@ const TONE_STYLES: Record<StatusTone, { badge: string; dot: string }> = {
     brand: { badge: "bg-brand-surface text-brand", dot: "bg-brand" },
     highlight: { badge: "bg-status-highlight-surface text-status-highlight", dot: "bg-status-highlight" },
     warning: { badge: "bg-status-warning/10 text-status-warning", dot: "bg-status-warning" },
+    danger: { badge: "bg-destructive/10 text-destructive", dot: "bg-destructive" },
     neutral: { badge: "bg-status-neutral-surface text-status-neutral", dot: "bg-status-neutral" },
 };
 

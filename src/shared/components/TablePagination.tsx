@@ -1,0 +1,59 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
+
+interface TablePaginationProps {
+    page: number;
+    pageCount: number;
+    onPageChange: (page: number) => void;
+}
+
+export default function TablePagination({ page, pageCount, onPageChange }: TablePaginationProps) {
+    if (pageCount <= 1) return null;
+
+    return (
+        <div className="flex items-center justify-end gap-1.5">
+            <Button
+                variant="outline"
+                size="icon"
+                disabled={page === 1}
+                onClick={() => onPageChange(page - 1)}
+                aria-label="Página anterior"
+                className="h-9 w-9 rounded-lg border-border text-ink-muted hover:text-brand hover:border-brand disabled:opacity-40 transition-colors active:scale-95"
+            >
+                <ChevronLeft size={18} strokeWidth={2.5} />
+            </Button>
+
+            {Array.from({ length: pageCount }).map((_, index) => {
+                const target = index + 1;
+                const isActive = target === page;
+                return (
+                    <Button
+                        key={target}
+                        variant="outline"
+                        size="icon"
+                        onClick={() => onPageChange(target)}
+                        aria-current={isActive ? "page" : undefined}
+                        className={`h-9 w-9 rounded-lg font-bold transition-colors active:scale-95 ${
+                            isActive
+                                ? "bg-brand border-brand text-white hover:bg-brand-dark hover:text-white"
+                                : "border-border text-ink-muted hover:text-brand hover:border-brand"
+                        }`}
+                    >
+                        {target}
+                    </Button>
+                );
+            })}
+
+            <Button
+                variant="outline"
+                size="icon"
+                disabled={page === pageCount}
+                onClick={() => onPageChange(page + 1)}
+                aria-label="Página siguiente"
+                className="h-9 w-9 rounded-lg border-border text-ink-muted hover:text-brand hover:border-brand disabled:opacity-40 transition-colors active:scale-95"
+            >
+                <ChevronRight size={18} strokeWidth={2.5} />
+            </Button>
+        </div>
+    );
+}

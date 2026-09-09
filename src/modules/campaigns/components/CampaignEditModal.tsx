@@ -14,6 +14,7 @@ import { Button } from "@/shared/components/ui/button";
 interface CampaignEditModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    campaignId?: number | null;
     onSuccess?: () => void;
 }
 
@@ -22,7 +23,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
     const [selectedDerivedFruits, setSelectedDerivedFruits] = useState<string[]>(["Mango 2026"]);
     
     const [fruitError, setFruitError] = useState<string | null>(null);
-    const [derivedError, setDerivedError] = useState<string | null>(null);
+
 
     const handleFruitChange = (value: string | null) => {
         if (value === "Mngo ") {
@@ -32,16 +33,10 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
         }
         setFruitError(null);
         setSelectedFruit(value);
-    };
-
-    const handleAddDerivedFruit = (value: string | null) => {
-        if (value === "Mngo marron") {
-            setDerivedError("La fruta 'Mngo marron' no es válida o está mal escrita.");
-            return;
-        }
-        setDerivedError(null);
-        if (value && !selectedDerivedFruits.includes(value)) {
-            setSelectedDerivedFruits([...selectedDerivedFruits, value]);
+        if (value === "Mango") {
+            const derivatives = ["Mango Kent", "Mango Edward", "Mango Haden"];
+            const toAdd = derivatives.filter(d => !selectedDerivedFruits.includes(d));
+            setSelectedDerivedFruits([...selectedDerivedFruits, ...toAdd]);
         }
     };
 
@@ -51,7 +46,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[600px] sm:max-w-[700px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[700px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
                     <div className="flex items-start gap-5">
                         <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
@@ -79,7 +74,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                     </div>
 
                     {/* Fechas */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-ink">Fecha Inicio:</label>
                             <Input
@@ -96,49 +91,23 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                         </div>
                     </div>
 
-                    {/* Frutas derivadas */}
-                    <div className="grid grid-cols-2 gap-4">
+                    {/* Fruta Principal */}
+                    <div className="flex flex-col gap-2.5">
+                        <label className="text-[13px] font-semibold text-ink">Seleccionar Fruta:</label>
+                        <Select onValueChange={handleFruitChange} value={selectedFruit || ""}>
+                            <SelectTrigger className={`w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand transition-colors ${fruitError ? "border-destructive focus:ring-destructive" : ""}`}>
+                                <SelectValue placeholder="Seleccionar Fruta" />
+                            </SelectTrigger>
+                            <SelectContent className="rounded-lg">
+                                <SelectItem value="Mango" className="rounded-lg">Mango</SelectItem>
+                                <SelectItem value="Mngo " className="rounded-lg text-destructive font-medium">Mngo marron (Mal escrito)</SelectItem>
+                            </SelectContent>
+                        </Select>
 
-                        <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-ink">Seleccionar Frutas:</label>
-                            <Select onValueChange={handleFruitChange} value={selectedFruit || ""}>
-                                <SelectTrigger className={`w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand transition-colors ${fruitError ? "border-destructive focus:ring-destructive" : ""}`}>
-                                    <SelectValue placeholder="Seleccionar Fruta" />
-                                </SelectTrigger>
-                                <SelectContent className="rounded-lg">
-                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
-                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
-                                    <SelectItem value="Mango " className="rounded-lg">Mango </SelectItem>
-                                    <SelectItem value="Mngo " className="rounded-lg text-destructive font-medium">Mngo marron (Mal escrito)</SelectItem>
-                                </SelectContent>
-                            </Select>
-
-                            {/* Validación Micro-animada */}
-                            <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-destructive ${fruitError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
-                                <AlertCircle size={14} />
-                                <span className="text-[13px] font-medium">{fruitError}</span>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col gap-2.5">
-                            <label className="text-[13px] font-semibold text-ink">Frutas  derivadas:</label>
-                            <Select onValueChange={handleAddDerivedFruit} value="">
-                                <SelectTrigger className={`w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand transition-colors ${derivedError ? "border-destructive focus:ring-destructive" : ""}`}>
-                                    <SelectValue placeholder="Seleccionar Fruta Derivada" />
-                                </SelectTrigger>
-                                <SelectContent className="rounded-lg">
-                                    <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
-                                    <SelectItem value="Mango Edward" className="rounded-lg">Mango Edward</SelectItem>
-                                    <SelectItem value="Mango Haden" className="rounded-lg">Mango Haden</SelectItem>
-                                    <SelectItem value="Mngo marron" className="rounded-lg text-destructive font-medium">Mngo marron (Mal escrito)</SelectItem>
-                                </SelectContent>
-                            </Select>
-
-                            {/* Validación Micro-animada */}
-                            <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-destructive ${derivedError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
-                                <AlertCircle size={14} />
-                                <span className="text-[13px] font-medium">{derivedError}</span>
-                            </div>
+                        {/* Validación Micro-animada */}
+                        <div className={`transition-all duration-300 overflow-hidden flex items-center gap-2 text-destructive ${fruitError ? "opacity-100 max-h-10 mt-1" : "opacity-0 max-h-0 mt-0"}`}>
+                            <AlertCircle size={14} />
+                            <span className="text-[13px] font-medium">{fruitError}</span>
                         </div>
                     </div>
 
@@ -178,7 +147,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                     </div>
                 </div>
 
-                <div className="flex justify-center gap-4 mt-8">
+                <div className="flex flex-col-reverse sm:flex-row justify-center gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}

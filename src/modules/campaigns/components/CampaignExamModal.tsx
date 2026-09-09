@@ -1,10 +1,19 @@
-import { Upload } from "lucide-react";
+import { Upload, FlaskConical } from "lucide-react";
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogDescription,
 } from "@/shared/components/ui/dialog";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/shared/components/ui/table";
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
 import { Textarea } from "@/shared/components/ui/textarea";
@@ -29,25 +38,35 @@ export default function CampaignExamModal({ open, onOpenChange, onSave }: Campai
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[1100px] sm:max-w-[1100px] md:max-w-[1000px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[1100px] md:max-w-[1000px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
-                    <DialogTitle className="text-[24px] font-bold text-ink">
-                        Registrar examen
-                    </DialogTitle>
+                    <div className="flex items-start gap-4 sm:gap-5">
+                        <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
+                            <FlaskConical size={24} strokeWidth={2} />
+                        </div>
+                        <div className="flex-1 pt-1">
+                            <DialogTitle className="text-xl font-bold text-ink">
+                                Registrar Examen
+                            </DialogTitle>
+                            <DialogDescription className="text-[13.5px] text-ink-muted mt-1">
+                                Registra los análisis de laboratorio asociados al productor.
+                            </DialogDescription>
+                        </div>
+                    </div>
                 </DialogHeader>
 
-                <div className="flex flex-col gap-6">
-                    <div className="grid grid-cols-12 gap-6">
-                        {/* Left Column (Inputs) */}
-                        <div className="col-span-4 flex flex-col gap-5">
-                            <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                        {/* Columna 1 */}
+                        <div className="flex flex-col gap-4 sm:gap-5">
+                            <div className="flex flex-col gap-2.5">
                                 <label className="text-[13px] font-semibold text-ink">Fecha:</label>
                                 <Input
                                     type="date"
                                     className="rounded-lg h-11 border-border text-ink-muted shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand"
                                 />
                             </div>
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-2.5">
                                 <label className="text-[13px] font-semibold text-ink">Resultado:</label>
                                 <Input
                                     placeholder="Ingrese el resultado"
@@ -56,16 +75,16 @@ export default function CampaignExamModal({ open, onOpenChange, onSave }: Campai
                             </div>
                         </div>
 
-                        {/* Middle Column (Inputs) */}
-                        <div className="col-span-4 flex flex-col gap-5">
-                            <div className="flex flex-col gap-2">
+                        {/* Columna 2 */}
+                        <div className="flex flex-col gap-4 sm:gap-5">
+                            <div className="flex flex-col gap-2.5">
                                 <label className="text-[13px] font-semibold text-ink">Tipo de examen:</label>
                                 <Input
                                     placeholder="Tipo de examen"
                                     className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand placeholder:text-muted-foreground"
                                 />
                             </div>
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-2.5">
                                 <label className="text-[13px] font-semibold text-ink">Origen:</label>
                                 <Input
                                     placeholder="Origen"
@@ -74,70 +93,104 @@ export default function CampaignExamModal({ open, onOpenChange, onSave }: Campai
                             </div>
                         </div>
 
-                        {/* Right Column (Textarea & Button) */}
-                        <div className="col-span-4 flex flex-col gap-4">
-                            <div className="flex flex-col gap-2 flex-1">
+                        {/* Columna 3 */}
+                        <div className="flex flex-col gap-4">
+                            <div className="flex flex-col gap-2.5 flex-1">
                                 <label className="text-[13px] font-semibold text-ink">Observaciones/Detalles:</label>
                                 <Textarea
                                     className="resize-none h-full min-h-[90px] rounded-lg border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand"
                                 />
                             </div>
-                            <Button className="h-11 rounded-lg bg-ink-body hover:bg-ink text-white font-bold flex items-center gap-2 shadow-sm w-full mx-auto max-w-[200px] transition-colors active:scale-95">
+                            {/* Acción secundaria: outline punteado, igual que "Adjuntar requerimientos" */}
+                            <Button
+                                type="button"
+                                variant="outline"
+                                className="h-11 rounded-lg border-dashed border-brand-border text-ink-body hover:border-brand hover:text-brand hover:bg-brand-surface font-semibold flex items-center gap-2 shadow-none w-full transition-colors active:scale-95"
+                            >
                                 <Upload size={18} />
-                                Importar Archivo
+                                Importar archivo
                             </Button>
                         </div>
                     </div>
 
-                    {/* Boton Agregar */}
-                    <div className="flex justify-center mt-2">
+                    <div className="flex justify-end">
                         <Button
                             onClick={handleAdd}
-                            className="h-10 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-10 shadow-sm transition-colors active:scale-95"
+                            className="h-11 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-8 shadow-sm transition-colors active:scale-95 w-full sm:w-auto"
                         >
                             Agregar
                         </Button>
                     </div>
 
-                    {/* Tabla de Examenes */}
-                    <div className="mt-4 rounded-xl border border-border overflow-hidden">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="border-b border-border bg-white">
-                                    <th className="py-3 px-4 text-[12px] font-semibold text-ink">Nombre Analisis</th>
-                                    <th className="py-3 px-4 text-[12px] font-semibold text-ink">Resultado</th>
-                                    <th className="py-3 px-4 text-[12px] font-semibold text-ink">Fecha</th>
-                                    <th className="py-3 px-4 text-[12px] font-semibold text-ink">Origen</th>
-                                    <th className="py-3 px-4 text-[12px] font-semibold text-ink">Detalles</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {addedExams.map((exam) => (
-                                    <tr key={exam.id} className="border-b border-border last:border-0 bg-white">
-                                        <td className="py-3 px-4 text-[12px] font-medium text-ink-body">{exam.name}</td>
-                                        <td className="py-3 px-4 text-[12px] font-medium text-ink-body">{exam.result}</td>
-                                        <td className="py-3 px-4 text-[12px] font-medium text-ink-body">{exam.date}</td>
-                                        <td className="py-3 px-4 text-[12px] font-medium text-ink-body">{exam.origin}</td>
-                                        <td className="py-3 px-4 text-[12px] font-medium text-ink-body">{exam.details}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    {/* Exámenes registrados */}
+                    <div className="flex flex-col gap-2.5 pt-1">
+                        <label className="text-[13px] font-semibold text-ink">Exámenes registrados:</label>
+
+                        {/* Móvil: tarjeta por examen; la tabla de 5 columnas no cabe */}
+                        <div className="flex flex-col gap-3 sm:hidden">
+                            {addedExams.map((exam) => (
+                                <div key={exam.id} className="rounded-xl border border-border border-l-[3px] border-l-brand bg-white overflow-hidden">
+                                    <div className="flex items-start justify-between gap-3 p-4 pb-3">
+                                        <span className="text-[14px] font-bold text-ink leading-tight">{exam.name}</span>
+                                        <span className="text-[13px] font-semibold text-brand shrink-0">{exam.result}</span>
+                                    </div>
+                                    <div className="mx-4 mb-4 flex flex-col gap-2.5 rounded-lg bg-surface-page border border-border p-3">
+                                        <div className="flex justify-between gap-3">
+                                            <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider shrink-0">Fecha</span>
+                                            <span className="text-[13px] font-semibold text-ink">{exam.date}</span>
+                                        </div>
+                                        <div className="flex justify-between gap-3">
+                                            <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider shrink-0">Origen</span>
+                                            <span className="text-[13px] font-semibold text-ink">{exam.origin}</span>
+                                        </div>
+                                        <div className="flex flex-col gap-1">
+                                            <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider">Detalles</span>
+                                            <span className="text-[12.5px] font-medium text-ink-body">{exam.details}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="hidden sm:block rounded-xl overflow-hidden border border-border">
+                            <Table>
+                                <TableHeader className="bg-surface-page">
+                                    <TableRow className="border-b border-border hover:bg-transparent">
+                                        <TableHead className="text-ink font-semibold h-12 px-4">Nombre Análisis</TableHead>
+                                        <TableHead className="text-ink font-semibold h-12">Resultado</TableHead>
+                                        <TableHead className="text-ink font-semibold h-12">Fecha</TableHead>
+                                        <TableHead className="text-ink font-semibold h-12">Origen</TableHead>
+                                        <TableHead className="text-ink font-semibold h-12">Detalles</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {addedExams.map((exam) => (
+                                        <TableRow key={exam.id} className="border-b border-border last:border-0 hover:bg-surface-page/60 transition-colors">
+                                            <TableCell className="font-medium text-ink h-14 px-4">{exam.name}</TableCell>
+                                            <TableCell className="text-ink-body font-medium">{exam.result}</TableCell>
+                                            <TableCell className="text-ink-body font-medium">{exam.date}</TableCell>
+                                            <TableCell className="text-ink-body font-medium">{exam.origin}</TableCell>
+                                            <TableCell className="text-ink-body font-medium">{exam.details}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
                     </div>
                 </div>
 
                 {/* Botones Footer */}
-                <div className="flex justify-center gap-3 mt-8">
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-lg h-10 px-6 border-transparent bg-muted hover:bg-border text-ink-body font-bold shadow-none transition-colors"
+                        className="rounded-lg h-11 px-8 border-border text-ink-muted font-bold hover:bg-muted hover:text-ink transition-colors"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={() => onSave ? onSave() : onOpenChange(false)}
-                        className="rounded-lg h-10 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
+                        className="rounded-lg h-11 px-8 bg-brand hover:bg-brand-dark text-white font-semibold gap-2 shadow-sm transition-colors active:scale-95"
                     >
                         Guardar
                     </Button>

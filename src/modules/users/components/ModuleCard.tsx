@@ -29,21 +29,21 @@ export default function ModuleCard({
       </div>
 
       {/* Left section (Icon & Text) */}
-      <div className="flex flex-1 items-start p-5 gap-4 z-20 relative">
+      <div className="flex flex-1 items-start p-4 sm:p-5 gap-3 sm:gap-4 z-20 relative min-w-0">
         {/* Icon */}
-        <div className="w-14 h-14 shrink-0 rounded-full bg-brand-surface flex items-center justify-center text-brand mt-0.5">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-full bg-brand-surface flex items-center justify-center text-brand mt-0.5">
           {icon}
         </div>
 
         {/* Text & Link */}
-        <div className="flex flex-col justify-center flex-1">
-          <h2 className="text-[17px] font-bold text-ink leading-tight mb-1">
+        <div className="flex flex-col justify-center flex-1 min-w-0">
+          <h2 className="text-[15px] sm:text-[17px] font-bold text-ink leading-tight mb-1">
             {title}
           </h2>
-          <p className="text-ink-muted text-[13px] leading-snug mb-2 line-clamp-3">
+          <p className="text-ink-muted text-[12.5px] sm:text-[13px] leading-snug mb-2 line-clamp-2 sm:line-clamp-3">
             {description}
           </p>
-          <div className="text-brand text-[13px] font-bold flex items-center gap-1">
+          <div className="text-brand text-[12.5px] sm:text-[13px] font-bold flex items-center gap-1 whitespace-nowrap">
             Acceder al módulo{" "}
             <ArrowRight
               size={14}
@@ -55,7 +55,7 @@ export default function ModuleCard({
 
       {/* Right section (Image with wavy left edge) */}
       <div
-        className="w-[155px] shrink-0 relative z-0 -ml-5"
+        className="w-[105px] sm:w-[155px] shrink-0 relative z-0 -ml-5"
         style={{ clipPath: `url(#${WAVE_CLIP_ID})` }}
       >
         <div className="w-full h-full bg-muted">

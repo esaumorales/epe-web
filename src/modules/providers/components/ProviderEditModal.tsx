@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Upload, X, Users } from "lucide-react";
+import { Upload, X, Pencil } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -12,14 +12,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/shared/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/components/ui/dropdown-menu";
 
-interface ProviderCreateModalProps {
+interface ProviderEditModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     onSuccess?: () => void;
 }
 
-export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: ProviderCreateModalProps) {
-    const [selectedFruits, setSelectedFruits] = useState<string[]>([]);
+export default function ProviderEditModal({ open, onOpenChange, onSuccess }: ProviderEditModalProps) {
+    const [selectedFruits, setSelectedFruits] = useState<string[]>(["Mango Kent"]);
 
     const handleAddFruit = (value: string | null) => {
         if (value && !selectedFruits.includes(value)) {
@@ -37,20 +37,20 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                 <DialogHeader className="mb-6">
                     <div className="flex items-start gap-5">
                         <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
-                            <Users size={24} strokeWidth={2} />
+                            <Pencil size={24} strokeWidth={2} />
                         </div>
                         <div className="flex-1 pt-1">
                             <DialogTitle className="text-xl font-bold text-ink">
-                                Registrar Proveedor
+                                Editar Proveedor
                             </DialogTitle>
                             <DialogDescription className="text-[13.5px] text-ink-muted mt-1">
-                                Completa la información para registrar un nuevo proveedor.
+                                Modifica la información del proveedor existente.
                             </DialogDescription>
                         </div>
                     </div>
                 </DialogHeader>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div className="grid grid-cols-4 gap-6">
                     {/* Row 1 */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Nombres:</label>
@@ -63,8 +63,8 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Tipo de Documento:</label>
                         <Select>
-                            <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                                <SelectValue placeholder="Seleccionar" />
+                            <SelectTrigger className="rounded-lg h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
+                                <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent className="rounded-lg">
                                 <SelectItem value="dni" className="rounded-lg">DNI</SelectItem>
@@ -86,11 +86,11 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                         <label className="text-[13px] font-semibold text-ink">Fecha Revision SENASA:</label>
                         <Input type="date" className="rounded-lg h-11 border-border text-ink-muted shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
                     </div>
-                    <div className="flex flex-col gap-2.5 sm:col-span-2">
+                    <div className="flex flex-col gap-2.5 col-span-2">
                         <label className="text-[13px] font-semibold text-ink">Frutas derivadas:</label>
                         <Select onValueChange={handleAddFruit} value="">
-                            <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                                <SelectValue placeholder="Seleccionar fruta derivada" />
+                            <SelectTrigger className="rounded-lg h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
+                                <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent className="rounded-lg">
                                 <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
@@ -113,11 +113,11 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                         <Input className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
                     </div>
                     <div className="flex flex-col gap-2.5 row-span-2">
-                        <label className="text-[13px] font-semibold text-ink">Frutas seleccionadas:</label>
+                        <label className="text-[13px] font-semibold text-ink">Frutas derivadas seleccionadas:</label>
                         <div className="flex flex-wrap gap-2">
-                            {selectedFruits.map((fruit) => (
+                            {selectedFruits.map((fruit, idx) => (
                                 <div
-                                    key={fruit}
+                                    key={idx}
                                     className="bg-brand-surface text-brand pr-3 pl-2 py-1.5 rounded-full text-[13px] font-semibold flex items-center gap-2"
                                 >
                                     <button
@@ -137,9 +137,9 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                         <DropdownMenu>
                             <DropdownMenuTrigger 
                                 render={
-                                    <Button type="button" variant="outline" className="h-11 rounded-lg border-dashed border-brand-border text-ink-body hover:border-brand hover:text-brand hover:bg-brand-surface font-semibold flex gap-2 shadow-none w-full transition-colors active:scale-95">
+                                    <Button variant="secondary" className="bg-ink-body hover:bg-ink text-white rounded-lg h-11 flex gap-2 shadow-none w-full transition-all active:scale-95">
                                         <Upload size={16} />
-                                        Adjuntar archivo DNI
+                                        Certificado Nacional
                                     </Button>
                                 }
                             />
@@ -157,9 +157,9 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                         <DropdownMenu>
                             <DropdownMenuTrigger 
                                 render={
-                                    <Button type="button" variant="outline" className="h-11 rounded-lg border-dashed border-brand-border text-ink-body hover:border-brand hover:text-brand hover:bg-brand-surface font-semibold flex gap-2 shadow-none w-full transition-colors active:scale-95">
+                                    <Button variant="secondary" className="bg-ink-body hover:bg-ink text-white rounded-lg h-11 flex gap-2 shadow-none w-full transition-all active:scale-95">
                                         <Upload size={16} />
-                                        Certificado Nacional
+                                        Adjuntar DNI
                                     </Button>
                                 }
                             />
@@ -175,19 +175,19 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                     </div>
                 </div>
 
-                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
+                <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
-                        variant="outline"
+                        variant="secondary"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-lg h-11 px-8 border-border text-ink-muted font-bold hover:bg-muted hover:text-ink transition-colors"
+                        className="rounded-full h-10 px-6 bg-muted hover:bg-muted/80 text-ink font-semibold border-none transition-all active:scale-95"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={onSuccess}
-                        className="rounded-lg h-11 px-8 bg-brand hover:bg-brand-dark text-white font-semibold gap-2 shadow-sm transition-all active:scale-95"
+                        className="rounded-full h-10 px-8 bg-brand hover:bg-brand-dark text-white font-semibold transition-all active:scale-95"
                     >
-                        Crear Proveedor
+                        Guardar
                     </Button>
                 </div>
             </DialogContent>
