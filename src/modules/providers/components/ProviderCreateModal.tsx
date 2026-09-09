@@ -50,7 +50,7 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                     </div>
                 </DialogHeader>
 
-                <div className="grid grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     {/* Row 1 */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Nombres:</label>
@@ -63,8 +63,8 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Tipo de Documento:</label>
                         <Select>
-                            <SelectTrigger className="rounded-lg h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                                <SelectValue placeholder="" />
+                            <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
+                                <SelectValue placeholder="Seleccionar" />
                             </SelectTrigger>
                             <SelectContent className="rounded-lg">
                                 <SelectItem value="dni" className="rounded-lg">DNI</SelectItem>
@@ -86,11 +86,11 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                         <label className="text-[13px] font-semibold text-ink">Fecha Revision SENASA:</label>
                         <Input type="date" className="rounded-lg h-11 border-border text-ink-muted shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
                     </div>
-                    <div className="flex flex-col gap-2.5 col-span-2">
+                    <div className="flex flex-col gap-2.5 sm:col-span-2">
                         <label className="text-[13px] font-semibold text-ink">Frutas derivadas:</label>
                         <Select onValueChange={handleAddFruit} value="">
-                            <SelectTrigger className="rounded-lg h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                                <SelectValue placeholder="" />
+                            <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
+                                <SelectValue placeholder="Seleccionar fruta derivada" />
                             </SelectTrigger>
                             <SelectContent className="rounded-lg">
                                 <SelectItem value="Mango Kent" className="rounded-lg">Mango Kent</SelectItem>
@@ -137,7 +137,7 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                         <DropdownMenu>
                             <DropdownMenuTrigger 
                                 render={
-                                    <Button variant="secondary" className="bg-ink-body hover:bg-ink text-white rounded-lg h-11 flex gap-2 shadow-none w-full transition-all active:scale-95">
+                                    <Button type="button" variant="outline" className="h-11 rounded-lg border-dashed border-brand-border text-ink-body hover:border-brand hover:text-brand hover:bg-brand-surface font-semibold flex gap-2 shadow-none w-full transition-colors active:scale-95">
                                         <Upload size={16} />
                                         Adjuntar archivo DNI
                                     </Button>
@@ -157,7 +157,7 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                         <DropdownMenu>
                             <DropdownMenuTrigger 
                                 render={
-                                    <Button variant="secondary" className="bg-ink-body hover:bg-ink text-white rounded-lg h-11 flex gap-2 shadow-none w-full transition-all active:scale-95">
+                                    <Button type="button" variant="outline" className="h-11 rounded-lg border-dashed border-brand-border text-ink-body hover:border-brand hover:text-brand hover:bg-brand-surface font-semibold flex gap-2 shadow-none w-full transition-colors active:scale-95">
                                         <Upload size={16} />
                                         Certificado Nacional
                                     </Button>
@@ -175,11 +175,11 @@ export default function ProviderCreateModal({ open, onOpenChange, onSuccess }: P
                     </div>
                 </div>
 
-                <div className="flex flex-col-reverse sm:flex-row justify-center gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-lg h-11 px-8 border-border text-brand font-bold hover:bg-muted hover:text-brand transition-all active:scale-95"
+                        className="rounded-lg h-11 px-8 border-border text-ink-muted font-bold hover:bg-muted hover:text-ink transition-colors"
                     >
                         Cancelar
                     </Button>
