@@ -159,20 +159,24 @@ export default function CampaignTable({ data, onClearFilters, hasActiveFilters }
                             </div>
 
                             <div className="flex items-center gap-1 mt-3 px-2.5 py-1.5 border-t border-border bg-surface-page/50 text-ink-muted">
-                                {row.estado === "Planificado" && (
+                                {(row.estado === "Planificado" || row.estado === "En proceso") && (
                                     <>
-                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingCertificationsCampaignId(row.id)} aria-label="Certificaciones">
-                                            <FileText size={18} strokeWidth={2.5} />
-                                        </Button>
+                                        {row.estado === "Planificado" && (
+                                            <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingCertificationsCampaignId(row.id)} aria-label="Certificaciones">
+                                                <FileText size={18} strokeWidth={2.5} />
+                                            </Button>
+                                        )}
                                         <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => navigate(`/campaigns/${row.id}/providers`)} aria-label="Proveedores">
                                             <Users size={18} strokeWidth={2.5} />
                                         </Button>
                                         <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingClientsCampaignId(row.id)} aria-label="Clientes">
                                             <Contact size={18} strokeWidth={2.5} />
                                         </Button>
-                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setEditingCampaignId(row.id)} aria-label="Editar">
-                                            <Pencil size={18} strokeWidth={2.5} />
-                                        </Button>
+                                        {row.estado === "Planificado" && (
+                                            <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setEditingCampaignId(row.id)} aria-label="Editar">
+                                                <Pencil size={18} strokeWidth={2.5} />
+                                            </Button>
+                                        )}
                                     </>
                                 )}
                                 <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95 ml-auto" onClick={() => navigate(`/campaigns/${row.id}`)} aria-label="Ver detalle">
@@ -207,20 +211,24 @@ export default function CampaignTable({ data, onClearFilters, hasActiveFilters }
                                     </TableCell>
                                     <TableCell className="px-6">
                                         <div className="flex items-center justify-end gap-1.5 text-ink-muted">
-                                            {row.estado === "Planificado" && (
+                                            {(row.estado === "Planificado" || row.estado === "En proceso") && (
                                                 <>
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingCertificationsCampaignId(row.id)}>
-                                                        <FileText size={18} strokeWidth={2.5} />
-                                                    </Button>
+                                                    {row.estado === "Planificado" && (
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingCertificationsCampaignId(row.id)}>
+                                                            <FileText size={18} strokeWidth={2.5} />
+                                                        </Button>
+                                                    )}
                                                     <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => navigate(`/campaigns/${row.id}/providers`)}>
                                                         <Users size={18} strokeWidth={2.5} />
                                                     </Button>
                                                     <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingClientsCampaignId(row.id)}>
                                                         <Contact size={18} strokeWidth={2.5} />
                                                     </Button>
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setEditingCampaignId(row.id)}>
-                                                        <Pencil size={18} strokeWidth={2.5} />
-                                                    </Button>
+                                                    {row.estado === "Planificado" && (
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setEditingCampaignId(row.id)}>
+                                                            <Pencil size={18} strokeWidth={2.5} />
+                                                        </Button>
+                                                    )}
                                                 </>
                                             )}
                                             <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => navigate(`/campaigns/${row.id}`)}>

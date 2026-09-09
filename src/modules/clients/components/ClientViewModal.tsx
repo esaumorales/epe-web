@@ -10,13 +10,15 @@ import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
 
-interface ClientCreateModalProps {
+interface ClientViewModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    onSuccess?: () => void;
+    clientId: number | null;
 }
 
-export default function ClientCreateModal({ open, onOpenChange, onSuccess }: ClientCreateModalProps) {
+export default function ClientViewModal({ open, onOpenChange, clientId }: ClientViewModalProps) {
+    if (!clientId) return null;
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[650px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
@@ -27,51 +29,51 @@ export default function ClientCreateModal({ open, onOpenChange, onSuccess }: Cli
                         </div>
                         <div className="flex-1 pt-1">
                             <DialogTitle className="text-xl font-bold text-ink">
-                                Registrar Cliente
+                                Detalles del Cliente
                             </DialogTitle>
                             <DialogDescription className="text-[13.5px] text-ink-muted mt-1">
-                                Completa la información para registrar un nuevo cliente.
+                                Visualizando la información registrada del cliente.
                             </DialogDescription>
                         </div>
                     </div>
                 </DialogHeader>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 opacity-90 pointer-events-none">
                     {/* Row 1 */}
                     <div className="flex flex-col gap-2.5 col-span-2">
                         <label className="text-[13px] font-semibold text-ink">Nombres Completos:</label>
-                        <Input className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
+                        <Input readOnly value="Nombre de Ejemplo" className="rounded-lg h-11 border-border shadow-none bg-surface-page" />
                     </div>
 
                     {/* Row 2 */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Empresa:</label>
-                        <Input className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
+                        <Input readOnly value="Empresa Ejemplo S.A.C" className="rounded-lg h-11 border-border shadow-none bg-surface-page" />
                     </div>
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Teléfono:</label>
-                        <Input className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
+                        <Input readOnly value="+51 987 654 321" className="rounded-lg h-11 border-border shadow-none bg-surface-page" />
                     </div>
 
                     {/* Row 3 */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">RUC:</label>
-                        <Input className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
+                        <Input readOnly value="20123456789" className="rounded-lg h-11 border-border shadow-none bg-surface-page" />
                     </div>
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Correo Corporativo:</label>
-                        <Input className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
+                        <Input readOnly value="contacto@empresa.com" className="rounded-lg h-11 border-border shadow-none bg-surface-page" />
                     </div>
 
                     {/* Row 4 */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Ubicación:</label>
-                        <Input className="rounded-lg h-11 border-border shadow-none focus-visible:ring-1 focus-visible:ring-brand/30 focus-visible:border-brand" />
+                        <Input readOnly value="Lima, Perú" className="rounded-lg h-11 border-border shadow-none bg-surface-page" />
                     </div>
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Tipo de Cliente:</label>
-                        <Select>
-                            <SelectTrigger className="rounded-lg h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
+                        <Select value="mayorista">
+                            <SelectTrigger className="rounded-lg h-11 border-border text-ink shadow-none bg-surface-page">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent className="rounded-lg">
@@ -82,19 +84,13 @@ export default function ClientCreateModal({ open, onOpenChange, onSuccess }: Cli
                     </div>
                 </div>
 
-                <div className="flex flex-col-reverse sm:flex-row justify-center gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
+                <div className="flex flex-col-reverse sm:flex-row justify-center gap-3 mt-8">
                     <Button
                         variant="secondary"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-full h-10 px-8 bg-muted hover:bg-muted/80 text-ink font-semibold border-none transition-all active:scale-95"
+                        className="rounded-full w-full sm:w-auto h-10 px-10 bg-muted hover:bg-muted/80 text-ink font-semibold border-none transition-all active:scale-95"
                     >
-                        Cancelar
-                    </Button>
-                    <Button
-                        onClick={onSuccess}
-                        className="rounded-full h-10 px-10 bg-brand hover:bg-brand-dark text-white font-semibold shadow-sm transition-all active:scale-95"
-                    >
-                        Crear
+                        Cerrar
                     </Button>
                 </div>
             </DialogContent>

@@ -12,28 +12,19 @@ import { Card, CardContent } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
 import StatusBadge from "@/shared/components/StatusBadge";
 import ProviderInterviewModal from "./ProviderInterviewModal";
+import ProviderEditModal from "./ProviderEditModal";
+import ProviderViewModal from "./ProviderViewModal";
 
-const data = [
-    {
-        id: 1,
-        nombre: "Brayan Gay",
-        dni: "98765412",
-        fruta: "mango",
-        categoria: "Mango Eduard",
-        estado: "Aprobado"
-    },
-    {
-        id: 2,
-        nombre: "Brayan Gay 2",
-        dni: "78451296",
-        fruta: "mango",
-        categoria: "Mango Eduard",
-        estado: "Por aprobar"
-    }
-];
+interface ProvidersTableProps {
+    data: any[];
+    hasActiveFilters: boolean;
+    onClearFilters: () => void;
+}
 
-export default function ProvidersTable() {
+export default function ProvidersTable({ data, hasActiveFilters, onClearFilters }: ProvidersTableProps) {
     const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
+    const [editingProviderId, setEditingProviderId] = useState<number | null>(null);
+    const [viewingProviderId, setViewingProviderId] = useState<number | null>(null);
 
     return (
         <>
@@ -54,9 +45,32 @@ export default function ProvidersTable() {
                         </div>
                     </div>
 
-                    {/* Móvil: tarjeta por proveedor en vez de tabla con scroll lateral */}
-                    <div className="flex flex-col gap-3 sm:hidden">
-                        {data.map((row) => (
+                    {data.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-12 text-center bg-surface-page/30 rounded-xl border border-dashed border-border/60">
+                            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm border border-border">
+                                <Truck className="text-ink-muted/50" size={32} strokeWidth={1.5} />
+                            </div>
+                            <h3 className="text-[16px] font-bold text-ink mb-1">No se encontraron resultados</h3>
+                            <p className="text-[13.5px] text-ink-muted mb-4 max-w-md">
+                                {hasActiveFilters 
+                                    ? "No hay proveedores que coincidan con los filtros aplicados. Intenta con otros criterios de búsqueda."
+                                    : "Aún no hay proveedores registrados. Haz clic en 'Nuevo Proveedor' para comenzar."}
+                            </p>
+                            {hasActiveFilters && (
+                                <Button 
+                                    onClick={onClearFilters}
+                                    variant="outline" 
+                                    className="h-9 px-4 rounded-lg font-semibold border-border text-brand hover:text-brand-dark hover:bg-brand-surface shadow-none transition-colors"
+                                >
+                                    Limpiar filtros
+                                </Button>
+                            )}
+                        </div>
+                    ) : (
+                        <>
+                            {/* Móvil: tarjeta por proveedor en vez de tabla con scroll lateral */}
+                            <div className="flex flex-col gap-3 sm:hidden">
+                                {data.map((row) => (
                             <div
                                 key={row.id}
                                 className={`rounded-xl border border-border border-l-[3px] bg-white overflow-hidden ${row.estado === "Aprobado" ? "border-l-brand" : "border-l-status-highlight"}`}
@@ -81,10 +95,10 @@ export default function ProvidersTable() {
                                 </div>
 
                                 <div className="flex items-center gap-1 mt-3 px-2.5 py-1.5 border-t border-border bg-surface-page/50 text-ink-muted">
-                                    <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Editar">
+                                    <Button variant="ghost" size="icon" onClick={() => setEditingProviderId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Editar">
                                         <Pencil size={18} strokeWidth={2.5} />
                                     </Button>
-                                    <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Ver">
+                                    <Button variant="ghost" size="icon" onClick={() => setViewingProviderId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Ver">
                                         <Eye size={18} strokeWidth={2.5} />
                                     </Button>
                                     <Button variant="ghost" size="icon" onClick={() => setIsInterviewModalOpen(true)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95 ml-auto" aria-label="Entrevista">
@@ -119,10 +133,10 @@ export default function ProvidersTable() {
                                         </TableCell>
                                         <TableCell className="px-6">
                                             <div className="flex items-center justify-end gap-1.5 text-ink-muted">
-                                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
+                                                <Button variant="ghost" size="icon" onClick={() => setEditingProviderId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                     <Pencil size={18} strokeWidth={2.5} />
                                                 </Button>
-                                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
+                                                <Button variant="ghost" size="icon" onClick={() => setViewingProviderId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                     <Eye size={18} strokeWidth={2.5} />
                                                 </Button>
                                                 <Button variant="ghost" size="icon" 
@@ -131,16 +145,28 @@ export default function ProvidersTable() {
                                                 </Button>
                                             </div>
                                         </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+                        </>
+                    )}
                 </CardContent>
             </Card>
             <ProviderInterviewModal 
                 open={isInterviewModalOpen} 
                 onOpenChange={setIsInterviewModalOpen}
+            />
+            <ProviderEditModal 
+                open={editingProviderId !== null}
+                onOpenChange={(open) => !open && setEditingProviderId(null)}
+                onSuccess={() => setEditingProviderId(null)}
+            />
+            <ProviderViewModal 
+                open={viewingProviderId !== null}
+                onOpenChange={(open) => !open && setViewingProviderId(null)}
+                providerId={viewingProviderId}
             />
         </>
     );

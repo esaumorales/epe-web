@@ -32,7 +32,7 @@ export default function SuccessModal({ open, onOpenChange, title, description }:
 
                 <Button
                     onClick={() => onOpenChange(false)}
-                    className="w-32 rounded-lg h-11 bg-brand hover:bg-brand-dark text-white font-semibold shadow-sm transition-colors active:scale-95"
+                    className="w-32 rounded-full h-11 bg-brand hover:bg-brand-dark text-white font-semibold shadow-sm transition-colors active:scale-95"
                 >
                     Aceptar
                 </Button>

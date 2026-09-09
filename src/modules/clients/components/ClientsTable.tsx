@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Pencil, Eye, Contact } from "lucide-react";
 import {
   Table,
@@ -9,6 +10,8 @@ import {
 } from "@/shared/components/ui/table";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
+import ClientEditModal from "./ClientEditModal";
+import ClientViewModal from "./ClientViewModal";
 
 const data = [
     {
@@ -30,8 +33,12 @@ const data = [
 ];
 
 export default function ClientsTable() {
+    const [editingClientId, setEditingClientId] = useState<number | null>(null);
+    const [viewingClientId, setViewingClientId] = useState<number | null>(null);
+
     return (
-        <Card className="rounded-2xl border-border shadow-[0_2px_12px_rgb(0,0,0,0.03)]">
+        <>
+            <Card className="rounded-2xl border-border shadow-[0_2px_12px_rgb(0,0,0,0.03)]">
             <CardContent className="p-4 sm:p-6 flex flex-col gap-5 sm:gap-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="flex items-center gap-3 sm:gap-4 min-w-0">
@@ -78,10 +85,10 @@ export default function ClientsTable() {
                             </div>
 
                             <div className="flex items-center gap-1 mt-3 px-2.5 py-1.5 border-t border-border bg-surface-page/50 text-ink-muted">
-                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Editar">
+                                <Button variant="ghost" size="icon" onClick={() => setEditingClientId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Editar">
                                     <Pencil size={18} strokeWidth={2.5} />
                                 </Button>
-                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95 ml-auto" aria-label="Ver">
+                                <Button variant="ghost" size="icon" onClick={() => setViewingClientId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95 ml-auto" aria-label="Ver">
                                     <Eye size={18} strokeWidth={2.5} />
                                 </Button>
                             </div>
@@ -111,10 +118,10 @@ export default function ClientsTable() {
                                     <TableCell className="text-ink-body font-medium">{row.ruc}</TableCell>
                                     <TableCell className="px-6">
                                         <div className="flex items-center justify-end gap-1.5 text-ink-muted">
-                                            <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
+                                            <Button variant="ghost" size="icon" onClick={() => setEditingClientId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                 <Pencil size={18} strokeWidth={2.5} />
                                             </Button>
-                                            <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
+                                            <Button variant="ghost" size="icon" onClick={() => setViewingClientId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                 <Eye size={18} strokeWidth={2.5} />
                                             </Button>
                                         </div>
@@ -124,7 +131,20 @@ export default function ClientsTable() {
                         </TableBody>
                     </Table>
                 </div>
-            </CardContent>
-        </Card>
+                </CardContent>
+            </Card>
+
+            <ClientEditModal 
+                open={editingClientId !== null}
+                onOpenChange={(open) => !open && setEditingClientId(null)}
+                onSuccess={() => setEditingClientId(null)}
+            />
+
+            <ClientViewModal 
+                open={viewingClientId !== null}
+                onOpenChange={(open) => !open && setViewingClientId(null)}
+                clientId={viewingClientId}
+            />
+        </>
     );
 }

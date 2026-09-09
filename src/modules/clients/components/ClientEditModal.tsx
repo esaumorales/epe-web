@@ -1,4 +1,4 @@
-import { Building2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -10,27 +10,27 @@ import { Input } from "@/shared/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { Button } from "@/shared/components/ui/button";
 
-interface ClientCreateModalProps {
+interface ClientEditModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     onSuccess?: () => void;
 }
 
-export default function ClientCreateModal({ open, onOpenChange, onSuccess }: ClientCreateModalProps) {
+export default function ClientEditModal({ open, onOpenChange, onSuccess }: ClientEditModalProps) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[650px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
                     <div className="flex items-start gap-5">
                         <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
-                            <Building2 size={24} strokeWidth={2} />
+                            <Pencil size={24} strokeWidth={2} />
                         </div>
                         <div className="flex-1 pt-1">
                             <DialogTitle className="text-xl font-bold text-ink">
-                                Registrar Cliente
+                                Editar Cliente
                             </DialogTitle>
                             <DialogDescription className="text-[13.5px] text-ink-muted mt-1">
-                                Completa la información para registrar un nuevo cliente.
+                                Modifica la información del cliente existente.
                             </DialogDescription>
                         </div>
                     </div>
@@ -71,7 +71,7 @@ export default function ClientCreateModal({ open, onOpenChange, onSuccess }: Cli
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Tipo de Cliente:</label>
                         <Select>
-                            <SelectTrigger className="rounded-lg h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
+                            <SelectTrigger className="rounded-lg h-11 border-border text-ink-muted shadow-none focus-ring-1 focus-ring-brand/30 focus:border-brand">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent className="rounded-lg">

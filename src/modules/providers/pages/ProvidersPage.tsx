@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ProvidersFilters from "@/modules/providers/components/ProvidersFilters";
 import ProvidersTable from "@/modules/providers/components/ProvidersTable";
 import ProviderCreateModal from "@/modules/providers/components/ProviderCreateModal";
@@ -7,9 +7,54 @@ import PageHeader from "@/shared/layout/PageHeader";
 import { Truck } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 
+const providersData = [
+    {
+        id: 1,
+        nombre: "Brayan Gay",
+        dni: "98765412",
+        fruta: "mango",
+        categoria: "Mango Eduard",
+        estado: "Aprobado"
+    },
+    {
+        id: 2,
+        nombre: "Brayan Gay 2",
+        dni: "78451296",
+        fruta: "mango",
+        categoria: "Mango Eduard",
+        estado: "Por aprobar"
+    }
+];
+
 export default function ProvidersPage() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+    // Filter states
+    const [search, setSearch] = useState("");
+    const [status, setStatus] = useState("estados");
+    const [type, setType] = useState("todos");
+
+    const clearFilters = () => {
+        setSearch("");
+        setStatus("estados");
+        setType("todos");
+    };
+    
+    const hasActiveFilters = search !== "" || status !== "estados" || type !== "todos";
+
+    const filteredData = useMemo(() => {
+        return providersData.filter((item) => {
+            let matchesStatus = true;
+            if (status === "aprobado") matchesStatus = item.estado === "Aprobado";
+            else if (status === "por aprobar") matchesStatus = item.estado === "Por aprobar";
+            
+            const searchLower = search.trim().toLowerCase();
+            const matchesSearch = item.nombre.toLowerCase().includes(searchLower) || item.dni.includes(searchLower);
+            
+            return matchesStatus && matchesSearch;
+        });
+    }, [search, status, type]);
 
     const handleCreateSuccess = () => {
         setIsCreateModalOpen(false);
@@ -40,9 +85,18 @@ export default function ProvidersPage() {
                 }
             />
 
-            <ProvidersFilters />
+            <ProvidersFilters 
+                search={search} onSearchChange={setSearch}
+                status={status} onStatusChange={setStatus}
+                type={type} onTypeChange={setType}
+                onClear={clearFilters}
+            />
 
-            <ProvidersTable />
+            <ProvidersTable 
+                data={filteredData}
+                hasActiveFilters={hasActiveFilters}
+                onClearFilters={clearFilters}
+            />
 
             <ProviderCreateModal
                 open={isCreateModalOpen}
