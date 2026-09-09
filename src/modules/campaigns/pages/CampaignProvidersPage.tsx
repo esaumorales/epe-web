@@ -19,6 +19,7 @@ import CampaignLinkProviderModal from "@/modules/campaigns/components/CampaignLi
 import CampaignSuccessModal from "@/modules/campaigns/components/CampaignSuccessModal";
 import CampaignExamModal from "@/modules/campaigns/components/CampaignExamModal";
 import CampaignInterviewModal from "@/modules/campaigns/components/CampaignInterviewModal";
+import CampaignProviderDetailsModal from "@/modules/campaigns/components/CampaignProviderDetailsModal";
 
 export default function CampaignProvidersPage() {
     const [activeTab, setActiveTab] = useState<"Productor" | "Acopiador">("Productor");
@@ -27,6 +28,8 @@ export default function CampaignProvidersPage() {
     const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const [successMode, setSuccessMode] = useState<"provider" | "exam" | "interview">("provider");
+    const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+    const [selectedProviderName, setSelectedProviderName] = useState<string>("");
 
     return (
         <div className="px-4 py-5 sm:px-8 lg:px-14">
@@ -183,7 +186,7 @@ export default function CampaignProvidersPage() {
                                                     </Button>
                                                 </>
                                             )}
-                                            <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
+                                            <Button variant="ghost" size="icon" onClick={() => { setSelectedProviderName("Juan Pérez"); setIsDetailsModalOpen(true); }} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                 <Eye size={18} strokeWidth={2.5} />
                                             </Button>
                                         </div>
@@ -219,7 +222,7 @@ export default function CampaignProvidersPage() {
                                                     </Button>
                                                 </>
                                             )}
-                                            <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
+                                            <Button variant="ghost" size="icon" onClick={() => { setSelectedProviderName("Carlos Mendoza"); setIsDetailsModalOpen(true); }} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                 <Eye size={18} strokeWidth={2.5} />
                                             </Button>
                                         </div>
@@ -265,6 +268,13 @@ export default function CampaignProvidersPage() {
                 open={isSuccessModalOpen}
                 onOpenChange={setIsSuccessModalOpen}
                 mode={successMode}
+            />
+
+            <CampaignProviderDetailsModal
+                open={isDetailsModalOpen}
+                onOpenChange={setIsDetailsModalOpen}
+                providerName={selectedProviderName}
+                providerType={activeTab}
             />
         </div>
     );
