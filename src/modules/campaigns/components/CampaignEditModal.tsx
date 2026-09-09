@@ -14,6 +14,7 @@ import { Button } from "@/shared/components/ui/button";
 interface CampaignEditModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    campaignId?: number | null;
     onSuccess?: () => void;
 }
 

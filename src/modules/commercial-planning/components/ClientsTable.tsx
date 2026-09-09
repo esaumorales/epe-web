@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, Eye, Contact } from "lucide-react";
+import { Pencil, Eye, Contact, FileSignature } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -12,6 +12,7 @@ import { Card, CardContent } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
 import ClientEditModal from "./ClientEditModal";
 import ClientViewModal from "./ClientViewModal";
+import ClientAddContractModal from "./ClientAddContractModal";
 
 const data = [
     {
@@ -35,6 +36,7 @@ const data = [
 export default function ClientsTable() {
     const [editingClientId, setEditingClientId] = useState<number | null>(null);
     const [viewingClientId, setViewingClientId] = useState<number | null>(null);
+    const [addingContractClientId, setAddingContractClientId] = useState<number | null>(null);
 
     return (
         <>
@@ -46,8 +48,8 @@ export default function ClientsTable() {
                             <Contact size={24} strokeWidth={2.5} />
                         </div>
                         <div className="flex flex-col">
-                            <h2 className="text-[15px] sm:text-[17px] font-bold text-ink leading-tight mb-1">Clientes Registrados</h2>
-                            <p className="text-[12.5px] sm:text-[13px] text-ink-muted font-medium">Gestiona, consulta y da seguimiento a todos tus clientes registrados.</p>
+                            <h2 className="text-[15px] sm:text-[17px] font-bold text-ink leading-tight mb-1">Clientes Generales</h2>
+                            <p className="text-[12.5px] sm:text-[13px] text-ink-muted font-medium">Gestiona, consulta y da seguimiento a todos tus clientes generales.</p>
                         </div>
                     </div>
                     <div className="text-[13px] text-muted-foreground font-medium">
@@ -85,6 +87,9 @@ export default function ClientsTable() {
                             </div>
 
                             <div className="flex items-center gap-1 mt-3 px-2.5 py-1.5 border-t border-border bg-surface-page/50 text-ink-muted">
+                                <Button variant="ghost" size="icon" onClick={() => setAddingContractClientId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Añadir contrato">
+                                    <FileSignature size={18} strokeWidth={2.5} />
+                                </Button>
                                 <Button variant="ghost" size="icon" onClick={() => setEditingClientId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Editar">
                                     <Pencil size={18} strokeWidth={2.5} />
                                 </Button>
@@ -118,6 +123,9 @@ export default function ClientsTable() {
                                     <TableCell className="text-ink-body font-medium">{row.ruc}</TableCell>
                                     <TableCell className="px-6">
                                         <div className="flex items-center justify-end gap-1.5 text-ink-muted">
+                                            <Button variant="ghost" size="icon" onClick={() => setAddingContractClientId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
+                                                <FileSignature size={18} strokeWidth={2.5} />
+                                            </Button>
                                             <Button variant="ghost" size="icon" onClick={() => setEditingClientId(row.id)} className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95">
                                                 <Pencil size={18} strokeWidth={2.5} />
                                             </Button>
@@ -144,6 +152,12 @@ export default function ClientsTable() {
                 open={viewingClientId !== null}
                 onOpenChange={(open) => !open && setViewingClientId(null)}
                 clientId={viewingClientId}
+            />
+
+            <ClientAddContractModal
+                open={addingContractClientId !== null}
+                onOpenChange={(open) => !open && setAddingContractClientId(null)}
+                onSuccess={() => setAddingContractClientId(null)}
             />
         </>
     );

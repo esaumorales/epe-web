@@ -1,4 +1,4 @@
-import { Home, Users, Award, Contact } from "lucide-react";
+import { Home, Users, Contact } from "lucide-react";
 
 export const sidebarItems = [
   {
@@ -12,13 +12,8 @@ export const sidebarItems = [
     icon: Users,
   },
   {
-    title: "Clientes",
-    url: "/clientes",
+    title: "Planificación Comercial",
+    url: "/planificacion-comercial",
     icon: Contact,
-  },
-  {
-    title: "Certificaciones",
-    url: "/certificaciones",
-    icon: Award,
   },
 ];

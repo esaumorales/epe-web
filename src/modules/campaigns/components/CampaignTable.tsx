@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FileText, Users, Pencil, Eye, Contact, Layers, ArrowUpDown, ArrowUp, ArrowDown, SearchX } from "lucide-react";
+import { Pencil, Eye, Contact, Layers, ArrowUpDown, ArrowUp, ArrowDown, SearchX, Briefcase } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -16,7 +16,6 @@ import TablePagination from "@/shared/components/TablePagination";
 import { Button } from "@/shared/components/ui/button";
 import CampaignEditModal from "@/modules/campaigns/components/CampaignEditModal";
 import CampaignSuccessModal from "@/modules/campaigns/components/CampaignSuccessModal";
-import CampaignCertificationsModal from "@/modules/campaigns/components/CampaignCertificationsModal";
 import CampaignLinkClientModal from "@/modules/campaigns/components/CampaignLinkClientModal";
 import type { Campaign } from "@/modules/campaigns/campaigns.data";
 
@@ -70,13 +69,12 @@ function SortableHead({ label, sortKey, sort, onToggle, className = "" }: Sortab
 
 export default function CampaignTable({ data, onClearFilters, hasActiveFilters }: CampaignTableProps) {
     const [editingCampaignId, setEditingCampaignId] = useState<number | null>(null);
-    const [managingCertificationsCampaignId, setManagingCertificationsCampaignId] = useState<number | null>(null);
     const [managingClientsCampaignId, setManagingClientsCampaignId] = useState<number | null>(null);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const [sort, setSort] = useState<{ key: SortKey; direction: "asc" | "desc" } | null>(null);
     const [page, setPage] = useState(1);
     const navigate = useNavigate();
-    const [successModalMode, setSuccessModalMode] = useState<"edit" | "provider" | "certification" | "client">("edit");
+    const [successModalMode, setSuccessModalMode] = useState<"edit" | "provider" | "client">("edit");
 
     const handleEditSuccess = () => {
         setEditingCampaignId(null);
@@ -128,8 +126,6 @@ export default function CampaignTable({ data, onClearFilters, hasActiveFilters }
                     </div>
                 </div>
 
-                {/* Móvil: cada campaña como tarjeta. Una tabla de 6 columnas
-                    obligaría a scroll horizontal para llegar al estado y las acciones. */}
                 <div className="flex flex-col gap-3 sm:hidden">
                     {visibleData.map((row) => (
                         <div
@@ -141,8 +137,6 @@ export default function CampaignTable({ data, onClearFilters, hasActiveFilters }
                                 <StatusBadge status={row.estado} />
                             </div>
 
-                            {/* Bloque de datos sobre fondo tenue: separa los valores del
-                                título y evita la tarjeta completamente en blanco. */}
                             <div className="mx-4 grid grid-cols-2 gap-y-3 gap-x-3 rounded-lg bg-surface-page border border-border p-3">
                                 <div className="flex flex-col">
                                     <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider">Inicio</span>
@@ -162,13 +156,10 @@ export default function CampaignTable({ data, onClearFilters, hasActiveFilters }
                                 {(row.estado === "Planificado" || row.estado === "En proceso") && (
                                     <>
                                         {row.estado === "Planificado" && (
-                                            <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingCertificationsCampaignId(row.id)} aria-label="Certificaciones">
-                                                <FileText size={18} strokeWidth={2.5} />
+                                            <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => navigate(`/campaigns/${row.id}/providers`)} aria-label="Proveedores">
+                                                <Briefcase size={18} strokeWidth={2.5} />
                                             </Button>
                                         )}
-                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => navigate(`/campaigns/${row.id}/providers`)} aria-label="Proveedores">
-                                            <Users size={18} strokeWidth={2.5} />
-                                        </Button>
                                         <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingClientsCampaignId(row.id)} aria-label="Clientes">
                                             <Contact size={18} strokeWidth={2.5} />
                                         </Button>
@@ -214,13 +205,10 @@ export default function CampaignTable({ data, onClearFilters, hasActiveFilters }
                                             {(row.estado === "Planificado" || row.estado === "En proceso") && (
                                                 <>
                                                     {row.estado === "Planificado" && (
-                                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingCertificationsCampaignId(row.id)}>
-                                                            <FileText size={18} strokeWidth={2.5} />
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => navigate(`/campaigns/${row.id}/providers`)}>
+                                                            <Briefcase size={18} strokeWidth={2.5} />
                                                         </Button>
                                                     )}
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => navigate(`/campaigns/${row.id}/providers`)}>
-                                                        <Users size={18} strokeWidth={2.5} />
-                                                    </Button>
                                                     <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" onClick={() => setManagingClientsCampaignId(row.id)}>
                                                         <Contact size={18} strokeWidth={2.5} />
                                                     </Button>
@@ -274,17 +262,8 @@ export default function CampaignTable({ data, onClearFilters, hasActiveFilters }
             <CampaignEditModal
                 open={editingCampaignId !== null}
                 onOpenChange={(open) => !open && setEditingCampaignId(null)}
+                campaignId={editingCampaignId}
                 onSuccess={handleEditSuccess}
-            />
-
-            <CampaignCertificationsModal
-                open={managingCertificationsCampaignId !== null}
-                onOpenChange={(open) => !open && setManagingCertificationsCampaignId(null)}
-                onSuccess={() => {
-                    setManagingCertificationsCampaignId(null);
-                    setSuccessModalMode("certification");
-                    setIsSuccessModalOpen(true);
-                }}
             />
 
             <CampaignLinkClientModal

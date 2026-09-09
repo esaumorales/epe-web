@@ -7,9 +7,7 @@ import CampaignsPage from './modules/campaigns/pages/CampaignsPage'
 import CampaignDetailsPage from './modules/campaigns/pages/CampaignDetailsPage'
 import CampaignProvidersPage from './modules/campaigns/pages/CampaignProvidersPage'
 import ProvidersPage from './modules/providers/pages/ProvidersPage'
-import ClientsPage from './modules/clients/pages/ClientsPage'
-import CertificationsPage from './modules/certifications/pages/CertificationsPage'
-import CertificationsCreatePage from './modules/certifications/pages/CertificationsCreatePage'
+import CommercialPlanningPage from './modules/commercial-planning/pages/CommercialPlanningPage'
 import DashboardLayout from '@/shared/layout/DashboardLayout'
 
 // Persistent layout wrapper for authenticated routes
@@ -42,9 +40,7 @@ function App() {
           <Route path="/campaigns/:id" element={<CampaignDetailsPage />} />
           <Route path="/campaigns/:id/providers" element={<CampaignProvidersPage />} />
           <Route path="/proveedores" element={<ProvidersPage />} />
-          <Route path="/clientes" element={<ClientsPage />} />
-          <Route path="/certificaciones" element={<CertificationsPage />} />
-          <Route path="/certificaciones/nueva" element={<CertificationsCreatePage />} />
+          <Route path="/planificacion-comercial" element={<CommercialPlanningPage />} />
         </Route>
         
         <Route path="/" element={<Navigate to="/modules" />} />

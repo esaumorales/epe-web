@@ -10,7 +10,7 @@ import { Button } from "@/shared/components/ui/button";
 const providersData = [
     {
         id: 1,
-        nombre: "Brayan Gay",
+        nombre: "Moises Chilet",
         dni: "98765412",
         fruta: "mango",
         categoria: "Mango Eduard",
@@ -18,7 +18,7 @@ const providersData = [
     },
     {
         id: 2,
-        nombre: "Brayan Gay 2",
+        nombre: "Brayan Ponce",
         dni: "78451296",
         fruta: "mango",
         categoria: "Mango Eduard",

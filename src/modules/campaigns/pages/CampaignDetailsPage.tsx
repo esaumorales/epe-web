@@ -1,5 +1,5 @@
 import {  useNavigate } from "react-router-dom";
-import {  Calendar, Tag, Sprout, TrendingUp, ShieldCheck, Users, Briefcase, ArrowLeft } from "lucide-react";
+import {  Calendar, Tag, Sprout, TrendingUp, Users, Briefcase, ArrowLeft } from "lucide-react";
 import StatusBadge from "@/shared/components/StatusBadge";
 import { Button } from "@/shared/components/ui/button";
 import { Progress } from "@/shared/components/ui/progress";
@@ -9,12 +9,7 @@ import CampaignManagementProvidersModal from "@/modules/campaigns/components/Cam
 import CampaignManagementClientsModal from "@/modules/campaigns/components/CampaignManagementClientsModal";
 import PageHeader from "@/shared/layout/PageHeader";
 
-const certifications = [
-    { name: "Global G.A.P.", detail: "3 archivos · vence 31/12/2026", status: "Vigente", iconClassName: "bg-brand-surface text-brand" },
-    { name: "SENASA Export", detail: "2 archivos · vence 15/06/2026", status: "Vigente", iconClassName: "bg-brand-surface text-brand" },
-    { name: "Rainforest Alliance", detail: "4 archivos · vence 20/09/2025", status: "Por vencer", iconClassName: "bg-status-highlight-surface text-status-highlight" },
-    { name: "BRC Food Safety", detail: "3 archivos · vence 01/03/2025", status: "Vencida", iconClassName: "bg-destructive/10 text-destructive" },
-];
+
 
 export default function CampaignDetailsPage() {
     const navigate = useNavigate();
@@ -172,35 +167,7 @@ export default function CampaignDetailsPage() {
                         </CardContent></Card>
                     </div>
 
-                    {/* Certificaciones List */}
-                    <Card className="rounded-2xl border-border shadow-[0_2px_12px_rgb(0,0,0,0.03)] flex-1 overflow-hidden py-0">
-                        <CardContent className="p-0 flex flex-col h-full">
-                        <div className="p-5 border-b border-border flex justify-between items-center bg-surface-page">
-                            <div>
-                                <h3 className="text-[15px] font-bold text-ink">Certificaciones</h3>
-                                <p className="text-[12px] text-ink-muted font-medium">4 certificaciones · 12 archivos</p>
-                            </div>
-                        </div>
 
-                        <div className="flex flex-col p-2">
-                            {certifications.map((certification) => (
-                                <div
-                                    key={certification.name}
-                                    className="p-3 hover:bg-status-neutral-surface/50 rounded-xl transition-colors flex items-center gap-3 cursor-pointer"
-                                >
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${certification.iconClassName}`}>
-                                        <ShieldCheck size={18} strokeWidth={2.5} />
-                                    </div>
-                                    <div className="flex-1 overflow-hidden">
-                                        <p className="text-[13.5px] font-bold text-ink truncate">{certification.name}</p>
-                                        <p className="text-[11px] font-medium text-ink-muted truncate">{certification.detail}</p>
-                                    </div>
-                                    <StatusBadge status={certification.status} />
-                                </div>
-                            ))}
-                        </div>
-                        </CardContent>
-                    </Card>
 
                 </div>
             </div>

@@ -1,13 +1,13 @@
 import { useState } from "react";
-import ClientsFilters from "@/modules/clients/components/ClientsFilters";
-import ClientsTable from "@/modules/clients/components/ClientsTable";
-import ClientCreateModal from "@/modules/clients/components/ClientCreateModal";
-import ClientSuccessModal from "@/modules/clients/components/ClientSuccessModal";
+import ClientsFilters from "@/modules/commercial-planning/components/ClientsFilters";
+import ClientsTable from "@/modules/commercial-planning/components/ClientsTable";
+import ClientCreateModal from "@/modules/commercial-planning/components/ClientCreateModal";
+import ClientSuccessModal from "@/modules/commercial-planning/components/ClientSuccessModal";
 import PageHeader from "@/shared/layout/PageHeader";
-import { Users } from "lucide-react";
+import { Contact } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 
-export default function ClientsPage() {
+export default function CommercialPlanningPage() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
@@ -19,9 +19,9 @@ export default function ClientsPage() {
     return (
         <div className="px-4 py-5 sm:px-8 lg:px-14">
             <PageHeader
-                icon={<Users size={24} strokeWidth={2.5} />}
-                title="Gestión de Clientes"
-                description="Administra los productores y acopiadores registrados en el sistema."
+                icon={<Contact size={24} strokeWidth={2.5} />}
+                title="Planificación Comercial"
+                description="Administra los clientes y planifica la gestión comercial."
                 action={
                     <Button
                         onClick={() => setIsCreateModalOpen(true)}
