@@ -51,7 +51,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[600px] sm:max-w-[700px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[700px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
                     <div className="flex items-start gap-5">
                         <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
@@ -79,7 +79,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                     </div>
 
                     {/* Fechas */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-ink">Fecha Inicio:</label>
                             <Input
@@ -97,7 +97,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                     </div>
 
                     {/* Frutas derivadas */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-ink">Seleccionar Frutas:</label>
@@ -178,7 +178,7 @@ export default function CampaignEditModal({ open, onOpenChange, onSuccess }: Cam
                     </div>
                 </div>
 
-                <div className="flex justify-center gap-4 mt-8">
+                <div className="flex flex-col-reverse sm:flex-row justify-center gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}

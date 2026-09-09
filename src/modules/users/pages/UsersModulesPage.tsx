@@ -43,9 +43,10 @@ export default function UsersModulesPage() {
         ></div>
       </div>
 
-      {/* `overflow-hidden` + altos relativos: la vista entra completa en pantalla
-          y nunca aparece scroll, sea cual sea el alto del viewport */}
-      <div className="relative z-10 w-full h-full flex flex-col overflow-hidden">
+      {/* En desktop `overflow-hidden` + altos relativos hacen que la vista entre
+          completa sin scroll. En móvil las 4 tarjetas apiladas no caben, así que
+          ahí se deja fluir el alto y se permite scroll. */}
+      <div className="relative z-10 w-full min-h-full lg:h-full flex flex-col overflow-visible lg:overflow-hidden">
         <HeroModules />
         <ModulesGrid />
         <ModulesFooter />

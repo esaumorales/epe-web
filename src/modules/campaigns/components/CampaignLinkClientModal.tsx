@@ -46,7 +46,7 @@ export default function CampaignLinkClientModal({ open, onOpenChange, onSave }: 
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[550px] md:max-w-xl p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[550px] md:max-w-xl p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
                     <DialogTitle className="text-xl font-bold text-ink">
                         Registrar Clientes
@@ -127,17 +127,17 @@ export default function CampaignLinkClientModal({ open, onOpenChange, onSave }: 
                 </div>
 
                 {/* Botones Footer */}
-                <div className="flex justify-end gap-3 mt-8">
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-lg h-10 px-6 border-border text-ink-body font-bold hover:bg-muted transition-colors"
+                        className="rounded-lg h-11 px-6 border-border text-ink-body font-bold hover:bg-muted transition-colors"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={() => onSave ? onSave() : onOpenChange(false)}
-                        className="rounded-lg h-10 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
+                        className="rounded-lg h-11 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
                     >
                         Guardar
                     </Button>

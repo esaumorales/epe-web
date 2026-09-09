@@ -32,15 +32,15 @@ const data = [
 export default function ClientsTable() {
     return (
         <Card className="rounded-2xl border-border shadow-[0_2px_12px_rgb(0,0,0,0.03)]">
-            <CardContent className="p-6 flex flex-col gap-6">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0">
+            <CardContent className="p-4 sm:p-6 flex flex-col gap-5 sm:gap-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0">
                             <Contact size={24} strokeWidth={2.5} />
                         </div>
                         <div className="flex flex-col">
-                            <h2 className="text-[17px] font-bold text-ink leading-tight mb-1">Clientes Registrados</h2>
-                            <p className="text-[13px] text-ink-muted font-medium">Gestiona, consulta y da seguimiento a todos tus clientes registrados.</p>
+                            <h2 className="text-[15px] sm:text-[17px] font-bold text-ink leading-tight mb-1">Clientes Registrados</h2>
+                            <p className="text-[12.5px] sm:text-[13px] text-ink-muted font-medium">Gestiona, consulta y da seguimiento a todos tus clientes registrados.</p>
                         </div>
                     </div>
                     <div className="text-[13px] text-muted-foreground font-medium">
@@ -48,7 +48,48 @@ export default function ClientsTable() {
                     </div>
                 </div>
 
-                <div className="rounded-xl overflow-hidden border border-border">
+                {/* Móvil: tarjeta por cliente en vez de tabla con scroll lateral */}
+                <div className="flex flex-col gap-3 sm:hidden">
+                    {data.map((row) => (
+                        <div key={row.id} className="rounded-xl border border-border border-l-[3px] border-l-brand bg-white overflow-hidden">
+                            <div className="flex items-center gap-3 p-4 pb-3">
+                                <div className="w-9 h-9 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-brand shrink-0 text-[13px] font-bold">
+                                    {row.empresa.charAt(0)}
+                                </div>
+                                <div className="flex flex-col min-w-0">
+                                    <span className="text-[15px] font-bold text-ink leading-tight truncate">{row.empresa}</span>
+                                    <span className="text-[12.5px] text-ink-muted font-medium truncate">{row.representante}</span>
+                                </div>
+                            </div>
+
+                            <div className="mx-4 flex flex-col gap-2.5 rounded-lg bg-surface-page border border-border p-3">
+                                <div className="flex justify-between gap-3">
+                                    <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider shrink-0">Número</span>
+                                    <span className="text-[13px] font-semibold text-ink truncate">{row.numero}</span>
+                                </div>
+                                <div className="flex justify-between gap-3">
+                                    <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider shrink-0">Correo</span>
+                                    <span className="text-[13px] font-semibold text-ink truncate">{row.correo}</span>
+                                </div>
+                                <div className="flex justify-between gap-3">
+                                    <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider shrink-0">RUC</span>
+                                    <span className="text-[13px] font-semibold text-ink truncate">{row.ruc}</span>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-1 mt-3 px-2.5 py-1.5 border-t border-border bg-surface-page/50 text-ink-muted">
+                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95" aria-label="Editar">
+                                    <Pencil size={18} strokeWidth={2.5} />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="h-9 w-9 hover:text-brand hover:bg-brand-surface rounded-lg transition-colors active:scale-95 ml-auto" aria-label="Ver">
+                                    <Eye size={18} strokeWidth={2.5} />
+                                </Button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="hidden sm:block rounded-xl overflow-hidden border border-border">
                     <Table>
                         <TableHeader className="bg-surface-page">
                             <TableRow className="border-b border-border hover:bg-transparent">

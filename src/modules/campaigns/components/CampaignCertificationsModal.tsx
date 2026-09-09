@@ -29,7 +29,7 @@ export default function CampaignCertificationsModal({ open, onOpenChange, onSucc
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[500px] sm:max-w-[600px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[600px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
                     <div className="flex items-start gap-5">
                         <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
@@ -48,7 +48,7 @@ export default function CampaignCertificationsModal({ open, onOpenChange, onSucc
 
                 <div className="flex flex-col gap-6">
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {/* Seleccionar Certificación */}
                         <div className="flex flex-col gap-2.5">
                             <label className="text-[13px] font-semibold text-ink">Seleccionar Certificación:</label>
@@ -56,7 +56,7 @@ export default function CampaignCertificationsModal({ open, onOpenChange, onSucc
                                 <SelectTrigger className="w-full rounded-lg !h-11 border-border text-ink-muted shadow-none focus:ring-1 focus:ring-brand/30 focus:border-brand">
                                     <SelectValue placeholder="Seleccione una certificación" />
                                 </SelectTrigger>
-                                <SelectContent className="rounded-xl">
+                                <SelectContent className="rounded-lg">
                                     <SelectItem value="Global GAP" className="rounded-lg">Global GAP</SelectItem>
                                     <SelectItem value="Fairtrade" className="rounded-lg">Fairtrade (Comercio Justo)</SelectItem>
                                     <SelectItem value="Organica" className="rounded-lg">Orgánica</SelectItem>
@@ -108,7 +108,7 @@ export default function CampaignCertificationsModal({ open, onOpenChange, onSucc
                     </div>
                 </div>
 
-                <div className="flex justify-center gap-4 mt-8">
+                <div className="flex flex-col-reverse sm:flex-row justify-center gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}

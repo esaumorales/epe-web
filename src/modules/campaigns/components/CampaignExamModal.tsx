@@ -29,7 +29,7 @@ export default function CampaignExamModal({ open, onOpenChange, onSave }: Campai
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[1100px] sm:max-w-[1100px] md:max-w-[1000px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[1100px] md:max-w-[1000px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
                     <DialogTitle className="text-[24px] font-bold text-ink">
                         Registrar examen
@@ -93,7 +93,7 @@ export default function CampaignExamModal({ open, onOpenChange, onSave }: Campai
                     <div className="flex justify-center mt-2">
                         <Button
                             onClick={handleAdd}
-                            className="h-10 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-10 shadow-sm transition-colors active:scale-95"
+                            className="h-11 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-10 shadow-sm transition-colors active:scale-95"
                         >
                             Agregar
                         </Button>
@@ -131,13 +131,13 @@ export default function CampaignExamModal({ open, onOpenChange, onSave }: Campai
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-lg h-10 px-6 border-transparent bg-muted hover:bg-border text-ink-body font-bold shadow-none transition-colors"
+                        className="rounded-lg h-11 px-6 border-transparent bg-muted hover:bg-border text-ink-body font-bold shadow-none transition-colors"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={() => onSave ? onSave() : onOpenChange(false)}
-                        className="rounded-lg h-10 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
+                        className="rounded-lg h-11 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
                     >
                         Guardar
                     </Button>

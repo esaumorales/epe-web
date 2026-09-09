@@ -10,7 +10,7 @@ export default function ModulesGrid() {
   const navigate = useNavigate();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(155px,auto)] content-start gap-6 w-full flex-1 min-h-0 px-14 py-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(140px,auto)] sm:auto-rows-[minmax(155px,auto)] content-start gap-4 sm:gap-6 w-full flex-1 min-h-0 px-4 py-5 sm:px-8 lg:px-14">
       <ModuleCard
         title="Planificación de Campaña"
         description="Organiza y planifica tus campañas de exportación."

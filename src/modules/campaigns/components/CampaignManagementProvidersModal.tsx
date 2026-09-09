@@ -65,7 +65,7 @@ export default function CampaignManagementProvidersModal({ open, onOpenChange }:
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[500px] md:max-w-[800px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-6">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[500px] md:max-w-[800px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-6 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-2">
                     <DialogTitle className="text-[22px] font-bold text-ink">
                         Gestión de Proveedores
@@ -79,9 +79,9 @@ export default function CampaignManagementProvidersModal({ open, onOpenChange }:
                         <span className="text-2xl font-black text-ink">4</span>
                         <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Proveedores</span>
                     </div>
-                    <div className="flex flex-col items-center justify-center border-r border-border">
+                    <div className="flex flex-col items-center justify-center border-r border-border px-1">
                         <span className="text-2xl font-black text-ink">245 ha</span>
-                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Hectáreas Totales</span>
+                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider text-center">Hectáreas Totales</span>
                     </div>
                     <div className="flex flex-col items-center justify-center">
                         <span className="text-2xl font-black text-ink">2</span>

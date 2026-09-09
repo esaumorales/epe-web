@@ -36,7 +36,7 @@ export default function CampaignSuccessModal({ open, onOpenChange, mode = "creat
     
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[400px] sm:max-w-[400px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 flex flex-col items-center text-center">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[400px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 flex flex-col items-center text-center max-h-[90vh] overflow-y-auto">
                 <div className="w-24 h-24 rounded-full bg-brand-surface flex items-center justify-center text-brand mb-6 border border-brand-border">
                     <Smile size={48} strokeWidth={2} />
                 </div>

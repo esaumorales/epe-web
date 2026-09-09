@@ -47,7 +47,7 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-[850px] sm:max-w-[700px] p-8 rounded-2xl bg-white border-none shadow-2xl gap-0">
+            <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[700px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
                     <DialogTitle className="text-xl font-bold text-ink">
                         Vincular Proveedores
@@ -101,7 +101,7 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                         <Button 
                             onClick={handleAdd}
                             disabled={!selectedProvider}
-                            className="h-10 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-8 shadow-sm disabled:opacity-50 transition-colors active:scale-95"
+                            className="h-11 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-8 shadow-sm disabled:opacity-50 transition-colors active:scale-95"
                         >
                             Agregar
                         </Button>
@@ -133,17 +133,17 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                 </div>
 
                 {/* Botones Footer */}
-                <div className="flex justify-end gap-3 mt-8">
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-lg h-10 px-6 border-transparent bg-muted hover:bg-border text-ink-body font-bold shadow-none transition-colors"
+                        className="rounded-lg h-11 px-6 border-transparent bg-muted hover:bg-border text-ink-body font-bold shadow-none transition-colors"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={() => onSave ? onSave() : onOpenChange(false)}
-                        className="rounded-lg h-10 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
+                        className="rounded-lg h-11 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
                     >
                         Guardar
                     </Button>
