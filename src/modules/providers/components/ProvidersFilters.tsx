@@ -45,7 +45,7 @@ export default function ProvidersFilters({ search, onSearchChange, status, onSta
 
                     <div className="w-full sm:flex-1 sm:min-w-[150px] flex flex-col gap-1.5">
                         <label className="text-[13px] font-bold text-ink">Tipo</label>
-                        <Select value={type} onValueChange={onTypeChange}>
+                        <Select value={type} onValueChange={(value) => onTypeChange(value || "")}>
                             <SelectTrigger className="w-full rounded-lg !h-11 border-border shadow-none text-ink font-medium [&>svg]:opacity-50 focus:ring-1 focus:ring-brand/30 focus:border-brand">
                                 <SelectValue placeholder="todos" />
                             </SelectTrigger>
@@ -74,7 +74,7 @@ export default function ProvidersFilters({ search, onSearchChange, status, onSta
 
                     <div className="w-full sm:flex-1 sm:min-w-[150px] flex flex-col gap-1.5">
                         <label className="text-[13px] font-bold text-ink">Estado</label>
-                        <Select value={status} onValueChange={onStatusChange}>
+                        <Select value={status} onValueChange={(value) => onStatusChange(value || "")}>
                             <SelectTrigger className="w-full rounded-lg !h-11 border-border shadow-none text-ink font-medium [&>svg]:opacity-50 focus:ring-1 focus:ring-brand/30 focus:border-brand">
                                 <SelectValue placeholder="estados" />
                             </SelectTrigger>
