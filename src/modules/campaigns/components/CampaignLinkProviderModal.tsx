@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { X, UserRound } from "lucide-react";
+import { X, UserRound, Users } from "lucide-react";
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogDescription,
 } from "@/shared/components/ui/dialog";
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
@@ -20,7 +21,7 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
     const [isAcopiador, setIsAcopiador] = useState(false);
     const [selectedProvider, setSelectedProvider] = useState<string>("");
     const [cantidad, setCantidad] = useState<string>("");
-    
+
     const [addedProviders, setAddedProviders] = useState([
         { id: 1, name: "Pepe Alonso", type: "Productor" },
         { id: 2, name: "Pepe Alonso", type: "Acopiador" }
@@ -32,7 +33,7 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
 
     const handleAdd = () => {
         if (!selectedProvider) return;
-        
+
         const name = selectedProvider === "pepe" ? "Pepe Alonso" : "Juan Perez";
         const newProvider = {
             id: Date.now(),
@@ -49,12 +50,22 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-[700px] p-5 sm:p-8 rounded-2xl bg-white border-none shadow-2xl gap-0 max-h-[90vh] overflow-y-auto">
                 <DialogHeader className="mb-6">
-                    <DialogTitle className="text-xl font-bold text-ink">
-                        Vincular Proveedores
-                    </DialogTitle>
+                    <div className="flex items-start gap-4 sm:gap-5">
+                        <div className="w-[52px] h-[52px] rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0 border border-brand-border">
+                            <Users size={24} strokeWidth={2} />
+                        </div>
+                        <div className="flex-1 pt-1">
+                            <DialogTitle className="text-xl font-bold text-ink">
+                                Vincular Proveedores
+                            </DialogTitle>
+                            <DialogDescription className="text-[13.5px] text-ink-muted mt-1">
+                                Asocia productores y acopiadores a esta campaña.
+                            </DialogDescription>
+                        </div>
+                    </div>
                 </DialogHeader>
 
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-5">
                     {/* Seleccionar Proveedor */}
                     <div className="flex flex-col gap-2.5">
                         <label className="text-[13px] font-semibold text-ink">Seleccionar Proveedor:</label>
@@ -69,18 +80,32 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                         </Select>
                     </div>
 
-                    {/* Toggle and Cantidad */}
-                    <div className="grid grid-cols-2 gap-6 items-end">
-                        <div className="flex flex-col gap-2">
-                            <div className="flex items-center justify-between w-[130px] px-1">
-                                <span className={`text-[12px] font-bold ${!isAcopiador ? "text-ink" : "text-ink-muted"}`}>Productor</span>
-                                <span className={`text-[12px] font-bold ${isAcopiador ? "text-ink" : "text-ink-muted"}`}>Acopiador</span>
-                            </div>
-                            <div 
-                                className="relative w-[130px] h-11 rounded-full cursor-pointer border-[2.5px] border-ink-muted bg-white transition-colors hover:border-ink"
-                                onClick={() => setIsAcopiador(!isAcopiador)}
-                            >
-                                <div className={`absolute top-1 w-8 h-8 rounded-full bg-brand transition-transform ${isAcopiador ? 'translate-x-[88px]' : 'translate-x-1'}`} />
+                    {/* Tipo y cantidad */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                        <div className="flex flex-col gap-2.5">
+                            <label className="text-[13px] font-semibold text-ink">Tipo de Proveedor:</label>
+                            {/* Selector segmentado con el mismo lenguaje que las pestañas de la vista */}
+                            <div className="inline-flex h-11 w-full p-1 bg-status-neutral-surface/60 rounded-lg items-center">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsAcopiador(false)}
+                                    aria-pressed={!isAcopiador}
+                                    className={`flex-1 h-full text-[13px] font-bold rounded-md transition-all ${
+                                        !isAcopiador ? "bg-white text-brand shadow-sm" : "text-ink-muted hover:text-ink"
+                                    }`}
+                                >
+                                    Productor
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsAcopiador(true)}
+                                    aria-pressed={isAcopiador}
+                                    className={`flex-1 h-full text-[13px] font-bold rounded-md transition-all ${
+                                        isAcopiador ? "bg-white text-brand shadow-sm" : "text-ink-muted hover:text-ink"
+                                    }`}
+                                >
+                                    Acopiador
+                                </button>
                             </div>
                         </div>
 
@@ -96,36 +121,36 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                         </div>
                     </div>
 
-                    {/* Boton Agregar */}
-                    <div className="flex justify-center mt-2">
-                        <Button 
+                    <div className="flex justify-end">
+                        <Button
                             onClick={handleAdd}
                             disabled={!selectedProvider}
-                            className="h-11 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-8 shadow-sm disabled:opacity-50 transition-colors active:scale-95"
+                            className="h-11 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold px-8 shadow-sm disabled:opacity-50 transition-colors active:scale-95 w-full sm:w-auto"
                         >
                             Agregar
                         </Button>
                     </div>
 
                     {/* Proveedores Agregados */}
-                    <div className="flex flex-col gap-3 mt-4">
-                        <label className="text-[13px] font-semibold text-ink">Productores Agregados:</label>
+                    <div className="flex flex-col gap-3 pt-1">
+                        <label className="text-[13px] font-semibold text-ink">Proveedores Agregados:</label>
                         <div className="flex flex-wrap gap-3">
                             {addedProviders.map((provider) => (
                                 <div key={provider.id} className="flex items-center gap-3 p-3 rounded-2xl border border-border bg-white min-w-[200px]">
-                                    <button 
-                                        onClick={() => handleRemove(provider.id)}
-                                        className="text-ink hover:text-destructive transition-colors"
-                                    >
-                                        <X size={18} strokeWidth={2.5} />
-                                    </button>
-                                    <div className="w-10 h-10 rounded-full border-2 border-ink flex items-center justify-center text-ink shrink-0">
-                                        <UserRound size={22} strokeWidth={2.5} />
+                                    <div className="w-10 h-10 rounded-full bg-brand-surface flex items-center justify-center text-brand shrink-0">
+                                        <UserRound size={20} strokeWidth={2.5} />
                                     </div>
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-col flex-1">
                                         <span className="text-[13px] font-bold text-ink leading-tight mb-0.5">{provider.name}</span>
-                                        <span className="text-[11px] font-medium text-ink">Proveedor - {provider.type}</span>
+                                        <span className="text-[11px] font-medium text-ink-muted">Proveedor - {provider.type}</span>
                                     </div>
+                                    <button
+                                        onClick={() => handleRemove(provider.id)}
+                                        className="text-ink-muted hover:text-destructive transition-colors shrink-0"
+                                        aria-label={`Quitar ${provider.name}`}
+                                    >
+                                        <X size={16} strokeWidth={2.5} />
+                                    </button>
                                 </div>
                             ))}
                         </div>
@@ -133,17 +158,17 @@ export default function CampaignLinkProviderModal({ open, onOpenChange, onSave }
                 </div>
 
                 {/* Botones Footer */}
-                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4 mt-8 [&>button]:w-full sm:[&>button]:w-auto">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
-                        className="rounded-lg h-11 px-6 border-transparent bg-muted hover:bg-border text-ink-body font-bold shadow-none transition-colors"
+                        className="rounded-lg h-11 px-8 border-border text-ink-muted font-bold hover:bg-muted hover:text-ink transition-colors"
                     >
                         Cancelar
                     </Button>
                     <Button
                         onClick={() => onSave ? onSave() : onOpenChange(false)}
-                        className="rounded-lg h-11 px-8 bg-brand hover:bg-brand-dark text-white font-bold shadow-sm transition-colors active:scale-95"
+                        className="rounded-lg h-11 px-8 bg-brand hover:bg-brand-dark text-white font-semibold gap-2 shadow-sm transition-colors active:scale-95"
                     >
                         Guardar
                     </Button>
