@@ -8,15 +8,12 @@ import { Card, CardContent } from "@/shared/components/ui/card";
 interface CampaignFiltersProps {
     search: string;
     onSearchChange: (value: string) => void;
-    status: string;
-    onStatusChange: (value: string) => void;
     onClear: () => void;
 }
 
-export default function CampaignFilters({ search, onSearchChange, status, onStatusChange, onClear }: CampaignFiltersProps) {
+export default function CampaignFilters({ search, onSearchChange, onClear }: CampaignFiltersProps) {
     const activeFilters = [
         search ? { key: "search", label: `Búsqueda: "${search}"`, clear: () => onSearchChange("") } : null,
-        status !== "todos" ? { key: "status", label: `Estado: ${status}`, clear: () => onStatusChange("todos") } : null,
     ].filter((item) => item !== null);
 
     return (
@@ -54,22 +51,6 @@ export default function CampaignFilters({ search, onSearchChange, status, onStat
                     <div className="w-full sm:flex-1 sm:min-w-[150px] flex flex-col gap-1.5">
                         <label className="text-[13px] font-bold text-ink">Fecha Fin</label>
                         <DatePicker placeholder="--/--/----" className="h-11 rounded-lg border-border text-ink-muted focus:ring-1 focus:ring-brand/30 focus:border-brand" />
-                    </div>
-
-                    {/* Estado */}
-                    <div className="w-full sm:flex-1 sm:min-w-[150px] flex flex-col gap-1.5">
-                        <label className="text-[13px] font-bold text-ink">Estado</label>
-                        <Select value={status} onValueChange={(value) => onStatusChange(value || "")}>
-                            <SelectTrigger className="w-full rounded-lg !h-11 border-border shadow-none text-ink font-medium [&>svg]:opacity-50 focus:ring-1 focus:ring-brand/30 focus:border-brand">
-                                <SelectValue placeholder="todos" />
-                            </SelectTrigger>
-                            <SelectContent className="rounded-lg">
-                                <SelectItem value="todos" className="rounded-lg">todos</SelectItem>
-                                <SelectItem value="Planificado" className="rounded-lg">planificado</SelectItem>
-                                <SelectItem value="En proceso" className="rounded-lg">en proceso</SelectItem>
-                                <SelectItem value="Terminado" className="rounded-lg">terminado</SelectItem>
-                            </SelectContent>
-                        </Select>
                     </div>
 
                     {/* Botón Limpiar Filtros: solo cuando hay algo que limpiar */}

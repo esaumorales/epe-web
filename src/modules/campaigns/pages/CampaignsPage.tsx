@@ -13,18 +13,17 @@ export default function CampaignsPage() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const [search, setSearch] = useState("");
-    const [status, setStatus] = useState("todos");
+    const [status, setStatus] = useState("Planificado");
 
-    const hasActiveFilters = search !== "" || status !== "todos";
+    const hasActiveFilters = search !== "";
 
     const clearFilters = () => {
         setSearch("");
-        setStatus("todos");
     };
 
     const filteredCampaigns = useMemo(() => {
         return campaigns.filter((campaign) => {
-            const matchesStatus = status === "todos" || campaign.estado === status;
+            const matchesStatus = campaign.estado === status;
             const matchesSearch = campaign.nombre.toLowerCase().includes(search.trim().toLowerCase());
             return matchesStatus && matchesSearch;
         });
@@ -74,8 +73,6 @@ export default function CampaignsPage() {
             <CampaignFilters
                 search={search}
                 onSearchChange={setSearch}
-                status={status}
-                onStatusChange={setStatus}
                 onClear={clearFilters}
             />
 
